@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'installations/bootstrap-4.4.1-dist/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'installations/style.css' %}"/>
+</head>
+<body>
+{% include 'installations/header.html' %}
+<hr>
+
+<div class="jumbotron">
+   <div class="container">
+       {% block main_content %}
+       {% endblock %}
+   </div>
+ </div>
+
+{% include 'installations/footer.html' %}
+
+</body>
+</html>

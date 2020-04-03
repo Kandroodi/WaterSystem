@@ -1,0 +1,8 @@
+{% extends 'installations/base.html' %}
+{% block main_content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Save">
+</form>
+{% endblock %}
