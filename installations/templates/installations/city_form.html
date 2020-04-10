@@ -1,8 +1,33 @@
 {% extends 'installations/base.html' %}
+{% load widget_tweaks %}
+
 {% block main_content %}
+
+<h2>Add City</h2>
 <form method="POST" action="">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Save">
+
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% render_field form.name class="form-control" %}
+          <!--        {{ field|add_class:'form-control' }}-->
+        {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-ok"></span> Save
+      </button>
+      <a href="{% url 'installations:city-new' %}" class="btn btn-default">Cancel</a>
+    </div>
+<!--    <input type="submit" class="btn btn-success" value="Save">-->
 </form>
 {% endblock %}

@@ -10,7 +10,7 @@ class Country(models.Model):
         return self.name
 
 class City(models.Model):
-    name = models.CharField(max_length=100, blank=False)
+    name = models.CharField(max_length=100, blank=False, help_text='City name!')
     country = models.ForeignKey(Country, on_delete= models.CASCADE, blank=True)
     latitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
     longitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
