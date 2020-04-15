@@ -1,0 +1,41 @@
+{% extends 'installations/base.html' %}
+{% load widget_tweaks %}
+
+{% block main_content %}
+
+<h2>City list</h2>
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>City Name</td>
+            <td>Country</td>
+            <td>Latitude</td>
+            <td>Longitude</td>
+            <td>
+                 <a href="{% url 'installations:city-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for city in city_list %}
+            <tr>
+                <td>{{city.name }}</td>
+                <td>{{city.country}}</td>
+                <td>{{city.latitude}}</td>
+                <td>{{city.longitude}}</td>
+                <td>
+                    <a href="{% url 'installations:city-update' city.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:city-delete' city.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor%}
+    </tbody>
+
+</table>
+
+{% endblock main_content %}
