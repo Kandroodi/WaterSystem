@@ -8,7 +8,7 @@
     <thead class="border-bottom font-weight-bold">
         <tr>
             <td>City Name</td>
-            <td>Country</td>
+<!--            <td>Country</td>-->
             <td>Latitude</td>
             <td>Longitude</td>
             <td>
@@ -20,15 +20,16 @@
         {% for city in city_list %}
             <tr>
                 <td>{{city.name }}</td>
-                <td>{{city.country}}</td>
+<!--                <td>{{city.country}}</td>-->
                 <td>{{city.latitude}}</td>
                 <td>{{city.longitude}}</td>
                 <td>
                     <a href="{% url 'installations:city-update' city.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:city-delete' city.id %}" method="post" class="d-inline">
                         {% csrf_token %}
-                        <button type="submit" class="btn">
-                            <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
                         </button>
                     </form>
                 </td>
