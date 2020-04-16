@@ -1,20 +1,19 @@
 from django.contrib import admin
-from .models import Country, City, Citymap, Politicalorientation, Religiousorientation,Person, CityPersonRelation, Watersystem, Installation, PersonInstallationRelation, CityInistallationRelation, Organization, Organizationtype, PersonOrganizationRelation
+from .models import City, Citymap, Religion, Person, CityPersonRelation, Watersystem, Installation
+from .models import CityInistallationRelation, Institution, InstitutionnType, Bibliography, TextualEvidence, MaterialEvidence
+
 # Register your models here.
 
-
-admin.site.register(Country)
 admin.site.register(City)
 admin.site.register(Citymap)
-admin.site.register(Politicalorientation)
-admin.site.register(Religiousorientation)
+admin.site.register(Religion)
 admin.site.register(Person)
 admin.site.register(CityPersonRelation)
 admin.site.register(Watersystem)
 admin.site.register(Installation)
-admin.site.register(PersonInstallationRelation)
 admin.site.register(CityInistallationRelation)
-admin.site.register(Organization)
-admin.site.register(Organizationtype)
-admin.site.register(PersonOrganizationRelation)
-
+admin.site.register(Institution)
+admin.site.register(InstitutionnType)
+admin.site.register(Bibliography)
+admin.site.register(TextualEvidence)
+admin.site.register(MaterialEvidence)

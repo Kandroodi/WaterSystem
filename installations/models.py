@@ -2,29 +2,17 @@ from django.db import models
 
 # Notes
 # 1) you can add help text for each field using :e.g. help_text='City name!'.
-
+# 2) on_delete= models.CASCADE: When the referenced object is deleted, also delete the objects that have references to it. (When you remove a Country for instance, you might want to delete Cities as well).'''
 
 # Create your models here.
 
-class Country(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    # map = ... Will be defined
-
-    def __str__(self):
-        return self.name
-
 class City(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    country = models.ForeignKey(Country, on_delete= models.CASCADE, blank=True)
     latitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
     longitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
 
     def __str__(self):
         return self.name
-
-''' on_delete= models.CASCADE: When the referenced object is deleted,
-    also delete the objects that have references to it
-    (When you remove a Country for instance, you might want to delete Cities as well).'''
 
 class Citymap(models.Model):
     # map = ... will be defined
@@ -34,48 +22,50 @@ class Citymap(models.Model):
     # start_date = ... will be the partitial date
     # end_date = ... will be the partitial date
 
-class Politicalorientation(models.Model):
+class Religion(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
 
     def __str__(self):
         return self.name
 
-class Religiousorientation(models.Model):
-    name = models.CharField(max_length=100, blank=False)
-    description = models.TextField()
+class Bibliography(models.Model):
+    title = models.CharField(max_length=250, blank=False)
+    author = models.CharField(max_length=50, blank=False)
+    journal = models.CharField(max_length=50)
+    publisher = models.CharField(max_length=50)
+    # year =  ... will be the partitial date
 
     def __str__(self):
-        return self.name
+        return self.title
 
 class Person(models.Model):
     last_name = models.CharField(max_length=50, blank=False)
     first_name = models.CharField(max_length=50, blank=True)
-    nationality = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True)
-    # gender = models.IntegerField(choices=GENDER_CHOICES, default=2) # find a way for choice!
+    GENDER = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    )
+    gender = models.CharField(max_length=1, choices=GENDER, default='M')
     # birth = ... will be the partitial dat
     # death = ... will be the partitial dat
     profession = models.CharField(max_length=100, blank=True)
-    political_orientation = models.ForeignKey(Politicalorientation, on_delete=models.CASCADE, blank=True)
-    religious_orientation = models.ForeignKey(Religiousorientation, on_delete=models.CASCADE, blank=True)
+    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
+    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, default='')
 
     def __str__(self):
         return self.first_name +' '+ self.last_name
-
-class CityPersonRelation(models.Model):
-    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    role = models.CharField(max_length=100, blank=False)
 
 class Watersystem(models.Model):
     name = models.CharField(max_length=100, blank=False)
     type = models.CharField(max_length=100, blank=True)
     inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
     description = models.TextField(max_length=1000, blank=True)
+    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False, default='')
 
     def __str__(self):
         return self.name
-
 
 class Installation(models.Model):
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
@@ -88,24 +78,36 @@ class Installation(models.Model):
     def __str__(self):
         return self.watersystem.name
 
-class PersonInstallationRelation(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
-    role = models.CharField(max_length=100, blank=False)
+class TextualEvidence(models.Model):
+    title = models.CharField(max_length=250, blank=False)
+    author = models.CharField(max_length=50, blank=False)
+    # date =  .. will be the partitial date
+    description = models.TextField(max_length=1000, blank=True)
+    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False, default='')
 
-class CityInistallationRelation(models.Model):
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
-    capacity_absolute = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    capacity_percentage = models.DecimalField(max_digits=7, decimal_places=2, default=0)
+    def __str__(self):
+        return self.title
 
-class Organizationtype(models.Model):
+class MaterialEvidence(models.Model):
+    title = models.CharField(max_length=250, blank=False)
+    author = models.CharField(max_length=50, blank=False)
+    # date =  .. will be the partitial date
+    # picture = models.ImageField()
+    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
+
+    def __str__(self):
+        return self.title
+
+class InstitutionnType(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length=1000, blank=True)
 
-class Organization(models.Model):
+    def __str__(self):
+        return self.name
+
+class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    type = models.ForeignKey(Organizationtype, on_delete=models.CASCADE, blank=True)
+    type = models.ForeignKey(InstitutionnType, on_delete=models.CASCADE, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     policy = models.CharField(max_length=100, blank=True)
     start_date = models.CharField(max_length=50, blank=True, help_text="Date formats:"
@@ -117,13 +119,32 @@ class Organization(models.Model):
                                                                        "Millennium: <integer>m 2m 1000-2000  ") # this field is for test and explaine the partitial dat
     # start_date = ... will be the partitial dat
     # end_date = ... will be the partitial dat
-    political_orientation = models.ForeignKey(Politicalorientation, on_delete=models.CASCADE, blank=True)
-    religious_orientation = models.ForeignKey(Religiousorientation, on_delete=models.CASCADE, blank=True)
+    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
+    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
+    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=False)
+    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=False)
 
     def __str__(self):
         return self.name
 
-class PersonOrganizationRelation(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, blank=True)
-    role = models.CharField(max_length=50, blank=False)
+# Relations
+class CityPersonRelation(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
+    role = models.CharField(max_length=100, blank=False)
+
+# class PersonInstitutionRelation(models.Model):
+#     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
+#     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
+#     role = models.CharField(max_length=50, blank=False)
+
+# class PersonInstallationRelation(models.Model):
+#     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
+#     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
+#     role = models.CharField(max_length=100, blank=False)
+
+class CityInistallationRelation(models.Model):
+    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
+    capacity_absolute = models.DecimalField(max_digits=7, decimal_places=2, default=0)
+    capacity_percentage = models.DecimalField(max_digits=7, decimal_places=2, default=0)
