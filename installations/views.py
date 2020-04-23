@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CityForm, InstitutionForm
-from .models import City, Institution
+from .forms import CityForm, InstitutionForm, PersonForm
+from .models import City, Institution, Person
 
 
 # Create your views here.
@@ -64,3 +64,31 @@ def InstitutionDelete(request, id):
     institution = get_object_or_404(Institution, pk=id)
     institution.delete()
     return redirect('installations:institution-list')
+
+
+def PersonCreate(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = PersonForm()
+        else:
+            person = Person.objects.get(pk=id)
+            form = PersonForm(instance=person)
+        return render(request, 'installations/person_form.html', {'form': form})
+    else:  # request.method == "POST":
+        if id == 0:
+            form = PersonForm(request.POST)
+        else:
+            person = Person.objects.get(pk=id)
+            form = PersonForm(request.POST, instance=person)
+        if form.is_valid():
+            form.save()
+        return redirect('installations:person-list')  # after save redirect to the city list
+
+def PersonList(request):
+    context = {'person_list': Person.objects.all()}
+    return render(request, 'installations/person_list.html', context)
+
+def PersonDelete(request, id):
+    person = get_object_or_404(Person, pk=id)
+    person.delete()
+    return redirect('installations:person-list')

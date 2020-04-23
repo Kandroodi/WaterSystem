@@ -1,0 +1,45 @@
+{% extends 'installations/base.html' %}
+{% load widget_tweaks %}
+
+{% block main_content %}
+
+<h2>Person list</h2>
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Last name</td>
+<!--            <td>Country</td>-->
+            <td>First name</td>
+            <td>Gender</td>
+            <td>Profession</td>
+            <td>Religion</td>
+            <td>
+                 <a href="{% url 'installations:person-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in person_list %}
+            <tr>
+                <td>{{person.last_name }}</td>
+                <td>{{person.first_name}}</td>
+                <td>{{person.gender}}</td>
+                <td>{{person.profession}}</td>
+                <td>{{person.religion}}</td>
+                <td>
+                    <a href="{% url 'installations:person-update' person.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:person-delete' person.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor%}
+    </tbody>
+
+</table>
+
+{% endblock main_content %}
