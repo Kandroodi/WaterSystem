@@ -9,12 +9,12 @@
 <form  method="POST" action="" autocomplete="off">
     {% csrf_token %}
 
-    {% crispy form %}
-
-<!--    <div class="form-group">-->
-<!--        <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>-->
-<!--        <a href="{% url 'installations:person-list' %}" class="btn btn-default">Cancel</a>-->
-<!--    </div>-->
+<!--    {% crispy form %}-->
+    {{ form|crispy }}
+    <div class="form-group">
+        <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>
+        <a href="{% url 'installations:person-list' %}" class="btn btn-default">Cancel</a>
+    </div>
 <!--    <input type="submit" class="btn btn-success" value="Save">-->
 </form>
 {% endblock main_content %}

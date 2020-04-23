@@ -8,7 +8,7 @@
 <hr class="my-4">
 <form  method="POST" action="" autocomplete="off" class="form-horizontal">
     {% csrf_token %}
-   {% crispy form %}
+    {{ form|crispy }}
 <!--    {{ form.name|as_crispy_field }}-->
 <!--    <div class="row">-->
 <!--        <div class="col-md-6">-->
