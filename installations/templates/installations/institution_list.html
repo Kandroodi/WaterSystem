@@ -11,11 +11,11 @@
             <td>Type</td>
             <td>city</td>
             <td>Policy</td>
-            <td>Date</td>
+            <td>Start date</td>
             <td>Religion</td>
-            <td>Bibliography</td>
-            <td>Textual evidence</td>
-            <td>Material evidence</td>
+<!--            <td>Bibliography</td>-->
+<!--            <td>Textual evidence</td>-->
+<!--            <td>Material evidence</td>-->
 
             <td>
                  <a href="{% url 'installations:institution-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
@@ -29,11 +29,11 @@
                 <td>{{institution.type}}</td>
                 <td>{{institution.city}}</td>
                 <td>{{institution.policy}}</td>
-                <td>{{institution.date}}</td>
+                <td>{{institution.start_date}}</td>
                 <td>{{institution.religion}}</td>
-                <td>{{institution.bibliography}}</td>
-                <td>{{institution.textual_evidence}}</td>
-                <td>{{institution.material_evidence}}</td>
+<!--                <td>{{institution.bibliography}}</td>-->
+<!--                <td>{{institution.textual_evidence}}</td>-->
+<!--                <td>{{institution.material_evidence}}</td>-->
                 <td>
                     <a href="{% url 'installations:institution-update' institution.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:institution-delete' institution.id %}" method="post" class="d-inline">

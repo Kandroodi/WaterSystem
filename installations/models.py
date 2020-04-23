@@ -110,13 +110,14 @@ class Institution(models.Model):
     type = models.ForeignKey(InstitutionnType, on_delete=models.CASCADE, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     policy = models.CharField(max_length=100, blank=True)
-    start_date = models.CharField(max_length=50, blank=True, help_text="Date formats:"
+    start_date = models.CharField(max_length=50, blank=True, ) # this field is for test and explaine the partitial dat
+    ''''help_text="Date formats:"
                                                                        "Day: yyyy-mm-dd 1999-12-04  "
                                                                        "Month: yyyy-mm 1999-12  "
                                                                        "Year: <integer>y 1999y  "
                                                                        "Decade: <integer>d 200d 1990-2000  "
                                                                        "Century: <integer>c 20c 1900-2000  "
-                                                                       "Millennium: <integer>m 2m 1000-2000  ") # this field is for test and explaine the partitial dat
+                                                                       "Millennium: <integer>m 2m 1000-2000  "'''
     # start_date = ... will be the partitial dat
     # end_date = ... will be the partitial dat
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
