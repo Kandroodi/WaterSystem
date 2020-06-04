@@ -7,7 +7,6 @@ from .models import City, Institution, Person
 from crispy_forms.helper import FormHelper
 
 
-
 class CityForm(ModelForm):
     class Meta:
         model = City
@@ -24,7 +23,6 @@ class CityForm(ModelForm):
         self.fields['latitude'].required = False
         self.fields['longitude'].required = False
         self.helper = FormHelper()
-
 
 
 class InstitutionForm(ModelForm):
