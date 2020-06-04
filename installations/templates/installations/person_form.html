@@ -10,7 +10,6 @@
     {% csrf_token %}
 
 <!--    {% crispy form %}-->
-    {{ form|crispy }}
     <div class="form-group">
         <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>
         <a href="{% url 'installations:person-list' %}" class="btn btn-default">Cancel</a>
