@@ -1,5 +1,5 @@
 {% extends 'installations/base.html' %}
-{% load widget_tweaks %}
+{% load leaflet_tags %}
 
 {% block main_content %}
 
@@ -12,5 +12,7 @@
     interrelationship between water installations, governance, and legal and cultural frameworks in five Middle Eastern cities
     from the first Arab conquests to Ottoman rule (7th-15th c.).
 </p>
+
+{% leaflet_map "Mainmap" %}
 
 {% endblock main_content %}

@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'crispy_forms',
-    'leaflet',
     'six',
+    'leaflet',
 ]
+
 
 # CRISPY_TEMPLATE_PACK = 'uni_form'
 
@@ -130,3 +131,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+
+# Leaflet config
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (30.03, 31.23),
+    'DEFAULT_ZOOM': 12,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+}
