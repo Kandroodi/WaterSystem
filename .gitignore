@@ -54,4 +54,4 @@ env.bak/
 venv.bak/
 
 # Directory
-/media/*
+../media/*
