@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import City, Citymap, Religion, Person, CityPersonRelation, Watersystem, Installation
-from .models import CityInistallationRelation, Institution, InstitutionnType, Bibliography, TextualEvidence, MaterialEvidence
+from .models import CityInistallationRelation, Institution, InstitutionnType, Bibliography, TextualEvidence, MaterialEvidence, UserProfileInfo
 
 # Register your models here.
 
@@ -17,3 +17,4 @@ admin.site.register(InstitutionnType)
 admin.site.register(Bibliography)
 admin.site.register(TextualEvidence)
 admin.site.register(MaterialEvidence)
+admin.site.register(UserProfileInfo)

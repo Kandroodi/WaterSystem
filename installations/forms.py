@@ -2,11 +2,29 @@ from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML
 from django.forms import ModelForm
 from django.urls import reverse_lazy
+from django.contrib.auth.models import User
+from django import forms
 
-from .models import City, Institution, Person
+from .models import City, Institution, Person, UserProfileInfo
 from crispy_forms.helper import FormHelper
 
 
+# User form
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta():
+        model = User
+        fields = ('username', 'email', 'password')
+
+
+class UserProfileInfoForm(forms.ModelForm):
+    class Meta():
+        model = UserProfileInfo
+        # fields = ('portfolio_site', 'profile_pic')
+        fields = ('profile_pic',)
+
+#
 class CityForm(ModelForm):
     class Meta:
         model = City
