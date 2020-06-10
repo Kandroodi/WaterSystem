@@ -2,7 +2,13 @@ from django.conf.urls import url
 from django.urls import path
 from . import views
 
+# TEMPLATE URLS
+app_name = 'installations'
+
 urlpatterns = [
+    path('register/', views.register , name='register'), # Sign up
+    path('logout/', views.user_logout, name='logout'), # Logout
+    path('login/', views.user_login, name='user_login'), # Login
     path('', views.Home, name='home'), # get and post req. for insert operation
     path('city/new/', views.CityCreate, name='city-insert'), # get and post req. for insert operation
     path('city/new/<int:id>/', views.CityCreate, name='city-update'), # get and post req. for update operation

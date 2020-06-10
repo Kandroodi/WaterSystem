@@ -1,0 +1,25 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+<div class="container">
+    <div class="jumbotron">
+      {% if registered %}
+        <h1>Registration successful!</h1>
+      {% else %}
+        <h1>Register here</h1>
+        <h3>Fill out the form:</h3>
+
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          {{ user_form.as_p }}
+          {{ profile_form.as_p }}
+          <input type="submit" name="" value="Register">
+        </form>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+{% endblock main_content %}
