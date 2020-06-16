@@ -22,4 +22,8 @@ urlpatterns = [
     path('person/new/<int:id>/', views.PersonCreate, name='person-update'),
     path('person/delete/<int:id>/', views.PersonDelete, name='person-delete'),
     path('person/list/', views.PersonList, name='person-list'),
+    path('bibliography/new/', views.BibliographyCreate, name='bibliography-insert'),
+    path('bibliography/new/<int:id>/', views.BibliographyCreate, name='bibliography-update'),
+    path('bibliography/delete/<int:id>/', views.BibliographyDelete, name='bibliography-delete'),
+    path('bibliography/list/', views.BibliographyList, name='bibliography-list'),
 ]

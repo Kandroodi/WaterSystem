@@ -1,5 +1,4 @@
 {% extends 'installations/base.html' %}
-{% load widget_tweaks %}  <!-- related to forms, the old method, befor the crispy forms -->
 {% load crispy_forms_tags %}
 
 {% block main_content %}
@@ -12,7 +11,7 @@
     {% crispy form %}
     <div class="form-group">
         <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>
-        <a href="{% url 'installations:person-list' %}" class="btn btn-default">Cancel</a>
+        <a href="{% url 'installations:bibliography-list' %}" class="btn btn-default">Cancel</a>
     </div>
 <!--    <input type="submit" class="btn btn-success" value="Save">-->
 </form>

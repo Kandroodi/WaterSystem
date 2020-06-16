@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django import forms
 
 from .models import City, Institution, Person, UserProfileInfo
+from .models import *
 from crispy_forms.helper import FormHelper
 
 
@@ -76,3 +77,17 @@ class PersonForm(ModelForm):
         self.fields['bibliography'].required = False
         self.fields['religion'].empty_label = "Select religion"
         self.fields['gender'].empty_label = "Select"
+
+
+class BibliographyForm(ModelForm):
+    class Meta:
+        model = Bibliography
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(BibliographyForm, self).__init__(*args, **kwargs)
+        self.fields['author'].required = False
+        self.fields['journal'].required = False
+        self.fields['publisher'].required = False
+        self.fields['year'].required = False
+

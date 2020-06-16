@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CityForm, InstitutionForm, PersonForm, UserForm, UserProfileInfoForm
-from .models import City, Institution, Person
+from .forms import *
+from .models import *
 
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def register(request):
@@ -67,7 +68,7 @@ def user_login(request):
             # Check it the account is active
             if user.is_active:
                 # Log the user in.
-                login(request,user)
+                login(request, user)
                 # Send the user back to some page. In this case their homepage.
                 return HttpResponseRedirect(reverse('installations:home'))
             else:
@@ -75,11 +76,11 @@ def user_login(request):
                 return HttpResponse("Your account is not active.")
         else:
             print("Someone tried to login and failed.")
-            print("They used username: {} and password: {}".format(username,password))
+            print("They used username: {} and password: {}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
 
     else:
-        #Nothing has been provided for username or password.
+        # Nothing has been provided for username or password.
         return render(request, 'installations/login.html', {})
 
 
@@ -94,6 +95,7 @@ def user_logout(request):
 # Forms and lists
 def Home(request):
     return render(request, 'installations/home.html')
+
 
 @login_required
 def CityCreate(request, id=0):
@@ -119,11 +121,13 @@ def CityList(request):
     context = {'city_list': City.objects.all()}
     return render(request, 'installations/city_list.html', context)
 
+
 @login_required
 def CityDelete(request, id):
     city = get_object_or_404(City, pk=id)
     city.delete()
     return redirect('installations:city-list')
+
 
 @login_required
 def InstitutionCreate(request, id=0):
@@ -142,18 +146,20 @@ def InstitutionCreate(request, id=0):
             form = InstitutionForm(request.POST, instance=institution)
         if form.is_valid():
             form.save()
-        return redirect('installations:institution-list')  # after save redirect to the city list
+        return redirect('installations:institution-list')  # after save redirect to the institution list
 
 
 def InstitutionList(request):
     context = {'institution_list': Institution.objects.all()}
     return render(request, 'installations/institution_list.html', context)
 
+
 @login_required
 def InstitutionDelete(request, id):
     institution = get_object_or_404(Institution, pk=id)
     institution.delete()
     return redirect('installations:institution-list')
+
 
 @login_required
 def PersonCreate(request, id=0):
@@ -172,15 +178,48 @@ def PersonCreate(request, id=0):
             form = PersonForm(request.POST, instance=person)
         if form.is_valid():
             form.save()
-        return redirect('installations:person-list')  # after save redirect to the city list
+        return redirect('installations:person-list')  # after save redirect to the Person list
 
 
 def PersonList(request):
     context = {'person_list': Person.objects.all()}
     return render(request, 'installations/person_list.html', context)
 
+
 @login_required
 def PersonDelete(request, id):
     person = get_object_or_404(Person, pk=id)
     person.delete()
     return redirect('installations:person-list')
+
+
+@login_required
+def BibliographyCreate(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = BibliographyForm()
+        else:
+            bibliography = Bibliography.objects.get(pk=id)
+            form = BibliographyForm(instance=bibliography)
+        return render(request, 'installations/bibliography_form.html', {'form': form})
+    else:  # request.method == "POST":
+        if id == 0:
+            form = BibliographyForm(request.POST)
+        else:
+            bibliography = Bibliography.objects.get(pk=id)
+            form = BibliographyForm(request.POST, instance=bibliography)
+        if form.is_valid():
+            form.save()
+        return redirect('installations:bibliography-list')  # after save redirect to the bibliography list
+
+
+def BibliographyList(request):
+    context = {'bibliography_list': Bibliography.objects.all()}
+    return render(request, 'installations/bibliography_list.html', context)
+
+
+@login_required
+def BibliographyDelete(request, id):
+    bibliography = get_object_or_404(Bibliography, pk=id)
+    bibliography.delete()
+    return redirect('installations:bibliography-list')

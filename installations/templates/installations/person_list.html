@@ -7,9 +7,7 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td>Last name</td>
-<!--            <td>Country</td>-->
-            <td>First name</td>
+            <td>Name</td>
             <td>Gender</td>
             <td>Profession</td>
             <td>Religion</td>
@@ -21,8 +19,7 @@
     <tbody>
         {% for person in person_list %}
             <tr>
-                <td>{{person.last_name }}</td>
-                <td>{{person.first_name}}</td>
+                <td>{{person.name }}</td>
                 <td>{{person.gender}}</td>
                 <td>{{person.profession}}</td>
                 <td>{{person.religion}}</td>
