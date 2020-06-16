@@ -26,4 +26,8 @@ urlpatterns = [
     path('bibliography/new/<int:id>/', views.BibliographyCreate, name='bibliography-update'),
     path('bibliography/delete/<int:id>/', views.BibliographyDelete, name='bibliography-delete'),
     path('bibliography/list/', views.BibliographyList, name='bibliography-list'),
+    path('installation/new/', views.InstallationCreate, name='installation-insert'),
+    path('installation/new/<int:id>/', views.InstallationCreate, name='installation-update'),
+    path('installation/delete/<int:id>/', views.InstallationDelete, name='installation-delete'),
+    path('installation/list/', views.InstallationList, name='installation-list'),
 ]

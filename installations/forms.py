@@ -91,3 +91,12 @@ class BibliographyForm(ModelForm):
         self.fields['publisher'].required = False
         self.fields['year'].required = False
 
+
+class InstallationForm(ModelForm):
+    class Meta:
+        model = Installation
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(InstallationForm, self).__init__(*args, **kwargs)
+        self.fields['construction_date'].required = False

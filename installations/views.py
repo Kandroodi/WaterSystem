@@ -223,3 +223,35 @@ def BibliographyDelete(request, id):
     bibliography = get_object_or_404(Bibliography, pk=id)
     bibliography.delete()
     return redirect('installations:bibliography-list')
+
+
+@login_required
+def InstallationCreate(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = InstallationForm()
+        else:
+            installation = Installation.objects.get(pk=id)
+            form = InstallationForm(instance=installation)
+        return render(request, 'installations/installation_form.html', {'form': form})
+    else:  # request.method == "POST":
+        if id == 0:
+            form = InstallationForm(request.POST)
+        else:
+            installation = Installation.objects.get(pk=id)
+            form = InstallationForm(request.POST, instance=installation)
+        if form.is_valid():
+            form.save()
+        return redirect('installations:installation-list')  # after save redirect to the bibliography list
+
+
+def InstallationList(request):
+    context = {'installation_list': Installation.objects.all()}
+    return render(request, 'installations/installation_list.html', context)
+
+
+@login_required
+def InstallationDelete(request, id):
+    installation = get_object_or_404(Installation, pk=id)
+    installation.delete()
+    return redirect('installations:installation-list')

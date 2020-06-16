@@ -1,0 +1,42 @@
+{% extends 'installations/base.html' %}
+{% load widget_tweaks %}
+
+{% block main_content %}
+
+<h2>Installation list</h2>
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Water System</td>
+            <td>Construction Date</td>
+            <td>Characteristic</td>
+<!--            <td>Publisher</td>-->
+<!--            <td>Year</td>-->
+            <td>
+                 <a href="{% url 'installations:installation-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for installation in installation_list %}
+            <tr>
+                <td>{{installation.watersystem }}</td>
+                <td>{{installation.construction_date}}</td>
+                <td>{{installation.characteristic}}</td>
+                <td>
+                    <a href="{% url 'installations:installation-update' installation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:installation-delete' installation.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor%}
+    </tbody>
+
+</table>
+
+{% endblock main_content %}
