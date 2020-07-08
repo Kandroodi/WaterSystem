@@ -26,7 +26,7 @@ SECRET_KEY = 'l2a!l=e(cc3!5re)2shwf1uw4tmo*3fj85xbg&*&_#7ewhb=!%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -149,7 +149,7 @@ LOGIN_URL = '/installations/user_login/'
 # Leaflet config
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (30.03, 31.23),
-    'DEFAULT_ZOOM': 12,
+    'DEFAULT_ZOOM': 8,
     'MIN_ZOOM': 3,
     'MAX_ZOOM': 18,
 }

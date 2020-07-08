@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from .models import *
 
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -255,3 +258,47 @@ def InstallationDelete(request, id):
     installation = get_object_or_404(Installation, pk=id)
     installation.delete()
     return redirect('installations:installation-list')
+
+
+def TextualEvidenceCreate(request):
+    form = TextualEvidenceForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save()
+        return HttpResponseRedirect("/")
+    return render(request, 'installations/textualevidence_form.html')
+
+
+def SourceTypeCreatePopup(request):
+    form = SourceTypeForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save()
+
+        ## Change the value of the "#id_sourcetype". This is the element id in the form
+        return HttpResponse(
+            '<script>opener.closePopup(window, "%s", "%s", "#id_sourcetype");</script>' % (instance.pk, instance))
+    return render(request, 'installation/sourcetype_form.html', {"form": form})
+
+
+def SourceTypeEditPopup(request, pk=None):
+    instance = get_object_or_404(SourceType, pk=pk)
+    form = SourceTypeForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save()
+
+        ## Change the value of the "#id_sourcetype". This is the element id in the form
+        return HttpResponse(
+            '<script>opener.closePopup(window, "%s", "%s", "#id_sourcetype");</script>' % (instance.pk, instance))
+
+    return render(request, 'installation/sourcetype_form.html', {"form": form})
+
+
+@csrf_exempt
+def get_sourcetype_id(request):
+    if request.is_ajax():
+        sourcetype_name = request.GET['sourcetype_name']
+        sourcetype_id = SourceType.objects.get(name=sourcetype_name).id
+        data = {'sourcetype_id': sourcetype_id, }
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse("/")
+
+

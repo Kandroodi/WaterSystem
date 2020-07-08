@@ -100,3 +100,16 @@ class InstallationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(InstallationForm, self).__init__(*args, **kwargs)
         self.fields['construction_date'].required = False
+
+
+class TextualEvidenceForm(ModelForm):
+    class Meta:
+        model = TextualEvidence
+        fields = '__all__'
+
+
+class SourceTypeForm(ModelForm):
+    class Meta:
+        model = SourceType
+        fields = '__all__'
+
