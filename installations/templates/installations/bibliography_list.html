@@ -1,0 +1,45 @@
+{% extends 'installations/base.html' %}
+{% load widget_tweaks %}
+
+{% block main_content %}
+
+<h2>Bibliography list</h2>
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Title</td>
+<!--            <td>Country</td>-->
+            <td>Author</td>
+            <td>Journal</td>
+            <td>Publisher</td>
+            <td>Year</td>
+            <td>
+                 <a href="{% url 'installations:bibliography-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bib in bibliography_list %}
+            <tr>
+                <td>{{bib.title }}</td>
+                <td>{{bib.author}}</td>
+                <td>{{bib.journal}}</td>
+                <td>{{bib.publisher}}</td>
+                <td>{{bib.year}}</td>
+                <td>
+                    <a href="{% url 'installations:bibliography-update' bib.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:bibliography-delete' bib.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor%}
+    </tbody>
+
+</table>
+
+{% endblock main_content %}

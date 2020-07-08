@@ -1,6 +1,7 @@
 from django.db import models
 from partial_date import PartialDateField
-
+# from django.contrib.gis.db import models as gismodels
+from django.contrib.auth.models import User
 
 # Notes
 # 1) you can add help text for each field using :e.g. help_text='City name!'.
@@ -8,6 +9,31 @@ from partial_date import PartialDateField
 #    to it. (When you remove a Country for instance, you might want to delete Cities as well).
 
 # Create your models here.
+
+# User model
+class UserProfileInfo(models.Model):
+
+    # Create relationship (don't inherit from User!)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    # Add any additional attributes you want
+    # portfolio_site = models.URLField(blank=True)
+    # pip install pillow to use this!
+    # Optional: pip install pillow --global-option=”build_ext” --global-option=”--disable-jpeg”
+    profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
+
+    def __str__(self):
+        # Built-in attribute of django.contrib.auth.models.User!
+        return self.user.username
+
+
+# class Station(gismodels.Model):
+#     name = models.CharField(max_length=256)
+#     geom = gismodels.PointField()
+#
+#     def __unicode__(self):
+#         return self.name
+
 
 class City(models.Model):
     name = models.CharField(max_length=100, blank=False)
@@ -219,26 +245,30 @@ class InstitutionInstallationRelation(models.Model):
 class TextPersonRelation(models.Model):
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
-    page_number = models.CharField(max_length=100, blank=False) # I think maybe it's better if we had letter as page numbers also
+    page_number = models.CharField(max_length=100,
+                                   blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True, default=0)
 
 
 class TextInstitutionRelation(models.Model):
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
-    page_number = models.CharField(max_length=100, blank=False)  # I think maybe it's better if we had letter as page numbers also
+    page_number = models.CharField(max_length=100,
+                                   blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True)
 
 
 class TextInstallationRelation(models.Model):
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
-    page_number = models.CharField(max_length=100, blank=False)  # I think maybe it's better if we had letter as page numbers also
+    page_number = models.CharField(max_length=100,
+                                   blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True)
 
 
 class MaterialInstallationRelation(models.Model):
-        material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
-        installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
-        page_number = models.CharField(max_length=100, blank=False)  # I think maybe it's better if we had letter as page numbers also
-        description = models.TextField(max_length=1000, blank=True)
+    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
+    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
+    page_number = models.CharField(max_length=100,
+                                   blank=False)  # I think maybe it's better if we had letter as page numbers also
+    description = models.TextField(max_length=1000, blank=True)

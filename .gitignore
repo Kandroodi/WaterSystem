@@ -32,6 +32,7 @@ __pycache__/
 *.sql
 *.sqlite
 *.sqlite3
+*.jpg
 
 # OS generated files #
 ######################
@@ -53,5 +54,10 @@ ENV/
 env.bak/
 venv.bak/
 
+<<<<<<< HEAD
 
 .idea/
+=======
+# Directory
+../media/*
+>>>>>>> d61f936e1e2366ef9364eb144da07668bcf691ea
