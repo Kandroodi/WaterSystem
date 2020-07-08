@@ -30,8 +30,4 @@ urlpatterns = [
     path('installation/new/<int:id>/', views.InstallationCreate, name='installation-update'),
     path('installation/delete/<int:id>/', views.InstallationDelete, name='installation-delete'),
     path('installation/list/', views.InstallationList, name='installation-list'),
-    path('textualevidence/new/', views.TextualEvidenceCreate, name='textualevidence-insert'),
-    path('sourcetype/new/', views.SourceTypeCreatePopup, name='sourcetype-insert'),
-    path('sourcetype/update/<int:id>/', views.SourceTypeEditPopup, name='sourcetype-update'),
-    path('sourcetype/ajax/get_sourcetype_id', views.get_sourcetype_id, name='get_sourcetype_id'),
 ]

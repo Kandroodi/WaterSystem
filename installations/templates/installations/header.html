@@ -16,6 +16,7 @@
 <!--      <li class="nav-item">-->
 <!--        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
 <!--      </li>-->
+    {% if user.is_authenticated %}
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -35,10 +36,10 @@
            <a class="dropdown-item" href="{% url 'installations:person-insert' %}">Person</a>
           <a class="dropdown-item" href="{% url 'installations:installation-insert' %}">Installation</a>
           <a class="dropdown-item" href="{% url 'installations:bibliography-insert' %}">Bibliography</a>
-          <a class="dropdown-item" href="{% url 'installations:textualevidence-insert' %}">Textual Evidence</a>
 <!--          <a class="dropdown-item" href="#">Something else here</a>-->
         </div>
       </li>
+    {% endif %}
 
       <!-- Log in and Sign up     -->
       {% if user.is_authenticated %}
