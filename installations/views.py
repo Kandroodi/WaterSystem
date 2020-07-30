@@ -267,9 +267,9 @@ def InstallationDelete(request, id):
 
 
 # Using Class based View
+
 @method_decorator(login_required, name='dispatch')
 class TextualEvidenceListView(ListView):
-
     model = TextualEvidence
     template_name = 'installations/textualevidence_list'
     context_object_name = 'textualevidences'
@@ -311,7 +311,32 @@ class TextualEvidenceUpdateView(UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class TextualEvidenceDelete(DeleteView):
+class TextualEvidenceDeleteView(DeleteView):
     model = TextualEvidence
     success_url = reverse_lazy("installations:textualevidence-list")
 
+
+@method_decorator(login_required, name='dispatch')
+class SourceTypeListView(ListView):
+    model = SourceType
+    template_name = 'installations/sourcetype_list.html'
+    context_object_name = 'sourcetypes'
+
+@method_decorator(login_required, name='dispatch')
+class SourceTypeCreatView(CreateView):
+    model = SourceType
+    fields = '__all__'
+    template_name = 'installations/sourcetype_form.html'
+    success_url = reverse_lazy('installations:sourcetype-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class SourceTypeUpdateView(UpdateView):
+    model = SourceType
+    fields = '__all__'
+    success_url = reverse_lazy('installations:sourcetype-list')
+
+
+class SourceTypeDeleteView(DeleteView):
+    model = SourceType
+    success_url = reverse_lazy("installations:sourcetype-list")

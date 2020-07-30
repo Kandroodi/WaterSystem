@@ -1,0 +1,40 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+    <h2>Source type list</h2>
+    <table class="table table-borderless">
+        <thead class="border-bottom font-weight-bold">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <td>
+                    <a href= "{% url 'installations:sourcetype-insert' %}"
+                       class="btn btn-outline-success"
+                       target="popup"
+                       onclick="window.open('{% url 'installations:sourcetype-insert' %}','popup','width=600,height=600'); return false;">
+                        <i class="fa fa-plus"></i> Add New</a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sourcetype in sourcetypes %}
+            <tr>
+                <td>{{sourcetype.name}}</td>
+                <td>{{sourcetype.description}}</td>
+                <td>
+                    <a href="{% url 'installations:sourcetype-update' sourcetype.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:sourcetype-delete' sourcetype.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

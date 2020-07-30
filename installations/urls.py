@@ -32,6 +32,10 @@ urlpatterns = [
     path('installation/list/', views.InstallationList, name='installation-list'),
     url(r'^textualevidence/new/$', views.TextualEvidenceCreatView.as_view(), name='textualevidence-insert'),
     url(r'^textualevidence/new/(?P<pk>\d+)/$', views.TextualEvidenceUpdateView.as_view(), name='textualevidence-update'),
-    url(r'^textualevidence/delete/(?P<pk>\d+)/$', views.TextualEvidenceDelete.as_view(), name='textualevidence-delete'),
+    url(r'^textualevidence/delete/(?P<pk>\d+)/$', views.TextualEvidenceDeleteView.as_view(), name='textualevidence-delete'),
     path('textualevidence/list', views.TextualEvidenceListView.as_view(), name='textualevidence-list'),
+    url(r'^Sourcetype/new/$', views.SourceTypeCreatView.as_view(), name='sourcetype-insert'),
+    url(r'^Sourcetype/new/(?P<pk>\d+)/$', views.SourceTypeUpdateView.as_view(), name='sourcetype-update'),
+    url(r'^Sourcetype/delete/(?P<pk>\d+)/$', views.SourceTypeDeleteView.as_view(), name='sourcetype-delete'),
+    path('sourcetype/list', views.SourceTypeListView.as_view(), name='sourcetype-list'),
 ]
