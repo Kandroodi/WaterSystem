@@ -336,7 +336,7 @@ class SourceTypeUpdateView(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('installations:sourcetype-list')
 
-
+@method_decorator(login_required, name='dispatch')
 class SourceTypeDeleteView(DeleteView):
     model = SourceType
     success_url = reverse_lazy("installations:sourcetype-list")
@@ -382,3 +382,29 @@ class MaterialEvidenceUpdateView(UpdateView):
 class MaterialEvidenceDeleteView(DeleteView):
     model = MaterialEvidence
     success_url = reverse_lazy("installations:materialevidence-list")
+
+
+@method_decorator(login_required, name='dispatch')
+class WaterSystemListView(ListView):
+    model = Watersystem
+    template_name = 'installations/watersystem_list.html'
+    context_object_name = 'watersystems'
+
+@method_decorator(login_required, name='dispatch')
+class WaterSystemCreatView(CreateView):
+    model = Watersystem
+    fields = '__all__'
+    template_name = 'installations/watersystem_form.html'
+    success_url = reverse_lazy('installations:watersystem-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class WaterSystemUpdateView(UpdateView):
+    model = Watersystem
+    fields = '__all__'
+    success_url = reverse_lazy('installations:watersystem-list')
+
+@method_decorator(login_required, name='dispatch')
+class WaterSystemDeleteView(DeleteView):
+    model = Watersystem
+    success_url = reverse_lazy("installations:watersystem-list")
