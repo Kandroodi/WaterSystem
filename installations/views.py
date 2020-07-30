@@ -408,3 +408,29 @@ class WaterSystemUpdateView(UpdateView):
 class WaterSystemDeleteView(DeleteView):
     model = Watersystem
     success_url = reverse_lazy("installations:watersystem-list")
+
+
+@method_decorator(login_required, name='dispatch')
+class PurposeListView(ListView):
+    model = Purpose
+    template_name = 'installations/purpose_list.html'
+    context_object_name = 'purposes'
+
+@method_decorator(login_required, name='dispatch')
+class PurposeCreatView(CreateView):
+    model = Purpose
+    fields = '__all__'
+    template_name = 'installations/purpose_form.html'
+    success_url = reverse_lazy('installations:purpose-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class PurposeUpdateView(UpdateView):
+    model = Purpose
+    fields = '__all__'
+    success_url = reverse_lazy('installations:purpose-list')
+
+@method_decorator(login_required, name='dispatch')
+class PurposeDeleteView(DeleteView):
+    model = Purpose
+    success_url = reverse_lazy("installations:purpose-list")

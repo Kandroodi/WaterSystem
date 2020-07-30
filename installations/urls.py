@@ -46,4 +46,8 @@ urlpatterns = [
     url(r'^watersystem/new/(?P<pk>\d+)/$', views.WaterSystemUpdateView.as_view(), name='watersystem-update'),
     url(r'^watersystem/delete/(?P<pk>\d+)/$', views.WaterSystemDeleteView.as_view(), name='watersystem-delete'),
     path('watersystem/list', views.WaterSystemListView.as_view(), name='watersystem-list'),
+    url(r'^purpose/new/$', views.PurposeCreatView.as_view(), name='purpose-insert'),
+    url(r'^purpose/new/(?P<pk>\d+)/$', views.PurposeUpdateView.as_view(), name='purpose-update'),
+    url(r'^purpose/delete/(?P<pk>\d+)/$', views.PurposeDeleteView.as_view(), name='purpose-delete'),
+    path('purpose/list', views.PurposeListView.as_view(), name='purpose-list'),
 ]
