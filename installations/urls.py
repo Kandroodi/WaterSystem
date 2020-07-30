@@ -38,4 +38,8 @@ urlpatterns = [
     url(r'^Sourcetype/new/(?P<pk>\d+)/$', views.SourceTypeUpdateView.as_view(), name='sourcetype-update'),
     url(r'^Sourcetype/delete/(?P<pk>\d+)/$', views.SourceTypeDeleteView.as_view(), name='sourcetype-delete'),
     path('sourcetype/list', views.SourceTypeListView.as_view(), name='sourcetype-list'),
+    url(r'^materialevidence/new/$', views.MaterialEvidenceCreatView.as_view(), name='materialevidence-insert'),
+    url(r'^materialevidence/new/(?P<pk>\d+)/$', views.MaterialEvidenceUpdateView.as_view(), name='materialevidence-update'),
+    url(r'^materialevidence/delete/(?P<pk>\d+)/$', views.MaterialEvidenceDeleteView.as_view(), name='materialevidence-delete'),
+    path('materialevidence/list', views.MaterialEvidenceListView.as_view(), name='materialevidence-list'),
 ]

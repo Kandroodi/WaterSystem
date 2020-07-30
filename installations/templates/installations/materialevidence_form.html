@@ -1,0 +1,24 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+
+    <h2>
+        {% if not form.instance.pk %}
+            Add Material evidence
+        {% else %}
+            Update Material evidence "{{materialevidence.name}}"
+        {% endif %}
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if not form.instance.pk %}
+            <input type="submit" class="btn btn-primary" value="Submit">
+        {% else %}
+            <input type="submit" class="btn btn-primary" value="Update">
+        {% endif %}
+
+    </form>
+
+{% endblock %}

@@ -294,14 +294,14 @@ class TextualEvidenceListView(ListView):
 class TextualEvidenceCreatView(CreateView):
     model = TextualEvidence
     # fields = ('title', 'author', 'date', 'description', 'bibliography', 'source_type')
-    fields = ('title', 'author', 'description')
+    fields = '__all__'
     template_name = 'installations/textualevidence_form.html'
     success_url = reverse_lazy('installations:textualevidence-list')
 
 
 @method_decorator(login_required, name='dispatch')
 class TextualEvidenceUpdateView(UpdateView):
-    fields = ('title', 'author', 'description')
+    fields = '__all__'
     model = TextualEvidence
     success_url = reverse_lazy('installations:textualevidence-list')
 
@@ -340,3 +340,45 @@ class SourceTypeUpdateView(UpdateView):
 class SourceTypeDeleteView(DeleteView):
     model = SourceType
     success_url = reverse_lazy("installations:sourcetype-list")
+
+
+@method_decorator(login_required, name='dispatch')
+class MaterialEvidenceListView(ListView):
+    model = MaterialEvidence
+    template_name = 'installations/materialevidence_list'
+    context_object_name = 'materialevidences'
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(MaterialEvidenceListView, self).get_context_data(**kwargs)
+        materialevidences = self.get_queryset()
+        page = self.request.GET.get('page')
+        paginator = Paginator(materialevidences, self.paginate_by)
+        try:
+            materialevidences = paginator.page(page)
+        except PageNotAnInteger:
+            materialevidences = paginator.page(1)
+        except EmptyPage:
+            materialevidences = paginator.page(paginator.num_pages)
+        context['materialevidences'] = materialevidences
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class MaterialEvidenceCreatView(CreateView):
+    model = MaterialEvidence
+    fields = '__all__'
+    template_name = 'installations/materialevidence_form.html'
+    success_url = reverse_lazy('installations:materialevidence-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class MaterialEvidenceUpdateView(UpdateView):
+    fields = '__all__'
+    model = MaterialEvidence
+    success_url = reverse_lazy('installations:materialevidence-list')
+
+@method_decorator(login_required, name='dispatch')
+class MaterialEvidenceDeleteView(DeleteView):
+    model = MaterialEvidence
+    success_url = reverse_lazy("installations:materialevidence-list")

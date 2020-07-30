@@ -78,7 +78,7 @@ class Bibliography(models.Model):
     author = models.CharField(max_length=50, blank=False)
     journal = models.CharField(max_length=50)
     publisher = models.CharField(max_length=50)
-    year = PartialDateField(default=None)
+    year = PartialDateField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -86,7 +86,7 @@ class Bibliography(models.Model):
 
 class SourceType(models.Model):
     name = models.CharField(max_length=50, blank=False)
-    description = models.CharField(max_length=500, blank=False)
+    description = models.TextField(max_length=500, blank=False)
 
     def __str__(self):
         return self.name
@@ -97,8 +97,8 @@ class TextualEvidence(models.Model):
     title = models.CharField(max_length=250, blank=False)
     author = models.CharField(max_length=50, blank=False)
     date = models.DateTimeField(blank=True, null=True)
-    description = models.TextField(max_length=1000, blank=True)
     bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=True, default='', null=True)
+    description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.title
@@ -112,10 +112,10 @@ class MaterialEvidence(models.Model):
     source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE)
     name = models.CharField(max_length=250, blank=False)
     author = models.CharField(max_length=50, blank=False)
-    date = PartialDateField()
+    date = PartialDateField(blank=True, null=True)
     # picture = models.ImageField()
-    description = models.TextField(max_length=1000, blank=True)
     bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
+    description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.name
