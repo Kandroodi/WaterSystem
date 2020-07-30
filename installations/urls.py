@@ -30,4 +30,8 @@ urlpatterns = [
     path('installation/new/<int:id>/', views.InstallationCreate, name='installation-update'),
     path('installation/delete/<int:id>/', views.InstallationDelete, name='installation-delete'),
     path('installation/list/', views.InstallationList, name='installation-list'),
+    url(r'^textualevidence/new/$', views.TextualEvidenceCreatView.as_view(), name='textualevidence-insert'),
+    url(r'^textualevidence/new/(?P<pk>\d+)/$', views.TextualEvidenceUpdateView.as_view(), name='textualevidence-update'),
+    url(r'^textualevidence/delete/(?P<pk>\d+)/$', views.TextualEvidenceDelete.as_view(), name='textualevidence-delete'),
+    path('textualevidence/list', views.TextualEvidenceListView.as_view(), name='textualevidence-list'),
 ]

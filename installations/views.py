@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 from .forms import *
 from .models import *
-
+from django.views.generic import (View, TemplateView, ListView,
+                                  DetailView, CreateView, UpdateView,
+                                  DeleteView)
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -258,4 +264,54 @@ def InstallationDelete(request, id):
     installation = get_object_or_404(Installation, pk=id)
     installation.delete()
     return redirect('installations:installation-list')
+
+
+# Using Class based View
+@method_decorator(login_required, name='dispatch')
+class TextualEvidenceListView(ListView):
+
+    model = TextualEvidence
+    template_name = 'installations/textualevidence_list'
+    context_object_name = 'textualevidences'
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(TextualEvidenceListView, self).get_context_data(**kwargs)
+        textualevidences = self.get_queryset()
+        page = self.request.GET.get('page')
+        paginator = Paginator(textualevidences, self.paginate_by)
+        try:
+            textualevidences = paginator.page(page)
+        except PageNotAnInteger:
+            textualevidences = paginator.page(1)
+        except EmptyPage:
+            textualevidences = paginator.page(paginator.num_pages)
+        context['textualevidences'] = textualevidences
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class TextualEvidenceCreatView(CreateView):
+    model = TextualEvidence
+    # fields = ('title', 'author', 'date', 'description', 'bibliography', 'source_type')
+    fields = ('title', 'author', 'description')
+    template_name = 'installations/textualevidence_form.html'
+    success_url = reverse_lazy('installations:textualevidence-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class TextualEvidenceUpdateView(UpdateView):
+    fields = ('title', 'author', 'description')
+    model = TextualEvidence
+    success_url = reverse_lazy('installations:textualevidence-list')
+
+    ## if you want to see the detail of updated record you can add a detail view and reverse there. uncomment the following lines
+    # def get_success_url(self):
+    #     return reverse_lazy('installations:textualevidence-detail', kwargs={'pk': self.object.id})
+
+
+@method_decorator(login_required, name='dispatch')
+class TextualEvidenceDelete(DeleteView):
+    model = TextualEvidence
+    success_url = reverse_lazy("installations:textualevidence-list")
 

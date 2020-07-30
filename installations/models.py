@@ -1,5 +1,6 @@
 from django.db import models
 from partial_date import PartialDateField
+from django.urls import reverse
 # from django.contrib.gis.db import models as gismodels
 from django.contrib.auth.models import User
 
@@ -92,15 +93,19 @@ class SourceType(models.Model):
 
 
 class TextualEvidence(models.Model):
-    source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE)
+    source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=250, blank=False)
     author = models.CharField(max_length=50, blank=False)
-    date = PartialDateField()
+    date = models.DateTimeField(blank=True, null=True)
     description = models.TextField(max_length=1000, blank=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False, default='')
+    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("installations:home", kwargs={'pk': self.pk})
+
 
 
 class MaterialEvidence(models.Model):
