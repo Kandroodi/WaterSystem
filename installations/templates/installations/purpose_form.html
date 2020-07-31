@@ -12,13 +12,17 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        {% if not form.instance.pk %}
-            <input type="submit" class="btn btn-primary" value="Submit">
-        {% else %}
-            <input type="submit" class="btn btn-primary" value="Update">
-        {% endif %}
-
+        <table>
+            {{ form.as_table }}
+        </table>
+        <div class="form-group">
+            {% if not form.instance.pk %}
+                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Save</button>
+            {% else %}
+                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Update</button>
+            {% endif %}
+            <a href="{% url 'installations:purpose-list' %}" class="btn btn-default">Cancel</a>
+        </div>
     </form>
 
 {% endblock %}
