@@ -301,8 +301,9 @@ class TextualEvidenceCreatView(CreateView):
 
 @method_decorator(login_required, name='dispatch')
 class TextualEvidenceUpdateView(UpdateView):
-    fields = '__all__'
+    # fields = '__all__'
     model = TextualEvidence
+    form_class = TextualEvidenceForm
     success_url = reverse_lazy('installations:textualevidence-list')
 
     ## if you want to see the detail of updated record you can add a detail view and reverse there. uncomment the following lines

@@ -100,3 +100,18 @@ class InstallationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(InstallationForm, self).__init__(*args, **kwargs)
         self.fields['construction_date'].required = False
+
+
+class TextualEvidenceForm(ModelForm):
+    class Meta:
+        model = TextualEvidence
+        fields = ('source_type', 'title', 'author', 'date', 'bibliography', 'description')
+
+        widgets = {
+            'source_type': forms.Select(attrs={'class': 'form-control'}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'class': 'form-control'}),
+            'date': forms.DateTimeInput(attrs={'class': 'form-control'}),
+            'bibliography': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
