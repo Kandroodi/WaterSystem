@@ -7,14 +7,31 @@
         <form method="post" action="{% url 'installations:user_login' %}">
           {% csrf_token %}
           {# A more "HTML" way of creating the login form#}
-          <label for="username">Username:</label>
-          <input type="text" name="username" placeholder="Username">
+            <table>
+                <tr>
+                    <td width="40%">
+                        <label for="username">Username:</label>
+                    </td>
+                    <td width="60%">
+                        <input type="text" name="username" placeholder="Username">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%">
+                        <label for="password">Password</label>
+                    </td>
+                    <td width="60%">
+                        <input type="password" name="password">
+                    </td>
+                </tr>
+            </table>
+            <p>
 
-          <label for="password"></label>
-          <input type="password" name="password">
-
-          <input type="submit" name="" value="Login">
-
+            </p>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="{% url 'installations:home' %}" class="btn btn-default">Cancel</a>
+            </div>
         </form>
 
     </div>

@@ -11,9 +11,42 @@
 
         <form enctype="multipart/form-data" method="POST">
           {% csrf_token %}
-          {{ user_form.as_p }}
-          {{ profile_form.as_p }}
-          <input type="submit" name="" value="Register">
+            <table>
+                <tr>
+                    <td width="40%">
+                        <label for="username">Username:</label>
+                    </td>
+                    <td width="60%">
+                        <input type="text" name="username" placeholder="Username">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%">
+                        <label for="username">Email address:</label>
+                    </td>
+                    <td width="60%">
+                        <input type="text" name="Email" placeholder="Email address">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%">
+                        <label for="password">Password</label>
+                    </td>
+                    <td width="60%">
+                        <input type="password" name="password">
+                    </td>
+                </tr>
+            </table>
+
+{#          {{ user_form.as_table}}#}
+{#          {{ profile_form.as_table }}#}
+            <p>
+
+            </p>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Register</button>
+                <a href="{% url 'installations:home' %}" class="btn btn-default">Cancel</a>
+            </div>
         </form>
 
       {% endif %}
