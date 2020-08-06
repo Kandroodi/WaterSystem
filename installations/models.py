@@ -107,7 +107,6 @@ class TextualEvidence(models.Model):
         return reverse("installations:home", kwargs={'pk': self.pk})
 
 
-
 class MaterialEvidence(models.Model):
     source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE)
     name = models.CharField(max_length=250, blank=False)
@@ -175,7 +174,7 @@ class Purpose(models.Model):
         return self.name
 
 
-class InstitutionnType(models.Model):
+class InstitutionType(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length=1000, blank=True)
 
@@ -185,7 +184,7 @@ class InstitutionnType(models.Model):
 
 class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    type = models.ForeignKey(InstitutionnType, on_delete=models.CASCADE, blank=True)
+    type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     policy = models.CharField(max_length=100, blank=True)
     start_date = models.CharField(max_length=50, blank=True, )  # this field is for test and explaine the partitial dat
