@@ -461,3 +461,29 @@ class InstitutionTypeUpdateView(UpdateView):
 class InstitutionTypeDeleteView(DeleteView):
     model = SourceType
     success_url = reverse_lazy("installations:institutiontype-list")
+
+
+@method_decorator(login_required, name='dispatch')
+class ReligionListView(ListView):
+    model = Religion
+    template_name = 'installations/religion_list.html'
+    context_object_name = 'religions'
+
+@method_decorator(login_required, name='dispatch')
+class ReligionCreatView(CreateView):
+    model = Religion
+    fields = '__all__'
+    template_name = 'installations/religion_form.html'
+    success_url = reverse_lazy('installations:religion-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class ReligionUpdateView(UpdateView):
+    model = Religion
+    fields = '__all__'
+    success_url = reverse_lazy('installations:religion-list')
+
+@method_decorator(login_required, name='dispatch')
+class ReligionDeleteView(DeleteView):
+    model = Religion
+    success_url = reverse_lazy("installations:religion-list")
