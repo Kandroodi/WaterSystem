@@ -153,11 +153,11 @@ class Watersystem(models.Model):
 
 class Installation(models.Model):
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
-    construction_date = PartialDateField()
+    construction_date = PartialDateField(blank=True, null=True)
     characteristic = models.CharField(max_length=50)  # space holder, ...  will be defined
     functioning_region = models.CharField(max_length=50)  # space holder, ... will be defined
-    start_functioning_year = PartialDateField()
-    end_functioning_year = PartialDateField()
+    start_functioning_year = PartialDateField(blank=True, null=True)
+    end_functioning_year = PartialDateField(blank=True, null=True)
     bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, default='')
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
     material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)

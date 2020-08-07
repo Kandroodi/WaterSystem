@@ -68,4 +68,8 @@ urlpatterns = [
     url(r'^personinstitutionrelation/new/(?P<pk>\d+)/$', views.PersonInstitutionRelationUpdateView.as_view(), name='personinstitutionrelation-update'),
     url(r'^personinstitutionrelation/delete/(?P<pk>\d+)/$', views.PersonInstitutionRelationDeleteView.as_view(), name='personinstitutionrelation-delete'),
     path('personinstitutionrelation/list', views.PersonInstitutionRelationListView.as_view(), name='personinstitutionrelation-list'),
+    url(r'^personinstallationrelation/new/$', views.PersonInstallationRelationCreatView.as_view(), name='personinstallationrelation-insert'),
+    url(r'^personinstallationrelation/new/(?P<pk>\d+)/$', views.PersonInstallationRelationUpdateView.as_view(), name='personinstallationrelation-update'),
+    url(r'^personinstallationrelation/delete/(?P<pk>\d+)/$', views.PersonInstallationRelationDeleteView.as_view(), name='personinstallationrelation-delete'),
+    path('personinstallationrelation/list', views.PersonInstallationRelationListView.as_view(), name='personinstallationrelation-list'),
 ]

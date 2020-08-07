@@ -1,0 +1,42 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+    <h2>Person-Installation relation list</h2>
+    <table class="table table-borderless">
+        <thead class="border-bottom font-weight-bold">
+            <tr>
+                <th scope="col">Person</th>
+                <th scope="col">Installation</th>
+                <th scope="col">Role</th>
+                <td>
+                    <a href= "{% url 'installations:personinstallationrelation-insert' %}"
+                       class="btn btn-outline-success"
+                       target="popup"
+                       onclick="window.open('{% url 'installations:personinstallationrelation-insert' %}','popup','width=600,height=600'); return false;">
+                        <i class="fa fa-plus"></i> Add New</a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for personinstallationrelation in personinstallationrelations %}
+            <tr>
+                <td>{{personinstallationrelation.person}}</td>
+                <td>{{personinstallationrelation.installation}}</td>
+                <td>{{personinstallationrelation.role}}</td>
+                <td>
+                    <a href="{% url 'installations:personinstallationrelation-update' personinstallationrelation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:personinstallationrelation-delete' personinstallationrelation.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
