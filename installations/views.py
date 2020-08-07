@@ -578,3 +578,32 @@ class PersonInstallationRelationUpdateView(UpdateView):
 class PersonInstallationRelationDeleteView(DeleteView):
     model = PersonInstallationRelation
     success_url = reverse_lazy("installations:personinstallationrelation-list")
+
+
+# CityInistallationRelation
+@method_decorator(login_required, name='dispatch')
+class CityInstallationRelationListView(ListView):
+    model = CityInstallationRelation
+    template_name = 'installations/cityinstallationrelation_list.html'
+    context_object_name = 'cityinstallationrelations'
+
+
+@method_decorator(login_required, name='dispatch')
+class CityInstallationRelationCreatView(CreateView):
+    model = CityInstallationRelation
+    fields = '__all__'
+    template_name = 'installations/cityinstallationrelation_form.html'
+    success_url = reverse_lazy('installations:cityinstallationrelation-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class CityInstallationRelationUpdateView(UpdateView):
+    model = CityInstallationRelation
+    fields = '__all__'
+    success_url = reverse_lazy('installations:cityinstallationrelation-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class CityInstallationRelationDeleteView(DeleteView):
+    model = CityInstallationRelation
+    success_url = reverse_lazy("installations:cityinstallationrelation-list")

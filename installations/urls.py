@@ -72,4 +72,8 @@ urlpatterns = [
     url(r'^personinstallationrelation/new/(?P<pk>\d+)/$', views.PersonInstallationRelationUpdateView.as_view(), name='personinstallationrelation-update'),
     url(r'^personinstallationrelation/delete/(?P<pk>\d+)/$', views.PersonInstallationRelationDeleteView.as_view(), name='personinstallationrelation-delete'),
     path('personinstallationrelation/list', views.PersonInstallationRelationListView.as_view(), name='personinstallationrelation-list'),
+    url(r'^cityinstallationrelation/new/$', views.CityInstallationRelationCreatView.as_view(), name='cityinstallationrelation-insert'),
+    url(r'^cityinstallationrelation/new/(?P<pk>\d+)/$', views.CityInstallationRelationUpdateView.as_view(), name='cityinstallationrelation-update'),
+    url(r'^cityinstallationrelation/delete/(?P<pk>\d+)/$', views.CityInstallationRelationDeleteView.as_view(), name='cityinstallationrelation-delete'),
+    path('cityinstallationrelation/list', views.CityInstallationRelationListView.as_view(), name='cityinstallationrelation-list'),
 ]

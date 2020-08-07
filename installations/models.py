@@ -227,7 +227,7 @@ class PersonInstallationRelation(models.Model):
     role = models.CharField(max_length=100, blank=False)
 
 
-class CityInistallationRelation(models.Model):
+class CityInstallationRelation(models.Model):
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     capacity_absolute = models.DecimalField(max_digits=7, decimal_places=2, default=0)
