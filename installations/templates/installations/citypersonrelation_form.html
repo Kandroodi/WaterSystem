@@ -1,0 +1,29 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+
+    <h2>
+        {% if not form.instance.pk %}
+            Add City-Person relation
+        {% else %}
+            Update City-Person relation "{{form.instance.person.name}}"
+        {% endif %}
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <div class="form-group">
+            {% if not form.instance.pk %}
+                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Save</button>
+            {% else %}
+                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Update</button>
+            {% endif %}
+            <a href="{% url 'installations:citypersonrelation-list' %}" class="btn btn-default">Cancel</a>
+        </div>
+
+    </form>
+
+{% endblock %}

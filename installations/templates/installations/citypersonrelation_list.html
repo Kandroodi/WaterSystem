@@ -1,0 +1,42 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+    <h2>City-person relation list</h2>
+    <table class="table table-borderless">
+        <thead class="border-bottom font-weight-bold">
+            <tr>
+                <th scope="col">City</th>
+                <th scope="col">Person</th>
+                <th scope="col">Role</th>
+                <td>
+                    <a href= "{% url 'installations:citypersonrelation-insert' %}"
+                       class="btn btn-outline-success"
+                       target="popup"
+                       onclick="window.open('{% url 'installations:citypersonrelation-insert' %}','popup','width=600,height=600'); return false;">
+                        <i class="fa fa-plus"></i> Add New</a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for citypersonrelation in citypersonrelations %}
+            <tr>
+                <td>{{citypersonrelation.city}}</td>
+                <td>{{citypersonrelation.person}}</td>
+                <td>{{citypersonrelation.role}}</td>
+                <td>
+                    <a href="{% url 'installations:citypersonrelation-update' citypersonrelation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:citypersonrelation-delete' citypersonrelation.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

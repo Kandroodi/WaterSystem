@@ -469,6 +469,7 @@ class ReligionListView(ListView):
     template_name = 'installations/religion_list.html'
     context_object_name = 'religions'
 
+
 @method_decorator(login_required, name='dispatch')
 class ReligionCreatView(CreateView):
     model = Religion
@@ -483,7 +484,37 @@ class ReligionUpdateView(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('installations:religion-list')
 
+
 @method_decorator(login_required, name='dispatch')
 class ReligionDeleteView(DeleteView):
     model = Religion
     success_url = reverse_lazy("installations:religion-list")
+
+
+# Relations
+@method_decorator(login_required, name='dispatch')
+class CityPersonRelationListView(ListView):
+    model = CityPersonRelation
+    template_name = 'installations/citypersonrelation_list.html'
+    context_object_name = 'citypersonrelations'
+
+
+@method_decorator(login_required, name='dispatch')
+class CityPersonRelationCreatView(CreateView):
+    model = CityPersonRelation
+    fields = '__all__'
+    template_name = 'installations/citypersonrelation_form.html'
+    success_url = reverse_lazy('installations:citypersonrelation-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class CityPersonRelationUpdateView(UpdateView):
+    model = CityPersonRelation
+    fields = '__all__'
+    success_url = reverse_lazy('installations:citypersonrelation-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class CityPersonRelationDeleteView(DeleteView):
+    model = CityPersonRelation
+    success_url = reverse_lazy("installations:citypersonrelation-list")
