@@ -64,4 +64,8 @@ urlpatterns = [
     url(r'^citypersonrelation/new/(?P<pk>\d+)/$', views.CityPersonRelationUpdateView.as_view(), name='citypersonrelation-update'),
     url(r'^citypersonrelation/delete/(?P<pk>\d+)/$', views.CityPersonRelationDeleteView.as_view(), name='citypersonrelation-delete'),
     path('citypersonrelation/list', views.CityPersonRelationListView.as_view(), name='citypersonrelation-list'),
+    url(r'^personinstitutionrelation/new/$', views.PersonInstitutionRelationCreatView.as_view(), name='personinstitutionrelation-insert'),
+    url(r'^personinstitutionrelation/new/(?P<pk>\d+)/$', views.PersonInstitutionRelationUpdateView.as_view(), name='personinstitutionrelation-update'),
+    url(r'^personinstitutionrelation/delete/(?P<pk>\d+)/$', views.PersonInstitutionRelationDeleteView.as_view(), name='personinstitutionrelation-delete'),
+    path('personinstitutionrelation/list', views.PersonInstitutionRelationListView.as_view(), name='personinstitutionrelation-list'),
 ]
