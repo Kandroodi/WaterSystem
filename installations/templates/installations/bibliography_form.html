@@ -1,18 +1,30 @@
-{% extends 'installations/base.html' %}
+{% extends "installations/base.html" %}
 {% load crispy_forms_tags %}
 
 {% block main_content %}
 
-<h2>Add Bibliography</h2>
-<hr class="my-4">
-<form  method="POST" action="" autocomplete="off">
-    {% csrf_token %}
+    <h2>
+        {% if not form.instance.pk %}
+            Add Bibliography
+        {% else %}
+            Update Bibliography "{{bibliography.title}}"
+        {% endif %}
+    </h2>
 
-    {% crispy form %}
-    <div class="form-group">
-        <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>
-        <a href="{% url 'installations:bibliography-list' %}" class="btn btn-default">Cancel</a>
-    </div>
-<!--    <input type="submit" class="btn btn-success" value="Save">-->
-</form>
-{% endblock main_content %}
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            {{ form|crispy }}
+        </table>
+        <div class="form-group">
+            {% if not form.instance.pk %}
+                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Save</button>
+            {% else %}
+                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Update</button>
+            {% endif %}
+            <a href="{% url 'installations:bibliography-list' %}" class="btn btn-default">Cancel</a>
+        </div>
+
+    </form>
+
+{% endblock %}

@@ -202,36 +202,51 @@ def PersonDelete(request, id):
     return redirect('installations:person-list')
 
 
-@login_required
-def BibliographyCreate(request, id=0):
-    if request.method == "GET":
-        if id == 0:
-            form = BibliographyForm()
-        else:
-            bibliography = Bibliography.objects.get(pk=id)
-            form = BibliographyForm(instance=bibliography)
-        return render(request, 'installations/bibliography_form.html', {'form': form})
-    else:  # request.method == "POST":
-        if id == 0:
-            form = BibliographyForm(request.POST)
-        else:
-            bibliography = Bibliography.objects.get(pk=id)
-            form = BibliographyForm(request.POST, instance=bibliography)
-        if form.is_valid():
-            form.save()
-        return redirect('installations:bibliography-list')  # after save redirect to the bibliography list
+# @login_required
+# def BibliographyCreate(request, id=0):
+#     if request.method == "GET":
+#         if id == 0:
+#             form = BibliographyForm()
+#         else:
+#             bibliography = Bibliography.objects.get(pk=id)
+#             form = BibliographyForm(instance=bibliography)
+#         return render(request, 'installations/bibliography_form.html', {'form': form})
+#     else:  # request.method == "POST":
+#         if id == 0:
+#             form = BibliographyForm(request.POST)
+#         else:
+#             bibliography = Bibliography.objects.get(pk=id)
+#             form = BibliographyForm(request.POST, instance=bibliography)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('installations:bibliography-list')  # after save redirect to the bibliography list
 
 
-def BibliographyList(request):
-    context = {'bibliography_list': Bibliography.objects.all()}
-    return render(request, 'installations/bibliography_list.html', context)
+@method_decorator(login_required, name='dispatch')
+class BibliographyListView(ListView):
+    model = Bibliography
+    template_name = 'installations/bibliography_list.html'
+    context_object_name = 'bibliographys'
 
 
-@login_required
-def BibliographyDelete(request, id):
-    bibliography = get_object_or_404(Bibliography, pk=id)
-    bibliography.delete()
-    return redirect('installations:bibliography-list')
+@method_decorator(login_required, name='dispatch')
+class BibliographyCreatView(CreateView):
+    model = Bibliography
+    fields = '__all__'
+    template_name = 'installations/bibliography_form.html'
+    success_url = reverse_lazy('installations:bibliography-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class BibliographyUpdateView(UpdateView):
+    model = Bibliography
+    fields = '__all__'
+    success_url = reverse_lazy('installations:bibliography-list')
+
+@method_decorator(login_required, name='dispatch')
+class BibliographyDeleteView(DeleteView):
+    model = Bibliography
+    success_url = reverse_lazy("installations:bibliography-list")
 
 
 @login_required
