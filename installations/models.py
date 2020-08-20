@@ -187,7 +187,7 @@ class Institution(models.Model):
     type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     policy = models.CharField(max_length=100, blank=True)
-    start_date = models.CharField(max_length=50, blank=True, )  # this field is for test and explaine the partitial dat
+    start_date = PartialDateField(blank=True, null=True) # this field is for test and explaine the partitial dat
     ''''help_text="Date formats:"
                                                                        "Day: yyyy-mm-dd 1999-12-04  "
                                                                        "Month: yyyy-mm 1999-12  "
@@ -196,7 +196,7 @@ class Institution(models.Model):
                                                                        "Century: <integer>c 20c 1900-2000  "
                                                                        "Millennium: <integer>m 2m 1000-2000  "'''
     # start_date = ... will be the partitial dat
-    end_date = PartialDateField()
+    end_date = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
     bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=False)
