@@ -50,7 +50,8 @@ class InstitutionForm(ModelForm):
         fields = '__all__'
 
         labels = {
-            'name': 'Institution Name'
+            'name': 'Institution Name',
+            'policy': 'Period'
         }
 
     def __init__(self, *args, **kwargs):
