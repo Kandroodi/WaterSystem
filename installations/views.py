@@ -243,6 +243,7 @@ class BibliographyUpdateView(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('installations:bibliography-list')
 
+
 @method_decorator(login_required, name='dispatch')
 class BibliographyDeleteView(DeleteView):
     model = Bibliography
@@ -308,8 +309,8 @@ class TextualEvidenceListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class TextualEvidenceCreatView(CreateView):
     model = TextualEvidence
-    # fields = ('title', 'author', 'date', 'description', 'bibliography', 'source_type')
-    fields = '__all__'
+    fields = ('title', 'author', 'date', 'bibliography', 'description')
+    # fields = '__all__'
     template_name = 'installations/textualevidence_form.html'
     success_url = reverse_lazy('installations:textualevidence-list')
 
@@ -332,11 +333,16 @@ class TextualEvidenceDeleteView(DeleteView):
     success_url = reverse_lazy("installations:textualevidence-list")
 
 
+'''
+Temporarily, Views related to Source Type is commented but it can completely be removed later If it's not needed.
+It is possible that later we need to add this field again
+
 @method_decorator(login_required, name='dispatch')
 class SourceTypeListView(ListView):
     model = SourceType
     template_name = 'installations/sourcetype_list.html'
     context_object_name = 'sourcetypes'
+
 
 @method_decorator(login_required, name='dispatch')
 class SourceTypeCreatView(CreateView):
@@ -352,11 +358,12 @@ class SourceTypeUpdateView(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('installations:sourcetype-list')
 
+
 @method_decorator(login_required, name='dispatch')
 class SourceTypeDeleteView(DeleteView):
     model = SourceType
     success_url = reverse_lazy("installations:sourcetype-list")
-
+'''
 
 @method_decorator(login_required, name='dispatch')
 class MaterialEvidenceListView(ListView):
@@ -383,7 +390,8 @@ class MaterialEvidenceListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class MaterialEvidenceCreatView(CreateView):
     model = MaterialEvidence
-    fields = '__all__'
+    fields = ('name', 'author', 'date', 'bibliography', 'description')
+    # fields = '__all__'
     template_name = 'installations/materialevidence_form.html'
     success_url = reverse_lazy('installations:materialevidence-list')
 
@@ -393,6 +401,7 @@ class MaterialEvidenceUpdateView(UpdateView):
     fields = '__all__'
     model = MaterialEvidence
     success_url = reverse_lazy('installations:materialevidence-list')
+
 
 @method_decorator(login_required, name='dispatch')
 class MaterialEvidenceDeleteView(DeleteView):
@@ -405,6 +414,7 @@ class WaterSystemListView(ListView):
     model = Watersystem
     template_name = 'installations/watersystem_list.html'
     context_object_name = 'watersystems'
+
 
 @method_decorator(login_required, name='dispatch')
 class WaterSystemCreatView(CreateView):
@@ -420,6 +430,7 @@ class WaterSystemUpdateView(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('installations:watersystem-list')
 
+
 @method_decorator(login_required, name='dispatch')
 class WaterSystemDeleteView(DeleteView):
     model = Watersystem
@@ -431,6 +442,7 @@ class PurposeListView(ListView):
     model = Purpose
     template_name = 'installations/purpose_list.html'
     context_object_name = 'purposes'
+
 
 @method_decorator(login_required, name='dispatch')
 class PurposeCreatView(CreateView):
@@ -446,6 +458,7 @@ class PurposeUpdateView(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('installations:purpose-list')
 
+
 @method_decorator(login_required, name='dispatch')
 class PurposeDeleteView(DeleteView):
     model = Purpose
@@ -457,6 +470,7 @@ class InstitutionTypeListView(ListView):
     model = InstitutionType
     template_name = 'installations/institutiontype_list.html'
     context_object_name = 'institutiontypes'
+
 
 @method_decorator(login_required, name='dispatch')
 class InstitutionTypeCreatView(CreateView):
@@ -471,6 +485,7 @@ class InstitutionTypeUpdateView(UpdateView):
     model = InstitutionType
     fields = '__all__'
     success_url = reverse_lazy('installations:institutiontype-list')
+
 
 @method_decorator(login_required, name='dispatch')
 class InstitutionTypeDeleteView(DeleteView):
