@@ -60,7 +60,7 @@ class Citymap(models.Model):
     # map = models.ImageField()
     type = models.CharField(max_length=50, blank=False)
     city = models.ForeignKey(City, related_name='citymaps', on_delete=models.CASCADE, blank=True)
-    population = models.IntegerField()
+    population = models.IntegerField()  # I think we do nat need population here, as we have it in CityEra
     start_date = PartialDateField()
     end_date = PartialDateField()
 
