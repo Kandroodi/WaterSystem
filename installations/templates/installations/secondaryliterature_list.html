@@ -1,7 +1,7 @@
 {% extends "installations/base.html" %}
 
 {% block main_content %}
-    <h2>Bibliography list</h2>
+    <h2>Secondary literature list</h2>
     <table class="table table-borderless">
         <thead class="border-bottom font-weight-bold">
             <tr>
@@ -11,21 +11,21 @@
                 <th scope="col">Publisher</th>
                 <th scope="col">Year</th>
                 <td>
-                    <a href="{% url 'installations:bibliography-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
+                    <a href="{% url 'installations:secondaryliterature-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
                 </td>
             </tr>
         </thead>
         <tbody>
-            {% for bibliography in bibliographys %}
+            {% for secondaryliterature in secondaryliteratures %}
             <tr>
-                <td>{{bibliography.title}}</td>
-                <td>{{bibliography.author}}</td>
-                <td>{{bibliography.journal}}</td>
-                <td>{{bibliography.publisher}}</td>
-                <td>{{bibliography.year}}</td>
+                <td>{{secondaryliterature.title}}</td>
+                <td>{{secondaryliterature.author}}</td>
+                <td>{{secondaryliterature.journal}}</td>
+                <td>{{secondaryliterature.publisher}}</td>
+                <td>{{secondaryliterature.year}}</td>
                 <td>
-                    <a href="{% url 'installations:bibliography-update' bibliography.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
-                    <form action="{% url 'installations:bibliography-delete' bibliography.id %}" method="post" class="d-inline">
+                    <a href="{% url 'installations:secondaryliterature-update' secondaryliterature.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:secondaryliterature-delete' secondaryliterature.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
 <!--                        <button type="submit" class="btn">-->

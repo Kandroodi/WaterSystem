@@ -73,12 +73,12 @@ class Religion(models.Model):
         return self.name
 
 
-class Bibliography(models.Model):
-    title = models.CharField(max_length=250, blank=False)
-    author = models.CharField(max_length=50, blank=False)
-    journal = models.CharField(max_length=50)
-    publisher = models.CharField(max_length=50)
-    year = PartialDateField(blank=True, null=True)
+class SecondaryLiterature(models.Model):
+    title = models.CharField(max_length=250, blank=False, default='', null=True)
+    author = models.CharField(max_length=100, blank=True, default='', null=True)
+    journal = models.CharField(max_length=100, blank=True, default='', null=True)
+    publisher = models.CharField(max_length=100, blank=True, default='', null=True)
+    year = PartialDateField(blank=True, null=True, default='')
 
     def __str__(self):
         return self.title
@@ -97,7 +97,7 @@ class TextualEvidence(models.Model):
     title = models.CharField(max_length=250, blank=False)
     author = models.CharField(max_length=50, blank=False)
     date = models.DateTimeField(blank=True, null=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
@@ -113,7 +113,7 @@ class MaterialEvidence(models.Model):
     author = models.CharField(max_length=50, blank=False)
     date = PartialDateField(blank=True, null=True)
     # picture = models.ImageField()
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
@@ -132,7 +132,7 @@ class Person(models.Model):
     death = PartialDateField()
     role = models.CharField(max_length=100, blank=True)  # I think it's not necessary
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, default='')
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
     material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
 
@@ -145,7 +145,7 @@ class Watersystem(models.Model):
     type = models.CharField(max_length=100, blank=True)
     inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
     description = models.TextField(max_length=1000, blank=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False, default='')
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -158,7 +158,7 @@ class Installation(models.Model):
     functioning_region = models.CharField(max_length=50)  # space holder, ... will be defined
     start_functioning_year = PartialDateField(blank=True, null=True)
     end_functioning_year = PartialDateField(blank=True, null=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, default='')
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
     material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
 
@@ -198,7 +198,7 @@ class Institution(models.Model):
     # start_date = ... will be the partitial dat
     end_date = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=False)
     material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=False)
 
