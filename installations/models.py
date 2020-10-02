@@ -149,11 +149,20 @@ class Watersystem(models.Model):
         return self.name
 
 
+class Purpose(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Installation(models.Model):
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
     construction_date = PartialDateField(blank=True, null=True)
     first_reference = PartialDateField(blank=True, null=True)
     end_functioning_year = PartialDateField(blank=True, null=True)
+    purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
@@ -162,14 +171,6 @@ class Installation(models.Model):
 
     def __str__(self):
         return self.watersystem.name
-
-
-class Purpose(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(max_length=1000, blank=True)
-
-    def __str__(self):
-        return self.name
 
 
 class InstitutionType(models.Model):
@@ -183,6 +184,7 @@ class InstitutionType(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
     type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True)
+    purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     policy = models.CharField(max_length=100, blank=True)
@@ -234,11 +236,6 @@ class CityInstallationRelation(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     capacity_absolute = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     capacity_percentage = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-
-
-class InstallationPurposeRelation(models.Model):
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
-    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, blank=True)
 
 
 class InstitutionInstallationRelation(models.Model):
