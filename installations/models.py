@@ -75,6 +75,17 @@ class Neighbourhood (models.Model):
         return st
 
 
+class Location(models.Model):
+    ''''The location used for exact location'''
+    gpsargs = {'blank': True, 'null': True, 'max_digits': 8, 'decimal_places': 5}
+    latitude = models.DecimalField(**gpsargs)
+    longitude = models.DecimalField(**gpsargs)
+
+    def __str__(self):
+        st = str(self.latitude) + '  ' + str(self.longitude)
+        return st
+
+
 class Religion(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
@@ -138,13 +149,13 @@ class Person(models.Model):
         ('O', 'Other'),
     )
     gender = models.CharField(max_length=1, choices=GENDER, default='M')
-    birth = PartialDateField()
-    death = PartialDateField()
+    birth = PartialDateField(blank=True, default='', null=True)
+    death = PartialDateField(blank=True, default='', null=True)
     role = models.CharField(max_length=100, blank=True)  # I think it's not necessary
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
+    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -164,10 +175,11 @@ class Watersystem(models.Model):
 class Installation(models.Model):
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
     construction_date = PartialDateField(blank=True, null=True)
-    characteristic = models.CharField(max_length=50)  # space holder, ...  will be defined
-    functioning_region = models.CharField(max_length=50)  # space holder, ... will be defined
-    start_functioning_year = PartialDateField(blank=True, null=True)
+    first_reference = PartialDateField(blank=True, null=True)
     end_functioning_year = PartialDateField(blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True, null=True)
+    exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
     material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
@@ -196,6 +208,7 @@ class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
     type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True, null=True)
     policy = models.CharField(max_length=100, blank=True)
     start_date = PartialDateField(blank=True, null=True) # this field is for test and explaine the partitial dat
     ''''help_text="Date formats:"
@@ -220,7 +233,13 @@ class Institution(models.Model):
 class CityPersonRelation(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    role = models.CharField(max_length=100, blank=False)
+    involvement_type = models.CharField(max_length=100, blank=False)
+
+
+class NeighbourhoodPersonRelation(models.Model):
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, blank=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
+    involvement_type = models.CharField(max_length=100, blank=False)
 
 
 class PersonInstitutionRelation(models.Model):
