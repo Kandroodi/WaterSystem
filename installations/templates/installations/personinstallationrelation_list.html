@@ -7,7 +7,7 @@
             <tr>
                 <th scope="col">Person</th>
                 <th scope="col">Installation</th>
-                <th scope="col">Role</th>
+                <th scope="col">Type of involvement</th>
                 <td>
                     <a href= "{% url 'installations:personinstallationrelation-insert' %}"
                        class="btn btn-outline-success"
@@ -22,7 +22,7 @@
             <tr>
                 <td>{{personinstallationrelation.person}}</td>
                 <td>{{personinstallationrelation.installation}}</td>
-                <td>{{personinstallationrelation.role}}</td>
+                <td>{{personinstallationrelation.type_of_involvement}}</td>
                 <td>
                     <a href="{% url 'installations:personinstallationrelation-update' personinstallationrelation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:personinstallationrelation-delete' personinstallationrelation.id %}" method="post" class="d-inline">

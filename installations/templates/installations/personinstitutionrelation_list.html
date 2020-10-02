@@ -7,9 +7,7 @@
             <tr>
                 <th scope="col">Person</th>
                 <th scope="col">Institution</th>
-                <th scope="col">Role</th>
-                <th scope="col">Start date</th>
-                <th scope="col">End date</th>
+                <th scope="col">Type of involvement</th>
                 <td>
                     <a href= "{% url 'installations:personinstitutionrelation-insert' %}"
                        class="btn btn-outline-success"
@@ -24,9 +22,7 @@
             <tr>
                 <td>{{personinstitutionrelation.person}}</td>
                 <td>{{personinstitutionrelation.institution}}</td>
-                <td>{{personinstitutionrelation.role}}</td>
-                <td>{{personinstitutionrelation.start_date}}</td>
-                <td>{{personinstitutionrelation.end_date}}</td>
+                <td>{{personinstitutionrelation.type_of_involvement}}</td>
                 <td>
                     <a href="{% url 'installations:personinstitutionrelation-update' personinstitutionrelation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:personinstitutionrelation-delete' personinstitutionrelation.id %}" method="post" class="d-inline">

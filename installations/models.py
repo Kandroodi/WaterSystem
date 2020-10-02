@@ -151,8 +151,8 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER, default='M')
     birth = PartialDateField(blank=True, default='', null=True)
     death = PartialDateField(blank=True, default='', null=True)
-    role = models.CharField(max_length=100, blank=True)  # I think it's not necessary
-    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
+    role = models.CharField(max_length=100, blank=True)  # Role field for person and type of envolvement feild for person-installation relation
+    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
     material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
@@ -178,11 +178,11 @@ class Installation(models.Model):
     first_reference = PartialDateField(blank=True, null=True)
     end_functioning_year = PartialDateField(blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
-    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True, null=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
+    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):
         return self.watersystem.name
@@ -208,7 +208,7 @@ class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
     type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
-    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True, null=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     policy = models.CharField(max_length=100, blank=True)
     start_date = PartialDateField(blank=True, null=True) # this field is for test and explaine the partitial dat
     ''''help_text="Date formats:"
@@ -222,8 +222,8 @@ class Institution(models.Model):
     end_date = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=False)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=False)
+    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=False, default='', null=True)
+    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=False, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -233,27 +233,25 @@ class Institution(models.Model):
 class CityPersonRelation(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    involvement_type = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
 class NeighbourhoodPersonRelation(models.Model):
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    involvement_type = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
 class PersonInstitutionRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
-    role = models.CharField(max_length=50, blank=False)
-    start_date = PartialDateField()
-    end_date = PartialDateField()
+    type_of_involvement = models.CharField(max_length=50, blank=False)
 
 
 class PersonInstallationRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
-    role = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
 class CityInstallationRelation(models.Model):
@@ -266,13 +264,12 @@ class CityInstallationRelation(models.Model):
 class InstallationPurposeRelation(models.Model):
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, blank=True)
-    percentage = models.DecimalField(max_digits=7, decimal_places=2)
 
 
 class InstitutionInstallationRelation(models.Model):
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
-    role = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
 class TextPersonRelation(models.Model):

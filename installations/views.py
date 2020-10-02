@@ -289,7 +289,7 @@ class TextualEvidenceListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class TextualEvidenceCreatView(CreateView):
     model = TextualEvidence
-    fields = ('title', 'author', 'date', 'secondaryliterature', 'description')
+    fields = ('title', 'author', 'date', 'secondary_literature', 'description')
     # fields = '__all__'
     template_name = 'installations/textualevidence_form.html'
     success_url = reverse_lazy('installations:textualevidence-list')
@@ -370,7 +370,7 @@ class MaterialEvidenceListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class MaterialEvidenceCreatView(CreateView):
     model = MaterialEvidence
-    fields = ('name', 'author', 'date', 'secondaryliterature', 'description')
+    fields = ('name', 'author', 'date', 'secondary_literature', 'description')
     # fields = '__all__'
     template_name = 'installations/materialevidence_form.html'
     success_url = reverse_lazy('installations:materialevidence-list')
