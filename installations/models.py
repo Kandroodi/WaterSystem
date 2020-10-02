@@ -133,6 +133,7 @@ class Person(models.Model):
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -168,6 +169,7 @@ class Installation(models.Model):
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.watersystem.name
@@ -201,6 +203,7 @@ class Institution(models.Model):
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=False, default='', null=True)
+    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
