@@ -105,16 +105,7 @@ class SecondaryLiterature(models.Model):
         return self.title
 
 
-class SourceType(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    description = models.TextField(max_length=500, blank=False)
-
-    def __str__(self):
-        return self.name
-
-
-class TextualEvidence(models.Model):
-    source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE, blank=True, null=True)
+class Evidence(models.Model):
     title = models.CharField(max_length=250, blank=False)
     author = models.CharField(max_length=50, blank=False)
     date = models.DateTimeField(blank=True, null=True)
@@ -126,19 +117,6 @@ class TextualEvidence(models.Model):
 
     def get_absolute_url(self):
         return reverse("installations:home", kwargs={'pk': self.pk})
-
-
-class MaterialEvidence(models.Model):
-    source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE)
-    name = models.CharField(max_length=250, blank=False)
-    author = models.CharField(max_length=50, blank=False)
-    date = PartialDateField(blank=True, null=True)
-    # picture = models.ImageField()
-    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    description = models.TextField(max_length=1000, blank=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Person(models.Model):
@@ -154,8 +132,7 @@ class Person(models.Model):
     role = models.CharField(max_length=100, blank=True)  # Role field for person and type of envolvement feild for person-installation relation
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -181,8 +158,7 @@ class Installation(models.Model):
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):
         return self.watersystem.name
@@ -222,8 +198,7 @@ class Institution(models.Model):
     end_date = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=False, default='', null=True)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=False, default='', null=True)
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=False, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -272,32 +247,24 @@ class InstitutionInstallationRelation(models.Model):
     type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
-class TextPersonRelation(models.Model):
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
+class EvidencePersonRelation(models.Model):
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True, default=0)
 
 
-class TextInstitutionRelation(models.Model):
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
+class EvidenceInstitutionRelation(models.Model):
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True)
 
 
-class TextInstallationRelation(models.Model):
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
-    page_number = models.CharField(max_length=100,
-                                   blank=False)  # I think maybe it's better if we had letter as page numbers also
-    description = models.TextField(max_length=1000, blank=True)
-
-
-class MaterialInstallationRelation(models.Model):
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
+class EvidenceInstallationRelation(models.Model):
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also

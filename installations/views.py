@@ -265,42 +265,42 @@ def InstallationDelete(request, id):
 # Using Class based View
 
 @method_decorator(login_required, name='dispatch')
-class TextualEvidenceListView(ListView):
-    model = TextualEvidence
-    template_name = 'installations/textualevidence_list'
-    context_object_name = 'textualevidences'
+class EvidenceListView(ListView):
+    model = Evidence
+    template_name = 'installations/evidence_list'
+    context_object_name = 'evidences'
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
-        context = super(TextualEvidenceListView, self).get_context_data(**kwargs)
-        textualevidences = self.get_queryset()
+        context = super(EvidenceListView, self).get_context_data(**kwargs)
+        evidences = self.get_queryset()
         page = self.request.GET.get('page')
-        paginator = Paginator(textualevidences, self.paginate_by)
+        paginator = Paginator(evidences, self.paginate_by)
         try:
-            textualevidences = paginator.page(page)
+            evidences = paginator.page(page)
         except PageNotAnInteger:
-            textualevidences = paginator.page(1)
+            evidences = paginator.page(1)
         except EmptyPage:
-            textualevidences = paginator.page(paginator.num_pages)
-        context['textualevidences'] = textualevidences
+            evidences = paginator.page(paginator.num_pages)
+        context['evidences'] = evidences
         return context
 
 
 @method_decorator(login_required, name='dispatch')
-class TextualEvidenceCreatView(CreateView):
-    model = TextualEvidence
-    fields = ('title', 'author', 'date', 'secondary_literature', 'description')
-    # fields = '__all__'
-    template_name = 'installations/textualevidence_form.html'
-    success_url = reverse_lazy('installations:textualevidence-list')
+class EvidenceCreatView(CreateView):
+    model = Evidence
+    # fields = ('title', 'author', 'date', 'secondary_literature', 'description')
+    fields = '__all__'
+    template_name = 'installations/evidence_form.html'
+    success_url = reverse_lazy('installations:evidence-list')
 
 
 @method_decorator(login_required, name='dispatch')
-class TextualEvidenceUpdateView(UpdateView):
+class EvidenceUpdateView(UpdateView):
     # fields = '__all__'
-    model = TextualEvidence
-    form_class = TextualEvidenceForm
-    success_url = reverse_lazy('installations:textualevidence-list')
+    model = Evidence
+    form_class = EvidenceForm
+    success_url = reverse_lazy('installations:evidence-list')
 
     ## if you want to see the detail of updated record you can add a detail view and reverse there. uncomment the following lines
     # def get_success_url(self):
@@ -308,85 +308,9 @@ class TextualEvidenceUpdateView(UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
-class TextualEvidenceDeleteView(DeleteView):
-    model = TextualEvidence
-    success_url = reverse_lazy("installations:textualevidence-list")
-
-
-'''
-Temporarily, Views related to Source Type is commented but it can completely be removed later If it's not needed.
-It is possible that later we need to add this field again
-
-@method_decorator(login_required, name='dispatch')
-class SourceTypeListView(ListView):
-    model = SourceType
-    template_name = 'installations/sourcetype_list.html'
-    context_object_name = 'sourcetypes'
-
-
-@method_decorator(login_required, name='dispatch')
-class SourceTypeCreatView(CreateView):
-    model = SourceType
-    fields = '__all__'
-    template_name = 'installations/sourcetype_form.html'
-    success_url = reverse_lazy('installations:sourcetype-list')
-
-
-@method_decorator(login_required, name='dispatch')
-class SourceTypeUpdateView(UpdateView):
-    model = SourceType
-    fields = '__all__'
-    success_url = reverse_lazy('installations:sourcetype-list')
-
-
-@method_decorator(login_required, name='dispatch')
-class SourceTypeDeleteView(DeleteView):
-    model = SourceType
-    success_url = reverse_lazy("installations:sourcetype-list")
-'''
-
-@method_decorator(login_required, name='dispatch')
-class MaterialEvidenceListView(ListView):
-    model = MaterialEvidence
-    template_name = 'installations/materialevidence_list'
-    context_object_name = 'materialevidences'
-    paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super(MaterialEvidenceListView, self).get_context_data(**kwargs)
-        materialevidences = self.get_queryset()
-        page = self.request.GET.get('page')
-        paginator = Paginator(materialevidences, self.paginate_by)
-        try:
-            materialevidences = paginator.page(page)
-        except PageNotAnInteger:
-            materialevidences = paginator.page(1)
-        except EmptyPage:
-            materialevidences = paginator.page(paginator.num_pages)
-        context['materialevidences'] = materialevidences
-        return context
-
-
-@method_decorator(login_required, name='dispatch')
-class MaterialEvidenceCreatView(CreateView):
-    model = MaterialEvidence
-    fields = ('name', 'author', 'date', 'secondary_literature', 'description')
-    # fields = '__all__'
-    template_name = 'installations/materialevidence_form.html'
-    success_url = reverse_lazy('installations:materialevidence-list')
-
-
-@method_decorator(login_required, name='dispatch')
-class MaterialEvidenceUpdateView(UpdateView):
-    fields = '__all__'
-    model = MaterialEvidence
-    success_url = reverse_lazy('installations:materialevidence-list')
-
-
-@method_decorator(login_required, name='dispatch')
-class MaterialEvidenceDeleteView(DeleteView):
-    model = MaterialEvidence
-    success_url = reverse_lazy("installations:materialevidence-list")
+class EvidenceDeleteView(DeleteView):
+    model = Evidence
+    success_url = reverse_lazy("installations:evidence-list")
 
 
 @method_decorator(login_required, name='dispatch')
@@ -469,7 +393,7 @@ class InstitutionTypeUpdateView(UpdateView):
 
 @method_decorator(login_required, name='dispatch')
 class InstitutionTypeDeleteView(DeleteView):
-    model = SourceType
+    model = InstitutionType
     success_url = reverse_lazy("installations:institutiontype-list")
 
 

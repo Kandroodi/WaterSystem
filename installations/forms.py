@@ -57,14 +57,12 @@ class InstitutionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(InstitutionForm, self).__init__(*args, **kwargs)
         self.fields['secondary_literature'].required = False
-        self.fields['textual_evidence'].required = False
-        self.fields['material_evidence'].required = False
+        self.fields['evidence'].required = False
         self.fields['type'].empty_label = "Select institution type"
         self.fields['city'].empty_label = "Select city"
         self.fields['religion'].empty_label = "Select religion"
         self.fields['secondary_literature'].empty_label = "Select"
-        self.fields['textual_evidence'].empty_label = "Select"
-        self.fields['material_evidence'].empty_label = "Select"
+        self.fields['evidence'].empty_label = "Select"
 
 
 class PersonForm(ModelForm):
@@ -103,13 +101,12 @@ class InstallationForm(ModelForm):
         self.fields['construction_date'].required = False
 
 
-class TextualEvidenceForm(ModelForm):
+class EvidenceForm(ModelForm):
     class Meta:
-        model = TextualEvidence
-        fields = ('source_type', 'title', 'author', 'date', 'secondary_literature', 'description')
+        model = Evidence
+        fields = ('title', 'author', 'date', 'secondary_literature', 'description')
 
         widgets = {
-            'source_type': forms.Select(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
             'date': forms.DateTimeInput(attrs={'class': 'form-control'}),

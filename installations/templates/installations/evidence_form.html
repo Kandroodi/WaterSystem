@@ -5,9 +5,9 @@
 
     <h2>
         {% if not form.instance.pk %}
-            Add Textual evidence
+            Add Evidence
         {% else %}
-            Update Textual evidence "{{textualevidence.title}}"
+            Update Evidence "{{form.instance.title}}"
         {% endif %}
     </h2>
     <div class="form-group">
@@ -21,7 +21,7 @@
                 {% else %}
                     <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Update</button>
                 {% endif %}
-                <a href="{% url 'installations:textualevidence-list' %}" class="btn btn-default">Cancel</a>
+                <a href="{% url 'installations:evidence-list' %}" class="btn btn-default">Cancel</a>
             </div>
 
         </form>

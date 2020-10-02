@@ -1,40 +1,38 @@
 {% extends "installations/base.html" %}
 
 {% block main_content %}
-    <h2>Material evidence list</h2>
+    <h2>Evidence list</h2>
     <table class="table table-borderless">
         <thead class="border-bottom font-weight-bold">
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col">Title</th>
                 <th scope="col">Author</th>
-                <th scope="col">Source type</th>
                 <th scope="col">Description</th>
                 <td>
-                    <a href= "{% url 'installations:materialevidence-insert' %}"
+                    <a href= "{% url 'installations:evidence-insert' %}"
                        class="btn btn-outline-success"
                        target="popup"
-                       onclick="window.open('{% url 'installations:materialevidence-insert' %}','popup','width=600,height=600'); return false;">
+                       onclick="window.open('{% url 'installations:evidence-insert' %}','popup','width=600,height=600'); return false;">
                         <i class="fa fa-plus"></i> Add New</a>
                 </td>
             </tr>
         </thead>
         <tbody>
-            {% for materialevidence in materialevidences %}
+            {% for evidence in evidences %}
             <tr>
-                <td>{{materialevidence.name}}</td>
-                <td>{{materialevidence.author}}</td>
-                <td>{{materialevidence.source_type}}</td>
-                <td>{{materialevidence.description}}</td>
+                <td>{{evidence.title}}</td>
+                <td>{{evidence.author}}</td>
+                <td>{{evidence.description}}</td>
                 <td>
-                    <a href="{% url 'installations:materialevidence-update' materialevidence.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
-
-                    <form action="{% url 'installations:materialevidence-delete' materialevidence.id %}" method="post" class="d-inline">
+                    <a href="{% url 'installations:evidence-update' evidence.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:evidence-delete' evidence.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
                         <i class="fa fa-trash fa-lg text-danger float-right"></i>
                         </button>
                     </form>
                 </td>
+
             </tr>
             {% endfor %}
         </tbody>
