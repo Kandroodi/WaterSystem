@@ -6,6 +6,8 @@
 *.exe
 *.o
 *.so
+*.pyc
+*.pyo
 
 # Byte-compiled / optimized / DLL files #
 #############
@@ -57,8 +59,8 @@ venv.bak/
 .idea/
 =======
 # Directory
-../media/*
-
+*/media/*
+*/__pycache__/*
 
 # migrations except __init__.py
 */migrations/*

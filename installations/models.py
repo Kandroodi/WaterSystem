@@ -65,6 +65,16 @@ class Citymap(models.Model):
     end_date = PartialDateField()
 
 
+class Neighbourhood (models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    neighbourhood_number = models.PositiveIntegerField (null=True, blank=True)
+    extent_shapefile = models.FileField(upload_to='shapefiles/', null=True, blank=True) # Is it correct way?
+
+    def __str__(self):
+        st = self.city.name + ' ' + str(self.neighbourhood_number)
+        return st
+
+
 class Religion(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
