@@ -8,6 +8,17 @@ from django import forms
 from .models import City, Institution, Person, UserProfileInfo
 from .models import *
 from crispy_forms.helper import FormHelper
+from django_select2 import forms as s2forms
+
+
+class CityWidget(s2forms.ModelSelect2Widget):
+    model = City
+
+    def label_from_instance(self, obj):
+        return obj.name
+
+    def get_queryset(self):
+        return City.objects.all().order_by('name')
 
 
 # User form
@@ -24,6 +35,7 @@ class UserProfileInfoForm(forms.ModelForm):
         model = UserProfileInfo
         # fields = ('portfolio_site', 'profile_pic')
         fields = ()
+
 
 #
 class CityForm(ModelForm):
@@ -45,6 +57,14 @@ class CityForm(ModelForm):
 
 
 class InstitutionForm(ModelForm):
+    # city = forms.ModelChoiceField(
+    #     queryset=City.objects.all(),
+    #     widget=CityWidget(attrs={'data-placeholder': 'Select genre...',
+    #                              'style': 'width:100%;', 'class': 'searching',
+    #                              'data-minimum-input-length': '0'}),
+    #     required=False
+    # )
+
     class Meta:
         model = Institution
         fields = '__all__'
@@ -53,6 +73,9 @@ class InstitutionForm(ModelForm):
             'name': 'Institution Name',
             'policy': 'Period'
         }
+        # widgets = {
+        #     "city": CityWidget,
+        # }
 
     def __init__(self, *args, **kwargs):
         super(InstitutionForm, self).__init__(*args, **kwargs)

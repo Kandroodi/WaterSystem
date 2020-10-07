@@ -1,20 +1,94 @@
 {% extends 'installations/base.html' %}
-{% load widget_tweaks %}  <!-- related to forms, the old method, befor the crispy forms -->
-{% load crispy_forms_tags %}
+
+{% block head %}
+	{{form.media.css}}  {# where this set #}
+	<title>{{page_name}}</title>   {# page_name is empty #}
+{% endblock %}
 
 {% block main_content %}
 
 <h2>Add Institution</h2>
-<hr class="my-4">
-<form  method="POST" action="" autocomplete="off">
+
+<form method="post" enctype="multipart/form-data" onsubmit="dosubmit();">
     {% csrf_token %}
 
-<!--     {% crispy form %}-->
-     {{ form|crispy }}
+    <!-- edit or minimize tab -->
+    {% include 'utilities/edit_minimize_tab.html' %}
+
+    <div class="tab-content">
+        <div class="tab-pane fade" id="Edit">
+        <!-- this is used for log info -->
+{#        {%if page_name == "Edit text" and 'unknown' not in crud.last_update %}#}
+{#            {% include 'utilities/change_log.html' %}#}
+{#            {% else %} <p class="mb-4"></p>#}
+{#        {% endif %}#}
+        <p class="mb-4"></p>
+        <!-- institution form is defined in a separate template -->
+        {% include 'installations/_institution_form.html' %}
+        </div>
+        <div class="tab-pane fade" id="Minimize">
+            <!-- you can minimize the text form -->
+            <br>
+            <h5 class="mb-1">Hello </h5>
+            <br>
+        </div>
+    </div>
+
+    {% if view == "inline" %}
+{% else %}
+{% include 'utilities/relation_tabs.html' %}
+
+<div class="tab-content">
+	<div class="tab-pane fade" id="Installations">
+		{{texttext_formset.management_form}}
+		<table class="table table-borderless">
+		<tr class ="d-flex">
+		    <th class="col-5">Installation
+			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+				href ="{% url 'installations:installation-insert' %}" role="button">
+				 <i class="fa fa-plus"></i></a>
+			</th>
+		<th class="col-3">role
+			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+				href ="{% url 'installations:installation-insert'  %}" role="button">
+				 <i class="fa fa-plus"></i></a>
+			</th>
+		<th><i class="fa fa-times text-danger"></i></th>
+		</tr>
+		{{texttextr_formset.management_form}}
+		{% for f in texttextr_formset.forms %}
+			<tr class ="d-flex">
+			<td class="col-5">{{f.primary}} {{f.primary.errors}}</td>
+			<td class="col-3">{{f.relation_type}} {{f.relation_type.errors}}</td>
+			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
+			</tr>
+		{% endfor %}
+		{% for f in texttext_formset.forms %}
+			<tr class ="d-flex">
+			<td class="col-5">{{f.secondary}} {{f.secondary.errors}}</td>
+			<td class="col-3">{{f.relation_type}} {{f.relation_type.errors}}</td>
+			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+
+{% endif %}
+
+
+
+
+
     <div class="form-group">
         <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>
         <a href="{% url 'installations:institution-list' %}" class="btn btn-default">Cancel</a>
     </div>
-<!--    <input type="submit" class="btn btn-success" value="Save">-->
-</form>
+
+{% include 'utilities/tab_selector.html' %}
+{{form.media.js}} {# where this set #}
 {% endblock main_content %}
+
+
+{% block right %}
+{% include 'utilities/complete_approved.html' %}
+{% endblock %}

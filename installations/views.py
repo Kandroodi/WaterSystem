@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
+from utilities.views import edit_model
 
 # Create your views here.
 def register(request):
@@ -139,6 +139,12 @@ def CityDelete(request, id):
 
 
 @login_required
+def edit_institution(request, pk=None, focus='', view='complete'):
+    names = 'institutioninstallation_formset'
+    return edit_model(request, __name__, 'Institution', 'installations', pk, formset_names=names,
+                      focus=focus, view=view)
+
+
 def InstitutionCreate(request, id=0):
     if request.method == "GET":
         if id == 0:
@@ -364,6 +370,7 @@ class SourceTypeDeleteView(DeleteView):
     model = SourceType
     success_url = reverse_lazy("installations:sourcetype-list")
 '''
+
 
 @method_decorator(login_required, name='dispatch')
 class MaterialEvidenceListView(ListView):

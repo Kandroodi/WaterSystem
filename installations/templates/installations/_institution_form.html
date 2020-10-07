@@ -1,0 +1,66 @@
+<table class="table table-borderless" >
+    <tr class="d-flex">
+        <th class="col-2">Name</th>
+        <td class="col-8">{{form.name}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Type</th>
+        <td class="col-8">{{form.type}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:institutiontype-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">City</th>
+        <td class="col-8">{{form.city}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:city-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Period</th>
+        <td class="col-8">{{form.policy}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Start date</th>
+        <td class="col-8">{{form.start_date}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">End date</th>
+        <td class="col-8">{{form.end_date}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Religion</th>
+        <td class="col-8">{{form.religion}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:religion-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Bibliography</th>
+        <td class="col-8">{{form.bibliography}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:bibliography-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Textual evidence</th>
+        <td class="col-8">{{form.textual_evidence}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:textualevidence-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Material evidence</th>
+        <td class="col-8">{{form.material_evidence}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:materialevidence-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+</table>
