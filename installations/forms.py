@@ -79,15 +79,13 @@ class InstitutionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(InstitutionForm, self).__init__(*args, **kwargs)
-        self.fields['bibliography'].required = False
-        self.fields['textual_evidence'].required = False
-        self.fields['material_evidence'].required = False
+        self.fields['secondary_literature'].required = False
+        self.fields['evidence'].required = False
         self.fields['type'].empty_label = "Select institution type"
         self.fields['city'].empty_label = "Select city"
         self.fields['religion'].empty_label = "Select religion"
-        self.fields['bibliography'].empty_label = "Select"
-        self.fields['textual_evidence'].empty_label = "Select"
-        self.fields['material_evidence'].empty_label = "Select"
+        self.fields['secondary_literature'].empty_label = "Select"
+        self.fields['evidence'].empty_label = "Select"
 
 
 class PersonForm(ModelForm):
@@ -98,18 +96,18 @@ class PersonForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(PersonForm, self).__init__(*args, **kwargs)
         self.fields['gender'].required = False
-        self.fields['bibliography'].required = False
+        self.fields['secondary_literature'].required = False
         self.fields['religion'].empty_label = "Select religion"
         self.fields['gender'].empty_label = "Select"
 
 
-class BibliographyForm(ModelForm):
+class SecondaryLiteratureForm(ModelForm):
     class Meta:
-        model = Bibliography
+        model = SecondaryLiterature
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(BibliographyForm, self).__init__(*args, **kwargs)
+        super(SecondaryLiteratureForm, self).__init__(*args, **kwargs)
         self.fields['author'].required = False
         self.fields['journal'].required = False
         self.fields['publisher'].required = False
@@ -126,16 +124,15 @@ class InstallationForm(ModelForm):
         self.fields['construction_date'].required = False
 
 
-class TextualEvidenceForm(ModelForm):
+class EvidenceForm(ModelForm):
     class Meta:
-        model = TextualEvidence
-        fields = ('source_type', 'title', 'author', 'date', 'bibliography', 'description')
+        model = Evidence
+        fields = ('title', 'author', 'date', 'secondary_literature', 'description')
 
         widgets = {
-            'source_type': forms.Select(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
             'date': forms.DateTimeInput(attrs={'class': 'form-control'}),
-            'bibliography': forms.Select(attrs={'class': 'form-control'}),
+            'secondary_literature': forms.Select(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }

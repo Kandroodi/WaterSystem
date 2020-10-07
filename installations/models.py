@@ -65,6 +65,27 @@ class Citymap(models.Model):
     end_date = PartialDateField()
 
 
+class Neighbourhood (models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    neighbourhood_number = models.PositiveIntegerField (null=True, blank=True)
+    extent_shapefile = models.FileField(upload_to='shapefiles/', null=True, blank=True) # Is it correct way?
+
+    def __str__(self):
+        st = self.city.name + ' ' + str(self.neighbourhood_number)
+        return st
+
+
+class Location(models.Model):
+    ''''The location used for exact location'''
+    gpsargs = {'blank': True, 'null': True, 'max_digits': 8, 'decimal_places': 5}
+    latitude = models.DecimalField(**gpsargs)
+    longitude = models.DecimalField(**gpsargs)
+
+    def __str__(self):
+        st = str(self.latitude) + '  ' + str(self.longitude)
+        return st
+
+
 class Religion(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
@@ -73,31 +94,22 @@ class Religion(models.Model):
         return self.name
 
 
-class Bibliography(models.Model):
-    title = models.CharField(max_length=250, blank=False)
-    author = models.CharField(max_length=50, blank=False)
-    journal = models.CharField(max_length=50)
-    publisher = models.CharField(max_length=50)
-    year = PartialDateField(blank=True, null=True)
+class SecondaryLiterature(models.Model):
+    title = models.CharField(max_length=250, blank=False, default='', null=True)
+    author = models.CharField(max_length=100, blank=True, default='', null=True)
+    journal = models.CharField(max_length=100, blank=True, default='', null=True)
+    publisher = models.CharField(max_length=100, blank=True, default='', null=True)
+    year = PartialDateField(blank=True, null=True, default='')
 
     def __str__(self):
         return self.title
 
 
-class SourceType(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    description = models.TextField(max_length=500, blank=False)
-
-    def __str__(self):
-        return self.name
-
-
-class TextualEvidence(models.Model):
-    source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE, blank=True, null=True)
+class Evidence(models.Model):
     title = models.CharField(max_length=250, blank=False)
     author = models.CharField(max_length=50, blank=False)
     date = models.DateTimeField(blank=True, null=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
@@ -105,19 +117,6 @@ class TextualEvidence(models.Model):
 
     def get_absolute_url(self):
         return reverse("installations:home", kwargs={'pk': self.pk})
-
-
-class MaterialEvidence(models.Model):
-    source_type = models.ForeignKey(SourceType, on_delete=models.CASCADE)
-    name = models.CharField(max_length=250, blank=False)
-    author = models.CharField(max_length=50, blank=False)
-    date = PartialDateField(blank=True, null=True)
-    # picture = models.ImageField()
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
-    description = models.TextField(max_length=1000, blank=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Person(models.Model):
@@ -128,13 +127,13 @@ class Person(models.Model):
         ('O', 'Other'),
     )
     gender = models.CharField(max_length=1, choices=GENDER, default='M')
-    birth = PartialDateField()
-    death = PartialDateField()
-    role = models.CharField(max_length=100, blank=True)  # I think it's not necessary
-    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, default='')
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
+    birth = PartialDateField(blank=True, default='', null=True)
+    death = PartialDateField(blank=True, default='', null=True)
+    role = models.CharField(max_length=100, blank=True)  # Role field for person and type of envolvement feild for person-installation relation
+    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -145,25 +144,10 @@ class Watersystem(models.Model):
     type = models.CharField(max_length=100, blank=True)
     inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
     description = models.TextField(max_length=1000, blank=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False, default='')
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
-
-
-class Installation(models.Model):
-    watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
-    construction_date = PartialDateField(blank=True, null=True)
-    characteristic = models.CharField(max_length=50)  # space holder, ...  will be defined
-    functioning_region = models.CharField(max_length=50)  # space holder, ... will be defined
-    start_functioning_year = PartialDateField(blank=True, null=True)
-    end_functioning_year = PartialDateField(blank=True, null=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, default='')
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.watersystem.name
 
 
 class Purpose(models.Model):
@@ -172,6 +156,23 @@ class Purpose(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Installation(models.Model):
+    watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
+    construction_date = PartialDateField(blank=True, null=True)
+    first_reference = PartialDateField(blank=True, null=True)
+    end_functioning_year = PartialDateField(blank=True, null=True)
+    purpose = models.ManyToManyField(Purpose, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
+    exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
+
+    def __str__(self):
+        return self.watersystem.name
 
 
 class InstitutionType(models.Model):
@@ -185,7 +186,9 @@ class InstitutionType(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
     type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True)
+    purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     policy = models.CharField(max_length=100, blank=True)
     start_date = PartialDateField(blank=True, null=True) # this field is for test and explaine the partitial dat
     ''''help_text="Date formats:"
@@ -198,9 +201,9 @@ class Institution(models.Model):
     # start_date = ... will be the partitial dat
     end_date = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
-    bibliography = models.ForeignKey(Bibliography, on_delete=models.CASCADE, blank=False)
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE, blank=False)
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE, blank=False)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=False, default='', null=True)
+    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -210,21 +213,25 @@ class Institution(models.Model):
 class CityPersonRelation(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    role = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
+
+
+class NeighbourhoodPersonRelation(models.Model):
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, blank=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
 class PersonInstitutionRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
-    role = models.CharField(max_length=50, blank=False)
-    start_date = PartialDateField()
-    end_date = PartialDateField()
+    type_of_involvement = models.CharField(max_length=50, blank=False)
 
 
 class PersonInstallationRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
-    role = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
 class CityInstallationRelation(models.Model):
@@ -234,44 +241,30 @@ class CityInstallationRelation(models.Model):
     capacity_percentage = models.DecimalField(max_digits=7, decimal_places=2, default=0)
 
 
-class InstallationPurposeRelation(models.Model):
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
-    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE, blank=True)
-    percentage = models.DecimalField(max_digits=7, decimal_places=2)
-
-
 class InstitutionInstallationRelation(models.Model):
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
-    role = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=False)
 
 
-class TextPersonRelation(models.Model):
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
+class EvidencePersonRelation(models.Model):
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True, default=0)
 
 
-class TextInstitutionRelation(models.Model):
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
+class EvidenceInstitutionRelation(models.Model):
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True)
 
 
-class TextInstallationRelation(models.Model):
-    textual_evidence = models.ForeignKey(TextualEvidence, on_delete=models.CASCADE)
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
-    page_number = models.CharField(max_length=100,
-                                   blank=False)  # I think maybe it's better if we had letter as page numbers also
-    description = models.TextField(max_length=1000, blank=True)
-
-
-class MaterialInstallationRelation(models.Model):
-    material_evidence = models.ForeignKey(MaterialEvidence, on_delete=models.CASCADE)
+class EvidenceInstallationRelation(models.Model):
+    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also

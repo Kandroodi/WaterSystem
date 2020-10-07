@@ -9,7 +9,7 @@
         <tr>
             <td>Water System</td>
             <td>Construction Date</td>
-            <td>Characteristic</td>
+            <td>City</td>
 <!--            <td>Publisher</td>-->
 <!--            <td>Year</td>-->
             <td>
@@ -22,7 +22,7 @@
             <tr>
                 <td>{{installation.watersystem }}</td>
                 <td>{{installation.construction_date}}</td>
-                <td>{{installation.characteristic}}</td>
+                <td>{{installation.city}}</td>
                 <td>
                     <a href="{% url 'installations:installation-update' installation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:installation-delete' installation.id %}" method="post" class="d-inline">

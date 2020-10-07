@@ -5,9 +5,9 @@
 
     <h2>
         {% if not form.instance.pk %}
-            Add Bibliography
+            Add Secondary literature
         {% else %}
-            Update Bibliography "{{bibliography.title}}"
+            Update Secondary literature "{{form.instance.title}}"
         {% endif %}
     </h2>
 
@@ -22,7 +22,7 @@
             {% else %}
                 <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Update</button>
             {% endif %}
-            <a href="{% url 'installations:bibliography-list' %}" class="btn btn-default">Cancel</a>
+            <a href="{% url 'installations:secondaryliterature-list' %}" class="btn btn-default">Cancel</a>
         </div>
 
     </form>
