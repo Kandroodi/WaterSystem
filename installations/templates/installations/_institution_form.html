@@ -41,26 +41,23 @@
     </tr>
     <tr class="d-flex">
         <th class="col-2">Bibliography</th>
-        <td class="col-8">{{form.bibliography}}</td>
+        <td class="col-8">{{form.secondary_literature}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:bibliography-insert' %}"
+           href ="{% url 'installations:secondaryliterature-insert' %}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
     <tr class="d-flex">
-        <th class="col-2">Textual evidence</th>
-        <td class="col-8">{{form.textual_evidence}}</td>
+        <th class="col-2">Evidence</th>
+        <td class="col-8">{{form.evidence}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:textualevidence-insert' %}"
+           href ="{% url 'installations:evidence-insert' %}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
     <tr class="d-flex">
-        <th class="col-2">Material evidence</th>
-        <td class="col-8">{{form.material_evidence}}</td>
-        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:materialevidence-insert' %}"
-           role="button"><i class="fa fa-plus"></i></a>
+        <th class="col-2">Comment</th>
+        <td class="col-8">{{form.comment}}</td>
         </td>
     </tr>
 </table>

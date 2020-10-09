@@ -64,6 +64,9 @@ class InstitutionForm(ModelForm):
     #                              'data-minimum-input-length': '0'}),
     #     required=False
     # )
+    comment = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 3}),
+        required=False)
 
     class Meta:
         model = Institution
