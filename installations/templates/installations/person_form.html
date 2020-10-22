@@ -1,5 +1,4 @@
 {% extends "installations/base.html" %}
-{% load crispy_forms_tags %}
 
 {% block main_content %}
 
@@ -11,11 +10,43 @@
         {% endif %}
     </h2>
 
-    <form method="post">
-        {% csrf_token %}
-        <table>
-            {% crispy form %}
-        </table>
+
+<form method="post">
+{% csrf_token %}
+    {# Edit-Minimize Tab#}
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a href="#Edit" id='Edita' class="nav-link" data-toggle="tab">
+		<i class="fas fa-pen"></i></a>
+    </li>
+    <li class="nav-item">
+        <a href="#Minimize" id='Minimizea' class="nav-link" data-toggle="tab">
+		<i class="fas fa-window-minimize"></i></a>
+    </li>
+    </ul>
+    {# Edit-Minimize Tab content #}
+    <div class="tab-content">
+        <div class="tab-pane fade in show active" id="Edit">
+        <p class="mb-4"></p>
+        <!-- person form is defined in a separate template -->
+        {% include 'installations/_person_form.html' %}
+        </div>
+        <div class="tab-pane fade" id="Minimize">
+            <!-- you can minimize the form -->
+            <br>
+            <h5 class="mb-1">Hello </h5>
+            <br>
+        </div>
+    </div>
+
+    {#    #}
+
+
+
+
+
+
+
         <div class="form-group">
             {% if not form.instance.pk %}
                 <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Save</button>

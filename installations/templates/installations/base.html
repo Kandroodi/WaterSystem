@@ -21,9 +21,6 @@
     {% leaflet_css %}
 
     <style>
-        input, select {width: 100%}
-    </style>
-    <style>
     .leaflet-container-default {
         width: 100%;
         height: 100%;
@@ -36,8 +33,14 @@
      -moz-box-sizing: border-box;
     }
     </style>
+    <style>
+        input, select {width: 100%}
+    </style>
+
+
+    {{ form.media.css }}
     {% block head %}
-	{% endblock %}
+	{% endblock head %}
     <title>Source of Life</title>
 </head>
 
@@ -71,5 +74,7 @@
 {#    </script>#}
     {% block javascript %}
     {% endblock javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{ form.media.js }}
 </body>
 </html>

@@ -4,32 +4,20 @@
         <td class="col-8">{{form.name}}</td>
     </tr>
     <tr class="d-flex">
-        <th class="col-2">Type</th>
-        <td class="col-8">{{form.type}}</td>
-        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:institutiontype-insert' %}"
-           role="button"><i class="fa fa-plus"></i></a>
-        </td>
+        <th class="col-2">Gender</th>
+        <td class="col-8">{{form.gender}}</td>
     </tr>
     <tr class="d-flex">
-        <th class="col-2">City</th>
-        <td class="col-8">{{form.city}}</td>
-        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:city-insert' %}"
-           role="button"><i class="fa fa-plus"></i></a>
-        </td>
+        <th class="col-2">Birth</th>
+        <td class="col-8">{{form.birth}}</td>
     </tr>
     <tr class="d-flex">
-        <th class="col-2">Period</th>
-        <td class="col-8">{{form.policy}}</td>
+        <th class="col-2">Death</th>
+        <td class="col-8">{{form.death}}</td>
     </tr>
     <tr class="d-flex">
-        <th class="col-2">Start date</th>
-        <td class="col-8">{{form.start_date}}</td>
-    </tr>
-    <tr class="d-flex">
-        <th class="col-2">End date</th>
-        <td class="col-8">{{form.end_date}}</td>
+        <th class="col-2">Role</th>
+        <td class="col-8">{{form.role}}</td>
     </tr>
     <tr class="d-flex">
         <th class="col-2">Religion</th>
@@ -58,6 +46,5 @@
     <tr class="d-flex">
         <th class="col-2">Comment</th>
         <td class="col-8">{{form.comment}}</td>
-        </td>
     </tr>
 </table>

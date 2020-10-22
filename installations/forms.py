@@ -10,16 +10,26 @@ from .models import *
 from crispy_forms.helper import FormHelper
 from django_select2 import forms as s2forms
 
+# Widgets
+class InstitutionTypeWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['name__icontains']
+
 
 class CityWidget(s2forms.ModelSelect2Widget):
-    model = City
+    search_fields = ['name__icontains']
 
-    def label_from_instance(self, obj):
-        return obj.name
 
-    def get_queryset(self):
-        return City.objects.all().order_by('name')
+class ReligionWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['name__icontains']
 
+
+class SecondaryLiteratureWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['title__icontains']
+    # search_fields = ['title__startswith'] this can used if you want to search based on first letter
+
+
+class EvidenceWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['title__icontains']
 
 # User form
 class UserForm(forms.ModelForm):
@@ -57,17 +67,6 @@ class CityForm(ModelForm):
 
 
 class InstitutionForm(ModelForm):
-    # city = forms.ModelChoiceField(
-    #     queryset=City.objects.all(),
-    #     widget=CityWidget(attrs={'data-placeholder': 'Select genre...',
-    #                              'style': 'width:100%;', 'class': 'searching',
-    #                              'data-minimum-input-length': '0'}),
-    #     required=False
-    # )
-    comment = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 3}),
-        required=False)
-
     class Meta:
         model = Institution
         fields = '__all__'
@@ -76,32 +75,50 @@ class InstitutionForm(ModelForm):
             'name': 'Institution Name',
             'policy': 'Period'
         }
-        # widgets = {
-        #     "city": CityWidget,
-        # }
+        widgets = {
+            "type": InstitutionTypeWidget(attrs={'style':'width:100%'}),
+            "city": CityWidget(attrs={'style':'width:100%'}),
+            "religion": ReligionWidget(attrs={'style':'width:100%'}),
+            "secondary_literature": SecondaryLiteratureWidget(attrs={'style':'width:100%'}),
+            "evidence": EvidenceWidget(attrs={'style':'width:100%'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(InstitutionForm, self).__init__(*args, **kwargs)
         self.fields['secondary_literature'].required = False
-        self.fields['evidence'].required = False
         self.fields['type'].empty_label = "Select institution type"
         self.fields['city'].empty_label = "Select city"
         self.fields['religion'].empty_label = "Select religion"
-        self.fields['secondary_literature'].empty_label = "Select"
-        self.fields['evidence'].empty_label = "Select"
+        self.fields['evidence'].empty_label = "Select evidence"
+        self.fields['secondary_literature'].empty_label = "Select secondary literature"
 
+
+    comment = forms.CharField(widget=forms.Textarea(
+            attrs={'style': 'width:100%', 'rows': 3}),
+            required=False)
 
 class PersonForm(ModelForm):
     class Meta:
         model = Person
         fields = '__all__'
+        widgets = {
+            "religion": ReligionWidget,
+            "secondary_literature": SecondaryLiteratureWidget,
+            "evidence": EvidenceWidget,
+        }
 
     def __init__(self, *args, **kwargs):
         super(PersonForm, self).__init__(*args, **kwargs)
         self.fields['gender'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['religion'].empty_label = "Select religion"
-        self.fields['gender'].empty_label = "Select"
+        self.fields['secondary_literature'].empty_label = "Select secondary literature"
+        self.fields['gender'].empty_label = "Select gender"
+        self.fields['evidence'].empty_label = "Select evidence"
+
+    comment = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 3}),
+        required=False)
 
 
 class SecondaryLiteratureForm(ModelForm):
