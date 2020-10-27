@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'six',
     'leaflet',
     'django_select2',
+    'easyaudit',
 ]
 
 # CRISPY_TEMPLATE_PACK = 'uni_form'
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
 ]
 
 ROOT_URLCONF = 'waterSystem.urls'

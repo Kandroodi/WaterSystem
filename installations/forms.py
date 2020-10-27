@@ -1,6 +1,6 @@
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML
-from django.forms import ModelForm
+from django.forms import ModelForm, inlineformset_factory
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django import forms
@@ -9,6 +9,7 @@ from .models import City, Institution, Person, UserProfileInfo
 from .models import *
 from crispy_forms.helper import FormHelper
 from django_select2 import forms as s2forms
+
 
 # Widgets
 class InstitutionTypeWidget(s2forms.ModelSelect2Widget):
@@ -30,6 +31,7 @@ class SecondaryLiteratureWidget(s2forms.ModelSelect2Widget):
 
 class EvidenceWidget(s2forms.ModelSelect2Widget):
     search_fields = ['title__icontains']
+
 
 # User form
 class UserForm(forms.ModelForm):
@@ -76,11 +78,11 @@ class InstitutionForm(ModelForm):
             'policy': 'Period'
         }
         widgets = {
-            "type": InstitutionTypeWidget(attrs={'style':'width:100%'}),
-            "city": CityWidget(attrs={'style':'width:100%'}),
-            "religion": ReligionWidget(attrs={'style':'width:100%'}),
-            "secondary_literature": SecondaryLiteratureWidget(attrs={'style':'width:100%'}),
-            "evidence": EvidenceWidget(attrs={'style':'width:100%'}),
+            "type": InstitutionTypeWidget(attrs={'style': 'width:100%'}),
+            "city": CityWidget(attrs={'style': 'width:100%'}),
+            "religion": ReligionWidget(attrs={'style': 'width:100%'}),
+            "secondary_literature": SecondaryLiteratureWidget(attrs={'style': 'width:100%'}),
+            "evidence": EvidenceWidget(attrs={'style': 'width:100%'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -92,10 +94,10 @@ class InstitutionForm(ModelForm):
         self.fields['evidence'].empty_label = "Select evidence"
         self.fields['secondary_literature'].empty_label = "Select secondary literature"
 
-
     comment = forms.CharField(widget=forms.Textarea(
-            attrs={'style': 'width:100%', 'rows': 3}),
-            required=False)
+        attrs={'style': 'width:100%', 'rows': 3}),
+        required=False)
+
 
 class PersonForm(ModelForm):
     class Meta:
@@ -156,3 +158,54 @@ class EvidenceForm(ModelForm):
             'secondary_literature': forms.Select(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+# Relations form
+class CityPersonRelationForm(ModelForm):
+    class Meta:
+        model = CityPersonRelation
+        fields = ('city', 'person', 'type_of_involvement')
+
+
+class NeighbourhoodPersonRelationForm(ModelForm):
+    class Meta:
+        model = NeighbourhoodPersonRelation
+        fields = ('neighbourhood', 'person', 'type_of_involvement')
+
+class PersonInstitutionRelationForm(ModelForm):
+    class Meta:
+        model = PersonInstitutionRelation
+        fields = ('person', 'institution', 'type_of_involvement')
+
+class PersonInstallationRelationForm(ModelForm):
+    class Meta:
+        model = PersonInstallationRelation
+        fields = ('person', 'installation', 'type_of_involvement')
+
+class EvidencePersonRelationForm(ModelForm):
+    class Meta:
+        model = EvidencePersonRelation
+        fields = ('evidence', 'person', 'page_number', 'description')
+
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+# Formsets
+personcity_formset = inlineformset_factory(
+    Person, CityPersonRelation, form=CityPersonRelationForm, extra=1)
+
+
+personneighbourhood_formset = inlineformset_factory(
+    Person, NeighbourhoodPersonRelation, form=NeighbourhoodPersonRelationForm, extra=1)
+
+
+personinstitution_formset = inlineformset_factory(
+    Person, PersonInstitutionRelation, form=PersonInstitutionRelationForm, extra=1)
+
+
+personinstallation_formset = inlineformset_factory(
+    Person, PersonInstallationRelation, form=PersonInstallationRelationForm, extra=1)
+
+
+personevidence_formset = inlineformset_factory(
+    Person, EvidencePersonRelation, form=EvidencePersonRelationForm, extra=1)

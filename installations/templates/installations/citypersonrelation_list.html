@@ -7,7 +7,7 @@
             <tr>
                 <th scope="col">City</th>
                 <th scope="col">Person</th>
-                <th scope="col">Role</th>
+                <th scope="col">Type of involvement</th>
                 <td>
                     <a href= "{% url 'installations:citypersonrelation-insert' %}"
                        class="btn btn-outline-success"
@@ -22,7 +22,7 @@
             <tr>
                 <td>{{citypersonrelation.city}}</td>
                 <td>{{citypersonrelation.person}}</td>
-                <td>{{citypersonrelation.role}}</td>
+                <td>{{citypersonrelation.type_of_involvement}}</td>
                 <td>
                     <a href="{% url 'installations:citypersonrelation-update' citypersonrelation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:citypersonrelation-delete' citypersonrelation.id %}" method="post" class="d-inline">
