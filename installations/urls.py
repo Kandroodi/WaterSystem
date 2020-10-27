@@ -19,6 +19,7 @@ urlpatterns = [
     path('institution/delete/<int:id>/', views.InstitutionDelete, name='institution-delete'),
     path('institution/list/', views.InstitutionList, name='institution-list'),  # get request to retrieve and display all records
     path('person/new/', views.edit_person, name='person-insert'),
+    path('person/new/<str:view>/', views.edit_person, name='person-insert'),
     path('person/new/<int:pk>/', views.edit_person, name='person-update'),
     path('person/new/<int:pk>/<str:focus>', views.edit_person, name='person-update'),
     path('person/delete/<int:id>/', views.PersonDelete, name='person-delete'),

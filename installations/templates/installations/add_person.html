@@ -32,8 +32,8 @@
     </div>
 </div>
 
-{#{% if view == "inline" %}#}
-{#{% else %}#}
+{% if view == "inline" %}
+{% else %}
 {#{% include 'utilities/relation_tabs.html' %}#}
 
 <!-- -->
@@ -192,7 +192,7 @@
 </div>
 
 
-{#{% endif %}#}
+{% endif %}
 
 <input type="hidden" name="navbar" id="navbar" value="" />
 <input type="hidden" name="navcontent" id="navcontent" value="" />
