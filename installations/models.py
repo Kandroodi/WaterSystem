@@ -159,6 +159,7 @@ class Purpose(models.Model):
 
 
 class Installation(models.Model):
+    name = models.CharField(max_length=250, blank=True, default='')
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
     construction_date = PartialDateField(blank=True, null=True)
     first_reference = PartialDateField(blank=True, null=True)
@@ -172,7 +173,7 @@ class Installation(models.Model):
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
-        return self.watersystem.name
+        return self.name
 
 
 class InstitutionType(models.Model):

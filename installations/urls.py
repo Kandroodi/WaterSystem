@@ -14,19 +14,23 @@ urlpatterns = [
     path('city/new/<int:id>/', views.CityCreate, name='city-update'), # get and post req. for update operation
     path('city/delete/<int:id>/', views.CityDelete, name='city-delete'),
     path('city/list/', views.CityList, name='city-list'),  # get request to retrieve and display all records
-    path('institution/new/', views.InstitutionCreate, name='institution-insert'),  # get and post req. for insert operation
+    # path('institution/new/', views.InstitutionCreate, name='institution-insert'),  # get and post req. for insert operation
+    path('institution/new/', views.edit_institution, name='institution-insert'),  # get and post req. for insert operation
     path('institution/new/<int:id>/', views.InstitutionCreate, name='institution-update'),  # get and post req. for update operation
     path('institution/delete/<int:id>/', views.InstitutionDelete, name='institution-delete'),
     path('institution/list/', views.InstitutionList, name='institution-list'),  # get request to retrieve and display all records
-    path('person/new/', views.PersonCreate, name='person-insert'),
-    path('person/new/<int:id>/', views.PersonCreate, name='person-update'),
+    path('person/new/', views.edit_person, name='person-insert'),
+    path('person/new/<str:view>/', views.edit_person, name='person-insert'),
+    path('person/new/<int:pk>/', views.edit_person, name='person-update'),
+    path('person/new/<int:pk>/<str:focus>', views.edit_person, name='person-update'),
     path('person/delete/<int:id>/', views.PersonDelete, name='person-delete'),
     path('person/list/', views.PersonList, name='person-list'),
     path('secondaryliterature/new/', views.SecondaryLiteratureCreatView.as_view(), name='secondaryliterature-insert'),
     url(r'^secondaryliterature/new/(?P<pk>\d+)/$', views.SecondaryLiteratureUpdateView.as_view(), name='secondaryliterature-update'),
     url(r'^secondaryliterature/delete/(?P<pk>\d+)/$', views.SecondaryLiteratureDeleteView.as_view(), name='secondaryliterature-delete'),
     path('secondaryliterature/list/', views.SecondaryLiteratureListView.as_view(), name='secondaryliterature-list'),
-    path('installation/new/', views.InstallationCreate, name='installation-insert'),
+    # path('installation/new/', views.InstallationCreate, name='installation-insert'),
+    path('installation/new/', views.edit_installation, name='installation-insert'),
     path('installation/new/<int:id>/', views.InstallationCreate, name='installation-update'),
     path('installation/delete/<int:id>/', views.InstallationDelete, name='installation-delete'),
     path('installation/list/', views.InstallationList, name='installation-list'),
@@ -50,6 +54,8 @@ urlpatterns = [
     url(r'^religion/new/(?P<pk>\d+)/$', views.ReligionUpdateView.as_view(), name='religion-update'),
     url(r'^religion/delete/(?P<pk>\d+)/$', views.ReligionDeleteView.as_view(), name='religion-delete'),
     path('religion/list', views.ReligionListView.as_view(), name='religion-list'),
+
+    url(r'^neighbourhood/new/$', views.NeighbourhoodCreatView.as_view(), name='neighbourhood-insert'),
     # Relations
     # ------------------------------------------------------------------------------------------------------------------
     url(r'^citypersonrelation/new/$', views.CityPersonRelationCreatView.as_view(), name='citypersonrelation-insert'),

@@ -10,12 +10,17 @@ from django.views.generic import (View, TemplateView, ListView,
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.apps import apps
+import sys
+import inspect
+from django.contrib import messages
 
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from utilities.views import edit_model
 
 
 # Create your views here.
@@ -139,6 +144,12 @@ def CityDelete(request, id):
 
 
 @login_required
+def edit_institution(request, pk=None, focus='', view='complete'):
+    names = 'institutionperson_formset,institutioninstallation_formset,institutionevidence_formset'
+    return edit_model(request, __name__, 'Institution', 'installations', pk, formset_names=names,
+                      focus=focus, view=view)
+
+
 def InstitutionCreate(request, id=0):
     if request.method == "GET":
         if id == 0:
@@ -146,7 +157,7 @@ def InstitutionCreate(request, id=0):
         else:
             institution = Institution.objects.get(pk=id)
             form = InstitutionForm(instance=institution)
-        return render(request, 'installations/institution_form.html', {'form': form})
+        return render(request, 'installations/add_institution.html', {'form': form})
     else:  # request.method == "POST":
         if id == 0:
             form = InstitutionForm(request.POST)
@@ -168,6 +179,14 @@ def InstitutionDelete(request, id):
     institution = get_object_or_404(Institution, pk=id)
     institution.delete()
     return redirect('installations:institution-list')
+
+
+@login_required
+def edit_person(request, pk=None, focus='', view='complete'):
+    names = 'personcity_formset,personneighbourhood_formset,personinstitution_formset,'
+    names += 'personinstallation_formset,personevidence_formset'
+    return edit_model(request, __name__, 'Person', 'installations', pk, formset_names=names,
+                      focus=focus, view=view)
 
 
 @login_required
@@ -228,6 +247,13 @@ class SecondaryLiteratureUpdateView(UpdateView):
 class SecondaryLiteratureDeleteView(DeleteView):
     model = SecondaryLiterature
     success_url = reverse_lazy("installations:secondaryliterature-list")
+
+
+@login_required
+def edit_installation(request, pk=None, focus='', view='complete'):
+    names = 'installationinstitution_formset,installationperson_formset'
+    return edit_model(request, __name__, 'Installation', 'installations', pk, formset_names=names,
+                      focus=focus, view=view)
 
 
 @login_required
@@ -425,6 +451,14 @@ class ReligionDeleteView(DeleteView):
     success_url = reverse_lazy("installations:religion-list")
 
 
+@method_decorator(login_required, name='dispatch')
+class NeighbourhoodCreatView(CreateView):
+    model = Neighbourhood
+    fields = '__all__'
+    template_name = 'installations/neighbourhood_form.html'
+    success_url = reverse_lazy('installations:home')
+
+
 # Relations
 # ----------------------------------------------------------------------------------------------------------------------
 # CityPersonRelation
@@ -541,3 +575,6 @@ class CityInstallationRelationUpdateView(UpdateView):
 class CityInstallationRelationDeleteView(DeleteView):
     model = CityInstallationRelation
     success_url = reverse_lazy("installations:cityinstallationrelation-list")
+
+
+# Functions
