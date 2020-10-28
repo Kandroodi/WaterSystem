@@ -7,6 +7,7 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
+            <td>Name</td>
             <td>Water System</td>
             <td>Construction Date</td>
             <td>City</td>
@@ -20,6 +21,7 @@
     <tbody>
         {% for installation in installation_list %}
             <tr>
+                <td>{{installation.name }}</td>
                 <td>{{installation.watersystem }}</td>
                 <td>{{installation.construction_date}}</td>
                 <td>{{installation.city}}</td>

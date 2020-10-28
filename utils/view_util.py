@@ -374,8 +374,8 @@ def make_tabs(tab_type,focus=0,focus_names = ''):
 		t = 'Institutions, Persons'
 		relations = Tab(t,focus)
 		return Tabs([minimize,relations],'minimize,relations',focus_names)
-	if tab_type == 'text':
-		t = 'Texts,Persons,Publications,PublicationReview'
+	if tab_type == 'institution':
+		t = 'Persons,Installations,Evidences'
 		relations = Tab(t,focus)
 		return Tabs([minimize,relations],'minimize,relations',focus_names)
 	if tab_type == 'illustration':
@@ -394,6 +394,3 @@ def make_tabs(tab_type,focus=0,focus_names = ''):
 		t = 'Contained by'
 		relations = Tab(t,focus)
 		return Tabs([minimize,relations],'minimize,relations',focus_names)
-		
-
-		

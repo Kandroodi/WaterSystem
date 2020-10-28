@@ -54,7 +54,6 @@
         <a class="nav-link" id="Evidencesa" data-toggle="tab" href="#Evidences" role="tab" aria-controls="Evidences" aria-selected="false">Evidences</a>
     </li>
 </ul>
-<div class="tab-content">
 
 <div class="tab-content" id="myTabContent">
     <!-- Citys -->
@@ -67,11 +66,7 @@
 				href ="{% url 'installations:city-insert' %}" role="button">
 				 <i class="fa fa-plus"></i></a>
         </th>
-		<th class="col-3">Type of involvement
-			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:citypersonrelation-insert' %}" role="button">
-				 <i class="fa fa-plus"></i></a>
-			</th>
+		<th class="col-3">Type of involvement </th>
 		<th><i class="fa fa-times text-danger"></i></th>
 		</tr>
 		{{personcity_formset.management_form}}
@@ -120,11 +115,7 @@
 				href ="{% url 'installations:institution-insert' %}" role="button">
 				 <i class="fa fa-plus"></i></a>
         </th>
-		<th class="col-3">Type of involvement
-			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:citypersonrelation-insert' %}" role="button"> <!-- creat a view for personinstitutionrelation-insert-->
-				 <i class="fa fa-plus"></i></a>
-			</th>
+		<th class="col-3">Type of involvement</th>
 		<th><i class="fa fa-times text-danger"></i></th>
 		</tr>
 		{{personinstitution_formset.management_form}}
@@ -169,7 +160,7 @@
 		<tr class ="d-flex">
 		<th class="col-3">Evidence
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:installation-insert' %}" role="button">
+				href ="{% url 'installations:evidence-insert' %}" role="button">
 				 <i class="fa fa-plus"></i></a>
         </th>
 		<th class="col-2">Page number </th>

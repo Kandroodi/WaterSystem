@@ -145,7 +145,7 @@ def CityDelete(request, id):
 
 @login_required
 def edit_institution(request, pk=None, focus='', view='complete'):
-    names = 'institutioninstallation_formset'
+    names = 'institutionperson_formset,institutioninstallation_formset,institutionevidence_formset'
     return edit_model(request, __name__, 'Institution', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
 
@@ -157,7 +157,7 @@ def InstitutionCreate(request, id=0):
         else:
             institution = Institution.objects.get(pk=id)
             form = InstitutionForm(instance=institution)
-        return render(request, 'installations/institution_form.html', {'form': form})
+        return render(request, 'installations/add_institution.html', {'form': form})
     else:  # request.method == "POST":
         if id == 0:
             form = InstitutionForm(request.POST)
@@ -256,24 +256,24 @@ def edit_installation(request, pk=None, focus='', view='complete'):
                       focus=focus, view=view)
 
 
-# @login_required
-# def InstallationCreate(request, id=0):
-#     if request.method == "GET":
-#         if id == 0:
-#             form = InstallationForm()
-#         else:
-#             installation = Installation.objects.get(pk=id)
-#             form = InstallationForm(instance=installation)
-#         return render(request, 'installations/installation_form.html', {'form': form})
-#     else:  # request.method == "POST":
-#         if id == 0:
-#             form = InstallationForm(request.POST)
-#         else:
-#             installation = Installation.objects.get(pk=id)
-#             form = InstallationForm(request.POST, instance=installation)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('installations:installation-list')  # after save redirect to the installation list
+@login_required
+def InstallationCreate(request, id=0):
+    if request.method == "GET":
+        if id == 0:
+            form = InstallationForm()
+        else:
+            installation = Installation.objects.get(pk=id)
+            form = InstallationForm(instance=installation)
+        return render(request, 'installations/installation_form.html', {'form': form})
+    else:  # request.method == "POST":
+        if id == 0:
+            form = InstallationForm(request.POST)
+        else:
+            installation = Installation.objects.get(pk=id)
+            form = InstallationForm(request.POST, instance=installation)
+        if form.is_valid():
+            form.save()
+        return redirect('installations:installation-list')  # after save redirect to the installation list
 
 
 def InstallationList(request):

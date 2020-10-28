@@ -1,0 +1,148 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+    <h2>
+        {% if not form.instance.pk %}
+            Add Institution
+        {% else %}
+            Update Institution "{{form.instance.name}}"
+        {% endif %}
+    </h2>
+
+<form method="post" enctype="multipart/form-data" onsubmit="dosubmit();">
+{% csrf_token %}
+
+    <!-- edit or minimize tab -->
+{% include 'utilities/edit_minimize_tab.html' %}
+
+<div class="tab-content">
+    <div class="tab-pane fade" id="Edit">
+{#	{%if page_name == "Edit text" and 'unknown' not in crud.last_update %}#}
+{#		{% include 'utilities/change_log.html' %}#}
+{#		{% else %} <p class="mb-4"></p>#}
+{#	{% endif %}#}
+	<!-- text form is defined in a seperate template -->
+	{% include 'installations/_institution_form.html' %}
+    </div>
+    <div class="tab-pane fade" id="Minimize">
+		<!-- you can minimize the text form -->
+		<br>
+        <h5 class="mb-1">Hello </h5>
+		<br>
+    </div>
+</div>
+
+{% if view == "inline" %}
+{% else %}
+{#{% include 'utilities/relation_tabs.html' %}#}
+<!-- -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link" id="Personsa" data-toggle="tab" href="#Persons" role="tab" aria-controls="Persons" aria-selected="true">Persons</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="Installationsa" data-toggle="tab" href="#Installations" role="tab" aria-controls="Installations" aria-selected="false">Installations</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="Evidencesa" data-toggle="tab" href="#Evidences" role="tab" aria-controls="Evidences" aria-selected="false">Evidences</a>
+    </li>
+</ul>
+
+
+<div class="tab-content" id="myTabContent">
+    <!--Persons -->
+    <div class="tab-pane fade" id="Persons">
+		{{institutionperson_formset.management_form}}
+		<table class="table table-borderless">
+		<tr class ="d-flex">
+		<th class="col-4">Person
+			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+				href ="{% url 'installations:person-insert' 'inline' %}" role="button">
+				 <i class="fa fa-plus"></i></a>
+			</th>
+		<th class="col-2">type of involvement </th>
+		<th><i class="fa fa-times text-danger"></i></th>
+		</tr>
+		{% for f in institutionperson_formset.forms %}
+			<tr class ="d-flex">
+			<td class="col-4">{{f.person}} {{f.person.errors}}</td>
+			<td class="col-2">{{f.type_of_involvement}} {{f.type_of_involvement.errors}}</td>
+			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+    <!--Installations -->
+	<div class="tab-pane fade" id="Installations">
+		{{institutioninstallation_formset.management_form}}
+		<table class="table table-borderless">
+		<tr class ="d-flex">
+		    <th class="col-5">Installation
+			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+				href ="{% url 'installations:installation-insert' %}" role="button">
+				 <i class="fa fa-plus"></i></a>
+			</th>
+		<th class="col-3">type of involvement</th>
+		<th><i class="fa fa-times text-danger"></i></th>
+		</tr>
+		{{institutioninstallation_formset.management_form}}
+		{% for f in institutioninstallation_formset.forms %}
+			<tr class ="d-flex">
+			<td class="col-5">{{f.installation}} {{f.installation.errors}}</td>
+			<td class="col-3">{{f.type_of_involvement}} {{f.type_of_involvement.errors}}</td>
+			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+    <!--Evidences -->
+    <div class="tab-pane fade" id="Evidences">
+		{{institutionevidence_formset.management_form}}
+		<table class="table table-borderless">
+		<tr class ="d-flex">
+		    <th class="col-5">Evidence
+			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+				href ="{% url 'installations:evidence-insert' %}" role="button">
+				 <i class="fa fa-plus"></i></a>
+			</th>
+		<th class="col-2">Page number </th>
+        <th class="col-6">Description </th>
+		<th><i class="fa fa-times text-danger"></i></th>
+		</tr>
+		{{institutionevidence_formset.management_form}}
+		{% for f in institutionevidence_formset.forms %}
+			<tr class ="d-flex">
+			<td class="col-5">{{f.evidence}} {{f.evidence.errors}}</td>
+			<td class="col-2">{{f.page_number}} {{f.page_number.errors}}</td>
+            <td class="col-6">{{f.description}} {{f.Description.errors}}</td>
+			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+</div>
+{% endif %}
+
+
+<input type="hidden" name="navbar" id="navbar" value="" />
+<input type="hidden" name="navcontent" id="navcontent" value="" />
+<input type="hidden" name="focus" id="focus" value="" />
+<button type="submit" value="Submit" class ="btn btn-success">Save</button>
+	{% if view == "inline" %}
+		<a type="reset" value="Cancel" class ="btn btn-light"
+		href="{% url 'utilities:close' %}">Cancel</a>
+	{% else %}
+		<button type="submit" name="save" value="add_another"
+			 class ="btn btn-outline-success">Save | add another</button>
+	{% endif %}
+	{% if page_name == "Edit person"%}
+    <button type="submit" name="save" value="delete"
+		 class ="btn btn-outline-danger">delete</button>
+	{% endif %}
+
+
+{% include 'utilities/tab_selector.html' %}
+</form>
+{% endblock main_content %}
+
+

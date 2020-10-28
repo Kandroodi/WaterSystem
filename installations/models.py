@@ -173,7 +173,7 @@ class Installation(models.Model):
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
-        return self.watersystem.name
+        return self.name
 
 
 class InstitutionType(models.Model):

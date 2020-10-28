@@ -20,6 +20,14 @@
         </td>
     </tr>
     <tr class="d-flex">
+        <th class="col-2">Neighbourhood</th>
+        <td class="col-8">{{form.neighbourhood}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:neighbourhood-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
         <th class="col-2">Period</th>
         <td class="col-8">{{form.policy}}</td>
     </tr>
