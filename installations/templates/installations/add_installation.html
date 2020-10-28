@@ -3,7 +3,11 @@
 {% block main_content %}
 
     <h2>
-        {{ page_name }}
+        {% if not form.instance.pk %}
+            Add Institution
+        {% else %}
+            Update Institution "{{form.instance.name}}"
+        {% endif %}
     </h2>
 
 <form method="post" enctype="multipart/form-data" onsubmit="dosubmit();">
@@ -23,7 +27,6 @@
     <div class="tab-pane fade" id="Minimize">
 		<!-- you can minimize the text form -->
 		<br>
-        <h5 class="mb-1">Hello </h5>
 		<br>
     </div>
 </div>
