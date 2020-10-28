@@ -20,6 +20,15 @@ class CityWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
 
+class NeighbourhoodWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['neighbourhood_number__icontains']
+
+
+class LocationWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        'latitude__icontains',
+        'longitude__icontains',
+        ]
 class ReligionWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
@@ -31,6 +40,22 @@ class SecondaryLiteratureWidget(s2forms.ModelSelect2Widget):
 
 class EvidenceWidget(s2forms.ModelSelect2Widget):
     search_fields = ['title__icontains']
+
+
+class WatersystemWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['name__icontains']
+
+class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
+    search_fields = ['name__icontains']
+
+class InstallationWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['name__icontains']
+
+class InstitutionWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['name__icontains']
+
+class PersonWidget(s2forms.ModelSelect2Widget):
+    search_fields = ['name__icontains']
 
 
 # User form
@@ -109,6 +134,10 @@ class PersonForm(ModelForm):
             "evidence": EvidenceWidget,
         }
 
+    comment = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 3}),
+        required=False)
+
     def __init__(self, *args, **kwargs):
         super(PersonForm, self).__init__(*args, **kwargs)
         self.fields['gender'].required = False
@@ -118,9 +147,7 @@ class PersonForm(ModelForm):
         self.fields['gender'].empty_label = "Select gender"
         self.fields['evidence'].empty_label = "Select evidence"
 
-    comment = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 3}),
-        required=False)
+
 
 
 class SecondaryLiteratureForm(ModelForm):
@@ -137,6 +164,52 @@ class SecondaryLiteratureForm(ModelForm):
 
 
 class InstallationForm(ModelForm):
+    watersystem = forms.ModelChoiceField(
+        queryset=Watersystem.objects.all(),   # this line refreshes the list when new item is entered using plus button
+        widget=WatersystemWidget(
+            attrs={'data-placeholder': 'Select a water system',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    purpose = forms.ModelChoiceField(
+        queryset=Purpose.objects.all(),
+        widget=PurposeWidget(
+            attrs={'data-placeholder': 'Select purposes',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    city = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=CityWidget(
+            attrs={'data-placeholder': 'Select city',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    neighbourhood = forms.ModelChoiceField(
+        queryset=Neighbourhood.objects.all(),
+        widget=NeighbourhoodWidget(
+            attrs={'data-placeholder': 'Select neighbourhood',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    location = forms.ModelChoiceField(
+        queryset=Location.objects.all(),
+        widget=LocationWidget(
+            attrs={'data-placeholder': 'Select location',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    secondary_literature = forms.ModelChoiceField(
+        queryset=SecondaryLiterature.objects.all(),
+        widget=SecondaryLiteratureWidget(
+            attrs={'data-placeholder': 'Select secondary literature',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    evidence = forms.ModelChoiceField(
+        queryset=Evidence.objects.all(),
+        widget=EvidenceWidget(
+            attrs={'data-placeholder': 'Select evidence',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    comment = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 3}),
+        required=False)
+
     class Meta:
         model = Installation
         fields = '__all__'
@@ -144,7 +217,13 @@ class InstallationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(InstallationForm, self).__init__(*args, **kwargs)
         self.fields['construction_date'].required = False
-
+        self.fields['purpose'].required = False
+        self.fields['city'].required = False
+        self.fields['neighbourhood'].required = False
+        self.fields['location'].required = False
+        self.fields['secondary_literature'].required = False
+        self.fields['evidence'].required = False
+        self.fields['comment'].required = False
 
 class EvidenceForm(ModelForm):
     class Meta:
@@ -162,9 +241,19 @@ class EvidenceForm(ModelForm):
 
 # Relations form
 class CityPersonRelationForm(ModelForm):
+    city = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=CityWidget(
+            attrs={'data-placeholder': 'Select city',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
     class Meta:
         model = CityPersonRelation
         fields = ('city', 'person', 'type_of_involvement')
+        # widget = {
+        #     "city": CityWidget,
+        # }
 
 
 class NeighbourhoodPersonRelationForm(ModelForm):
@@ -172,15 +261,31 @@ class NeighbourhoodPersonRelationForm(ModelForm):
         model = NeighbourhoodPersonRelation
         fields = ('neighbourhood', 'person', 'type_of_involvement')
 
+
 class PersonInstitutionRelationForm(ModelForm):
     class Meta:
         model = PersonInstitutionRelation
         fields = ('person', 'institution', 'type_of_involvement')
 
+
 class PersonInstallationRelationForm(ModelForm):
+    person = forms.ModelChoiceField(
+        queryset=Person.objects.all(),
+        widget=PersonWidget(
+            attrs={'data-placeholder': 'Select a person',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    installation = forms.ModelChoiceField(
+        queryset=Installation.objects.all(),
+        widget=InstallationWidget(
+            attrs={'data-placeholder': 'Select installation',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
     class Meta:
         model = PersonInstallationRelation
         fields = ('person', 'installation', 'type_of_involvement')
+
 
 class EvidencePersonRelationForm(ModelForm):
     class Meta:
@@ -190,22 +295,44 @@ class EvidencePersonRelationForm(ModelForm):
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 1}),
         required=False)
+
+
+class InstitutionInstallationRelationForm(ModelForm):
+    installation = forms.ModelChoiceField(
+        queryset=Installation.objects.all(),
+        widget=InstallationWidget(
+            attrs={'data-placeholder': 'Select installation',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    institution = forms.ModelChoiceField(
+        queryset=Institution.objects.all(),
+        widget=InstallationWidget(
+            attrs={'data-placeholder': 'Select institution',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
+    class Meta:
+        model = InstitutionInstallationRelation
+        fields = ('institution', 'installation', 'type_of_involvement')
+
+
 # Formsets
 personcity_formset = inlineformset_factory(
     Person, CityPersonRelation, form=CityPersonRelationForm, extra=1)
 
-
 personneighbourhood_formset = inlineformset_factory(
     Person, NeighbourhoodPersonRelation, form=NeighbourhoodPersonRelationForm, extra=1)
-
 
 personinstitution_formset = inlineformset_factory(
     Person, PersonInstitutionRelation, form=PersonInstitutionRelationForm, extra=1)
 
-
 personinstallation_formset = inlineformset_factory(
     Person, PersonInstallationRelation, form=PersonInstallationRelationForm, extra=1)
-
+installationperson_formset = inlineformset_factory(
+    Installation, PersonInstallationRelation, form=PersonInstallationRelationForm, extra=1)
 
 personevidence_formset = inlineformset_factory(
     Person, EvidencePersonRelation, form=EvidencePersonRelationForm, extra=1)
+
+installationinstitution_formset = inlineformset_factory(
+    Installation, InstitutionInstallationRelation, form=InstitutionInstallationRelationForm, extra=1)

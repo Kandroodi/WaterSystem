@@ -58,7 +58,6 @@
 
 <div class="tab-content" id="myTabContent">
     <!-- Citys -->
-{#    <div class="tab-pane fade" id="Citys">#}
     <div class="tab-pane" id="Citys" role="tabpanel" aria-labelledby="Citysa">
     {{personcity_formset.management_form}}
 		<table class="table table-borderless">
@@ -123,7 +122,7 @@
         </th>
 		<th class="col-3">Type of involvement
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:citypersonrelation-insert' %}" role="button">
+				href ="{% url 'installations:citypersonrelation-insert' %}" role="button"> <!-- creat a view for personinstitutionrelation-insert-->
 				 <i class="fa fa-plus"></i></a>
 			</th>
 		<th><i class="fa fa-times text-danger"></i></th>

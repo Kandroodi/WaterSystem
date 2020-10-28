@@ -159,6 +159,7 @@ class Purpose(models.Model):
 
 
 class Installation(models.Model):
+    name = models.CharField(max_length=250, blank=True, default='')
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
     construction_date = PartialDateField(blank=True, null=True)
     first_reference = PartialDateField(blank=True, null=True)

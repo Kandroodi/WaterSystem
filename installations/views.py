@@ -181,54 +181,6 @@ def InstitutionDelete(request, id):
     return redirect('installations:institution-list')
 
 
-# @login_required
-# def PersonCreateNew(request, pk=None, focus='', view='complete'):
-#     names = 'personcity_formset,personneighbourhood_formset,personinstitution_formset,personinstallation_formset,personevidence_formset'
-#     name_space = __name__
-#     model_name = 'Person'
-#     app_name = 'installations'
-#     instance_id = None
-#     focus = ''
-#     view = 'complete'
-#
-#     model = apps.get_model(app_name, model_name)
-#     modelform = get_modelform(name_space, model_name + 'Form')
-#     instance = model.objects.get(pk=instance_id) if instance_id else None
-#     crud = Crud(instance) if instance else None
-#     ffm, form = None, None
-#     if request.method == 'POST':
-#         focus, button = getfocus(request), getbutton(request)
-#         if button in 'delete,cancel,confirm_delete':
-#             return delete_model(request, name_space, model_name, app_name, instance_id)
-#         if button == 'saveas' and instance: instance = copy_complete(instance)
-#         form = modelform(request.POST, request.FILES, instance=instance)
-#         if form.is_valid():
-#             print('form is valid: ', form.cleaned_data, type(form))
-#             instance = form.save()
-#             if view == 'complete':
-#                 ffm = FormsetFactoryManager(name_space, names, request, instance)
-#                 valid = ffm.save()
-#                 if valid:
-#                     show_messages(request, button, model_name)
-#                     if button == 'add_another':
-#                         return HttpResponseRedirect(reverse(app_name + ':add_' + model_name.lower()))
-#                     return HttpResponseRedirect(reverse(
-#                         app_name + ':edit_' + model_name.lower(),
-#                         kwargs={'pk': instance.pk, 'focus': focus}))
-#                 else:
-#                     print('ERROR', ffm.errors)
-#             else:
-#                 return HttpResponseRedirect('/utilities/close/')
-#     if not form: form = modelform(instance=instance)
-#     if not ffm: ffm = FormsetFactoryManager(name_space, names, instance=instance)
-#     tabs = make_tabs(model_name.lower(), focus_names=focus)
-#     page_name = 'person_form'
-#     # page_name = 'Edit ' + model_name.lower() if instance_id else 'Add ' + model_name.lower()
-#     args = {'form': form, 'page_name': page_name, 'crud': crud,
-#             'tabs': tabs, 'view': view}
-#     args.update(ffm.dict)
-#     return render(request, app_name + '/person_form' + '.html', args)
-
 @login_required
 def edit_person(request, pk=None, focus='', view='complete'):
     names = 'personcity_formset,personneighbourhood_formset,personinstitution_formset,'
@@ -298,23 +250,30 @@ class SecondaryLiteratureDeleteView(DeleteView):
 
 
 @login_required
-def InstallationCreate(request, id=0):
-    if request.method == "GET":
-        if id == 0:
-            form = InstallationForm()
-        else:
-            installation = Installation.objects.get(pk=id)
-            form = InstallationForm(instance=installation)
-        return render(request, 'installations/installation_form.html', {'form': form})
-    else:  # request.method == "POST":
-        if id == 0:
-            form = InstallationForm(request.POST)
-        else:
-            installation = Installation.objects.get(pk=id)
-            form = InstallationForm(request.POST, instance=installation)
-        if form.is_valid():
-            form.save()
-        return redirect('installations:installation-list')  # after save redirect to the installation list
+def edit_installation(request, pk=None, focus='', view='complete'):
+    names = 'installationinstitution_formset,installationperson_formset'
+    return edit_model(request, __name__, 'Installation', 'installations', pk, formset_names=names,
+                      focus=focus, view=view)
+
+
+# @login_required
+# def InstallationCreate(request, id=0):
+#     if request.method == "GET":
+#         if id == 0:
+#             form = InstallationForm()
+#         else:
+#             installation = Installation.objects.get(pk=id)
+#             form = InstallationForm(instance=installation)
+#         return render(request, 'installations/installation_form.html', {'form': form})
+#     else:  # request.method == "POST":
+#         if id == 0:
+#             form = InstallationForm(request.POST)
+#         else:
+#             installation = Installation.objects.get(pk=id)
+#             form = InstallationForm(request.POST, instance=installation)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('installations:installation-list')  # after save redirect to the installation list
 
 
 def InstallationList(request):

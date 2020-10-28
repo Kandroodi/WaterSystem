@@ -1,0 +1,78 @@
+<table class="table table-borderless" >
+    <tr class="d-flex">
+        <th class="col-2">Name</th>
+        <td class="col-8">{{form.name}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Water system</th>
+        <td class="col-8">{{form.watersystem}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:watersystem-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Construction date</th>
+        <td class="col-8">{{form.construction_date}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">First reference</th>
+        <td class="col-8">{{form.first_reference}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">End functioning year</th>
+        <td class="col-8">{{form.end_functioning_year}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Purpose</th>
+        <td class="col-8">{{form.purpose}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:purpose-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">City</th>
+        <td class="col-8">{{form.city}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:city-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Neighbourhood</th>
+        <td class="col-8">{{form.neighbourhood}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:neighbourhood-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Location</th>
+        <td class="col-8">{{form.exact_location}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{#% url 'installations:location-insert' %#}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Secondary literature</th>
+        <td class="col-8">{{form.secondary_literature}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:secondaryliterature-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Evidence</th>
+        <td class="col-8">{{form.evidence}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:evidence-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Comment</th>
+        <td class="col-8">{{form.comment}}</td>
+    </tr>
+</table>
