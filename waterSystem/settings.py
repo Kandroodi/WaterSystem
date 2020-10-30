@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import socket
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -118,25 +119,57 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    },
-    'select2': {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     },
+#     'select2': {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/2",
+#         "TIMEOUT": None,
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     }
+# }
+
+# alternative setup
+# Check the availability of Redis at startup
+# otherwise use a database cache
+socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+REDIS_PORT = 6379
+
+try:
+     socket.connect(('127.0.0.1', REDIS_PORT))
+     socket.close()
+     print("Starting with Redis cache (port: {})".format(REDIS_PORT))
+     CACHES = {
+         "default": {
+             "BACKEND": "django_redis.cache.RedisCache",
+             "LOCATION": "redis://127.0.0.1:{}/1".format(REDIS_PORT),
+             "OPTIONS": {
+                 "CLIENT_CLASS": "django_redis.client.DefaultClient"
+             },
+             "TIMEOUT": 60*60*24  # 24 hours
+         }
+     }
+except ConnectionRefusedError:
+     print("Starting with database cache")
+     CACHES = {
+         'default': {
+             'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+             'LOCATION': config('CACHE_LOCATION', default="mediate_cache"),
+             'TIMEOUT': 60*60*24  # 24 hours
+         }
+     }
 
 # Set the cache backend to select2
-SELECT2_CACHE_BACKEND = 'select2'
+# SELECT2_CACHE_BACKEND = 'select2'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
