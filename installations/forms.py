@@ -127,12 +127,6 @@ class InstitutionForm(ModelForm):
             attrs={'data-placeholder': 'Select religion',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    location = forms.ModelChoiceField(
-        queryset=Location.objects.all(),
-        widget=LocationWidget(
-            attrs={'data-placeholder': 'Select location',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
     secondary_literature = forms.ModelChoiceField(
         queryset=SecondaryLiterature.objects.all(),
         widget=SecondaryLiteratureWidget(
@@ -177,9 +171,15 @@ class PersonForm(ModelForm):
         model = Person
         fields = '__all__'
         widgets = {
-            "religion": ReligionWidget,
-            "secondary_literature": SecondaryLiteratureWidget,
-            "evidence": EvidenceWidget,
+            "religion": ReligionWidget(attrs={'data-placeholder': 'Select religion',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}),
+            "secondary_literature": SecondaryLiteratureWidget(attrs={'data-placeholder': 'Select secondary literature',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}),
+            "evidence": EvidenceWidget(attrs={'data-placeholder': 'Select evidence',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}),
         }
 
     comment = forms.CharField(widget=forms.Textarea(
@@ -190,7 +190,7 @@ class PersonForm(ModelForm):
         super(PersonForm, self).__init__(*args, **kwargs)
         self.fields['gender'].required = False
         self.fields['secondary_literature'].required = False
-        self.fields['religion'].empty_label = "Select religion"
+        # self.fields['religion'].empty_label = "Select religion"
         self.fields['secondary_literature'].empty_label = "Select secondary literature"
         self.fields['gender'].empty_label = "Select gender"
         self.fields['evidence'].empty_label = "Select evidence"
@@ -236,7 +236,7 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    location = forms.ModelChoiceField(
+    exact_location = forms.ModelChoiceField(
         queryset=Location.objects.all(),
         widget=LocationWidget(
             attrs={'data-placeholder': 'Select location',
@@ -269,7 +269,7 @@ class InstallationForm(ModelForm):
         self.fields['purpose'].required = False
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False
-        self.fields['location'].required = False
+        self.fields['exact_location'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['evidence'].required = False
         self.fields['comment'].required = False
