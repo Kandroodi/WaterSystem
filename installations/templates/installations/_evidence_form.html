@@ -1,0 +1,26 @@
+<table class="table table-borderless" >
+    <tr class="d-flex">
+        <th class="col-2">Title</th>
+        <td class="col-8">{{form.title}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Author</th>
+        <td class="col-8">{{form.author}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Date</th>
+        <td class="col-8">{{form.date}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Secondary literature</th>
+        <td class="col-8">{{form.secondary_literature}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:secondaryliterature-insert' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Description</th>
+        <td class="col-8">{{form.description}}</td>
+    </tr>
+</table>
