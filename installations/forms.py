@@ -301,7 +301,7 @@ class WatersystemForm(ModelForm):
     inventor = forms.ModelChoiceField(
         queryset=Person.objects.all(),
         widget=PersonWidget(
-            attrs={'data-placeholder': 'Select person',
+            attrs={'data-placeholder': 'Select inventor',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
 
