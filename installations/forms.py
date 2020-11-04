@@ -28,7 +28,9 @@ class LocationWidget(s2forms.ModelSelect2Widget):
     search_fields = [
         'latitude__icontains',
         'longitude__icontains',
-        ]
+    ]
+
+
 class ReligionWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
@@ -45,17 +47,22 @@ class EvidenceWidget(s2forms.ModelSelect2Widget):
 class WatersystemWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
+
 class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
     search_fields = ['name__icontains']
+
 
 class InstallationWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
+
 class InstitutionWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
+
 class PersonWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
+
 
 class InstitutionTypeWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
@@ -98,7 +105,8 @@ class CityForm(ModelForm):
 
 class InstitutionForm(ModelForm):
     type = forms.ModelChoiceField(
-        queryset=InstitutionType.objects.all(),  # this line refreshes the list when a new item is entered using the plus button
+        queryset=InstitutionType.objects.all(),
+        # this line refreshes the list when a new item is entered using the plus button
         widget=InstitutionTypeWidget(
             attrs={'data-placeholder': 'Select institution type',
                    'style': 'width:100%;', 'class': 'searching',
@@ -152,7 +160,6 @@ class InstitutionForm(ModelForm):
             'policy': 'Period'
         }
 
-
     def __init__(self, *args, **kwargs):
         super(InstitutionForm, self).__init__(*args, **kwargs)
         self.fields['type'].required = False
@@ -172,14 +179,14 @@ class PersonForm(ModelForm):
         fields = '__all__'
         widgets = {
             "religion": ReligionWidget(attrs={'data-placeholder': 'Select religion',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}),
+                                              'style': 'width:100%;', 'class': 'searching',
+                                              'data-minimum-input-length': '1'}),
             "secondary_literature": SecondaryLiteratureWidget(attrs={'data-placeholder': 'Select secondary literature',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}),
+                                                                     'style': 'width:100%;', 'class': 'searching',
+                                                                     'data-minimum-input-length': '1'}),
             "evidence": EvidenceWidget(attrs={'data-placeholder': 'Select evidence',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}),
+                                              'style': 'width:100%;', 'class': 'searching',
+                                              'data-minimum-input-length': '1'}),
         }
 
     comment = forms.CharField(widget=forms.Textarea(
@@ -194,8 +201,6 @@ class PersonForm(ModelForm):
         self.fields['secondary_literature'].empty_label = "Select secondary literature"
         self.fields['gender'].empty_label = "Select gender"
         self.fields['evidence'].empty_label = "Select evidence"
-
-
 
 
 class SecondaryLiteratureForm(ModelForm):
@@ -213,7 +218,7 @@ class SecondaryLiteratureForm(ModelForm):
 
 class InstallationForm(ModelForm):
     watersystem = forms.ModelChoiceField(
-        queryset=Watersystem.objects.all(),   # this line refreshes the list when new item is entered using plus button
+        queryset=Watersystem.objects.all(),  # this line refreshes the list when new item is entered using plus button
         widget=WatersystemWidget(
             attrs={'data-placeholder': 'Select a water system',
                    'style': 'width:100%;', 'class': 'searching',
@@ -274,10 +279,10 @@ class InstallationForm(ModelForm):
         self.fields['evidence'].required = False
         self.fields['comment'].required = False
 
+
 class EvidenceForm(ModelForm):
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}))
-
 
     class Meta:
         model = Evidence
@@ -290,6 +295,22 @@ class EvidenceForm(ModelForm):
         #     'secondary_literature': forms.Select(attrs={'class': 'form-control'}),
         #     'description': forms.Textarea(attrs={'class': 'form-control'}),
         # }
+
+
+class WatersystemForm(ModelForm):
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 3}))
+    secondary_literature = forms.ModelChoiceField(
+        queryset=SecondaryLiterature.objects.all(),
+        widget=SecondaryLiteratureWidget(
+            attrs={'data-placeholder': 'Select secondary literature',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
+
+    class Meta:
+        model = Watersystem
+        fields = ('name', 'type', 'inventor', 'description', 'secondary_literature')
 
 
 # Relations form
@@ -322,6 +343,7 @@ class NeighbourhoodPersonRelationForm(ModelForm):
             attrs={'data-placeholder': 'Select person',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
+
     class Meta:
         model = NeighbourhoodPersonRelation
         fields = ('neighbourhood', 'person', 'type_of_involvement')
@@ -340,6 +362,7 @@ class PersonInstitutionRelationForm(ModelForm):
             attrs={'data-placeholder': 'Select institution',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
+
     class Meta:
         model = PersonInstitutionRelation
         fields = ('person', 'institution', 'type_of_involvement')
@@ -384,8 +407,6 @@ class EvidencePersonRelationForm(ModelForm):
     class Meta:
         model = EvidencePersonRelation
         fields = ('evidence', 'person', 'page_number', 'description')
-
-
 
 
 class InstitutionInstallationRelationForm(ModelForm):

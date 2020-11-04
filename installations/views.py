@@ -357,7 +357,7 @@ class WaterSystemListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class WaterSystemCreatView(CreateView):
     model = Watersystem
-    fields = '__all__'
+    form_class = WatersystemForm
     template_name = 'installations/watersystem_form.html'
     success_url = reverse_lazy('installations:watersystem-list')
 
