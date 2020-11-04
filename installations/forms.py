@@ -298,6 +298,14 @@ class EvidenceForm(ModelForm):
 
 
 class WatersystemForm(ModelForm):
+    inventor = forms.ModelChoiceField(
+        queryset=Person.objects.all(),
+        widget=PersonWidget(
+            attrs={'data-placeholder': 'Select person',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
+
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}))
     secondary_literature = forms.ModelChoiceField(
