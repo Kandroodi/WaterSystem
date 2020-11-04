@@ -312,12 +312,20 @@ class EvidenceListView(ListView):
         return context
 
 
+
+@login_required
+def edit_evidence(request, pk=None, focus='', view='complete'):
+    names = 'evidenceperson_formset,evidenceinstitution_formset,evidenceinstallation_formset'
+    return edit_model(request, __name__, 'Evidence', 'installations', pk, formset_names=names,
+                      focus=focus, view=view)
+
+
 @method_decorator(login_required, name='dispatch')
 class EvidenceCreatView(CreateView):
     model = Evidence
     # fields = ('title', 'author', 'date', 'secondary_literature', 'description')
     fields = '__all__'
-    template_name = 'installations/evidence_form.html'
+    template_name = 'installations/_evidence_form.html'
     success_url = reverse_lazy('installations:evidence-list')
 
 

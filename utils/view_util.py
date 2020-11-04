@@ -378,8 +378,8 @@ def make_tabs(tab_type,focus=0,focus_names = ''):
 		t = 'Persons,Installations,Evidences'
 		relations = Tab(t,focus)
 		return Tabs([minimize,relations],'minimize,relations',focus_names)
-	if tab_type == 'illustration':
-		t = 'Persons,Publications'
+	if tab_type == 'evidence':
+		t = 'Persons,institutions,installations'
 		relations = Tab(t,focus)
 		return Tabs([minimize,relations],'minimize,relations',focus_names)
 	if tab_type == 'movement':
