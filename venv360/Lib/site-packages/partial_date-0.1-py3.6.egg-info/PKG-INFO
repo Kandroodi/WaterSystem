@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: partial-date
+Version: 0.1
+Summary: a custom django model field to represent dates with varying specificity
+Home-page: https://github.com/martijnbentum/partial_date
+Author: Martijn Bentum, Mojtaba Kandroodi
+Author-email: m.bentum@let.ru.nl
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.5
+Description-Content-Type: text/markdown

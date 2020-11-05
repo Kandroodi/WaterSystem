@@ -50,8 +50,10 @@ Thumbs.db
 ######################
 .env
 .venv
+.venv360
 env/
 venv/
+venv360/
 ENV/
 env.bak/
 venv.bak/

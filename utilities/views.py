@@ -22,7 +22,7 @@ def list_view(request, model_name, app_name):
     return render(request, app_name + '/' + model_name.lower() + '_list.html', var)
 
 
-@permission_required('utilities.add_generic')
+# @permission_required('utilities.add_generic')
 def edit_model(request, name_space, model_name, app_name, instance_id=None,
                formset_names='', focus='', view='complete'):
     '''edit view generalized over models.
@@ -72,7 +72,7 @@ def edit_model(request, name_space, model_name, app_name, instance_id=None,
     return render(request, app_name + '/add_' + model_name.lower() + '.html', args)
 
 
-@permission_required('utilities.add_generic')
+# @permission_required('utilities.add_generic')
 def add_simple_model(request, name_space, model_name, app_name, page_name):
     '''Function to add simple models with only a form could be extended.
     request 	django object

@@ -256,24 +256,24 @@ def edit_installation(request, pk=None, focus='', view='complete'):
                       focus=focus, view=view)
 
 
-@login_required
-def InstallationCreate(request, id=0):
-    if request.method == "GET":
-        if id == 0:
-            form = InstallationForm()
-        else:
-            installation = Installation.objects.get(pk=id)
-            form = InstallationForm(instance=installation)
-        return render(request, 'installations/installation_form.html', {'form': form})
-    else:  # request.method == "POST":
-        if id == 0:
-            form = InstallationForm(request.POST)
-        else:
-            installation = Installation.objects.get(pk=id)
-            form = InstallationForm(request.POST, instance=installation)
-        if form.is_valid():
-            form.save()
-        return redirect('installations:installation-list')  # after save redirect to the installation list
+# @login_required
+# def InstallationCreate(request, id=0):
+#     if request.method == "GET":
+#         if id == 0:
+#             form = InstallationForm()
+#         else:
+#             installation = Installation.objects.get(pk=id)
+#             form = InstallationForm(instance=installation)
+#         return render(request, 'installations/installation_form.html', {'form': form})
+#     else:  # request.method == "POST":
+#         if id == 0:
+#             form = InstallationForm(request.POST)
+#         else:
+#             installation = Installation.objects.get(pk=id)
+#             form = InstallationForm(request.POST, instance=installation)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('installations:installation-list')  # after save redirect to the installation list
 
 
 def InstallationList(request):
