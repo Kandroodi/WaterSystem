@@ -150,25 +150,6 @@ def edit_institution(request, pk=None, focus='', view='complete'):
                       focus=focus, view=view)
 
 
-def InstitutionCreate(request, id=0):
-    if request.method == "GET":
-        if id == 0:
-            form = InstitutionForm()
-        else:
-            institution = Institution.objects.get(pk=id)
-            form = InstitutionForm(instance=institution)
-        return render(request, 'installations/add_institution.html', {'form': form})
-    else:  # request.method == "POST":
-        if id == 0:
-            form = InstitutionForm(request.POST)
-        else:
-            institution = Institution.objects.get(pk=id)
-            form = InstitutionForm(request.POST, instance=institution)
-        if form.is_valid():
-            form.save()
-        return redirect('installations:institution-list')  # after save redirect to the institution list
-
-
 def InstitutionList(request):
     context = {'institution_list': Institution.objects.all()}
     return render(request, 'installations/institution_list.html', context)

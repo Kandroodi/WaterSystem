@@ -382,15 +382,3 @@ def make_tabs(tab_type,focus=0,focus_names = ''):
 		t = 'Persons,institutions,installations'
 		relations = Tab(t,focus)
 		return Tabs([minimize,relations],'minimize,relations',focus_names)
-	if tab_type == 'movement':
-		t = 'Persons'
-		relations = Tab(t,focus)
-		return Tabs([minimize,relations],'minimize,relations',focus_names)
-	if tab_type == 'periodical':
-		t = 'Publications,Persons'
-		relations = Tab(t,focus)
-		return Tabs([minimize,relations],'minimize,relations',focus_names)
-	if tab_type == 'location':
-		t = 'Contained by'
-		relations = Tab(t,focus)
-		return Tabs([minimize,relations],'minimize,relations',focus_names)

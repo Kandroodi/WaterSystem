@@ -104,6 +104,10 @@ class CityForm(ModelForm):
 
 
 class InstitutionForm(ModelForm):
+    class Meta:
+        model = Institution
+        fields = '__all__'
+
     type = forms.ModelChoiceField(
         queryset=InstitutionType.objects.all(),
         # this line refreshes the list when a new item is entered using the plus button
@@ -146,19 +150,13 @@ class InstitutionForm(ModelForm):
         widget=EvidenceWidget(
             attrs={'data-placeholder': 'Select evidence',
                    'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
+                   'data-minimum-input-length': '1'}),
+        required=False)
     comment = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
 
-    class Meta:
-        model = Institution
-        fields = '__all__'
 
-        labels = {
-            'name': 'Institution Name',
-            'policy': 'Period'
-        }
 
     def __init__(self, *args, **kwargs):
         super(InstitutionForm, self).__init__(*args, **kwargs)
@@ -222,13 +220,15 @@ class InstallationForm(ModelForm):
         widget=WatersystemWidget(
             attrs={'data-placeholder': 'Select a water system',
                    'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
+                   'data-minimum-input-length': '1'}),
+        required=False)
     purpose = forms.ModelChoiceField(
-        queryset=Purpose.objects.all(),
+        queryset=Purpose.objects.all().order_by('name'),
         widget=PurposeWidget(
             attrs={'data-placeholder': 'Select purposes',
                    'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
+                   'data-minimum-input-length': '1'}),
+        required=False)
     city = forms.ModelChoiceField(
         queryset=City.objects.all(),
         widget=CityWidget(
@@ -281,20 +281,26 @@ class InstallationForm(ModelForm):
 
 
 class EvidenceForm(ModelForm):
+    secondary_literature = forms.ModelChoiceField(
+        queryset=SecondaryLiterature.objects.all(),
+        widget=SecondaryLiteratureWidget(
+            attrs={'data-placeholder': 'Select secondary literature',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}),
+        required=False)
     description = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 3}))
+        attrs={'style': 'width:100%', 'rows': 3}),
+        required=False)
 
     class Meta:
         model = Evidence
         fields = ('title', 'author', 'date', 'secondary_literature', 'description')
 
-        # widgets = {
-        #     'title': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'author': forms.TextInput(attrs={'class': 'form-control'}),
-        #     'date': forms.DateTimeInput(attrs={'class': 'form-control'}),
-        #     'secondary_literature': forms.Select(attrs={'class': 'form-control'}),
-        #     'description': forms.Textarea(attrs={'class': 'form-control'}),
-        # }
+        def __init__(self, *args, **kwargs):
+            super(EvidenceForm, self).__init__(*args, **kwargs)
+            self.fields['author'].required = False
+            self.fields['date'].required = True
+
 
 
 class WatersystemForm(ModelForm):
@@ -396,18 +402,19 @@ class PersonInstallationRelationForm(ModelForm):
 
 
 class EvidencePersonRelationForm(ModelForm):
-    # evidence = forms.ModelChoiceField(
-    #     queryset=Evidence.objects.all(),
-    #     widget=EvidenceWidget(
-    #         attrs={'data-placeholder': 'Select evidence',
-    #                'style': 'width:100%;', 'class': 'searching',
-    #                'data-minimum-input-length': '1'}))
-    # person = forms.ModelChoiceField(
-    #     queryset=Person.objects.all(),
-    #     widget=PersonWidget(
-    #         attrs={'data-placeholder': 'Select person',
-    #                'style': 'width:100%;', 'class': 'searching',
-    #                'data-minimum-input-length': '1'}))
+    evidence = forms.ModelChoiceField(
+        queryset=Evidence.objects.all(),
+        widget=EvidenceWidget(
+            attrs={'data-placeholder': 'Select evidence',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    person = forms.ModelChoiceField(
+        queryset=Person.objects.all(),
+        widget=PersonWidget(
+            attrs={'data-placeholder': 'Select person',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    page_number = forms.CharField(required=False)
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 1}),
         required=False)
@@ -437,6 +444,19 @@ class InstitutionInstallationRelationForm(ModelForm):
 
 
 class EvidenceInstallationRelationForm(ModelForm):
+    evidence = forms.ModelChoiceField(
+        queryset=Evidence.objects.all(),
+        widget=EvidenceWidget(
+            attrs={'data-placeholder': 'Select evidence',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    installation = forms.ModelChoiceField(
+        queryset=Installation.objects.all(),
+        widget=InstallationWidget(
+            attrs={'data-placeholder': 'Select installation',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    page_number = forms.CharField(required=False)
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 1}),
         required=False)
@@ -447,18 +467,19 @@ class EvidenceInstallationRelationForm(ModelForm):
 
 
 class EvidenceInstitutionRelationForm(ModelForm):
-    # evidence = forms.ModelChoiceField(
-    #     queryset=Evidence.objects.all(),
-    #     widget=EvidenceWidget(
-    #         attrs={'data-placeholder': 'Select evidence',
-    #                'style': 'width:100%;', 'class': 'searching',
-    #                'data-minimum-input-length': '1'}))
-    # institution = forms.ModelChoiceField(
-    #     queryset=Institution.objects.all(),
-    #     widget=InstallationWidget(
-    #         attrs={'data-placeholder': 'Select institution',
-    #                'style': 'width:100%;', 'class': 'searching',
-    #                'data-minimum-input-length': '1'}))
+    evidence = forms.ModelChoiceField(
+        queryset=Evidence.objects.all(),
+        widget=EvidenceWidget(
+            attrs={'data-placeholder': 'Select evidence',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    institution = forms.ModelChoiceField(
+        queryset=Institution.objects.all(),
+        widget=InstallationWidget(
+            attrs={'data-placeholder': 'Select institution',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    page_number = forms.CharField(required=False)
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 1}),
         required=False)

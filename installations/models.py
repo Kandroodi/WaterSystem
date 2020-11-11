@@ -107,10 +107,10 @@ class SecondaryLiterature(models.Model):
 
 class Evidence(models.Model):
     title = models.CharField(max_length=250, blank=False)
-    author = models.CharField(max_length=50, blank=False)
+    author = models.CharField(max_length=50, blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    description = models.TextField(max_length=1000, blank=True)
+    description = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.title
@@ -160,7 +160,7 @@ class Purpose(models.Model):
 
 class Installation(models.Model):
     name = models.CharField(max_length=250, blank=True, default='')
-    watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=False)
+    watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=True, null=True)
     construction_date = PartialDateField(blank=True, null=True)
     first_reference = PartialDateField(blank=True, null=True)
     end_functioning_year = PartialDateField(blank=True, null=True)
@@ -186,9 +186,9 @@ class InstitutionType(models.Model):
 
 class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True)
+    type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True, null=True)
     purpose = models.ManyToManyField(Purpose, blank=True)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     policy = models.CharField(max_length=100, blank=True)
     start_date = PartialDateField(blank=True, null=True) # this field is for test and explaine the partitial dat
@@ -201,7 +201,7 @@ class Institution(models.Model):
                                                                        "Millennium: <integer>m 2m 1000-2000  "'''
     # start_date = ... will be the partitial dat
     end_date = PartialDateField(blank=True, null=True)
-    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True)
+    religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=False, default='', null=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
