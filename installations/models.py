@@ -141,9 +141,9 @@ class Person(models.Model):
 
 class Watersystem(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    type = models.CharField(max_length=100, blank=True)
-    inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    description = models.TextField(max_length=1000, blank=True)
+    type = models.CharField(max_length=100, blank=True, null=True)
+    inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True, null=True)
+    description = models.TextField(max_length=1000, blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
 
     def __str__(self):

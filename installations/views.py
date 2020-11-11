@@ -170,24 +170,24 @@ def edit_person(request, pk=None, focus='', view='complete'):
                       focus=focus, view=view)
 
 
-@login_required
-def PersonCreate(request, id=0):
-    if request.method == "GET":
-        if id == 0:
-            form = PersonForm()
-        else:
-            person = Person.objects.get(pk=id)
-            form = PersonForm(instance=person)
-        return render(request, 'installations/person_form.html', {'form': form})
-    else:  # request.method == "POST":
-        if id == 0:
-            form = PersonForm(request.POST)
-        else:
-            person = Person.objects.get(pk=id)
-            form = PersonForm(request.POST, instance=person)
-        if form.is_valid():
-            form.save()
-        return redirect('installations:person-list')  # after save redirect to the Person list
+# @login_required
+# def PersonCreate(request, id=0):
+#     if request.method == "GET":
+#         if id == 0:
+#             form = PersonForm()
+#         else:
+#             person = Person.objects.get(pk=id)
+#             form = PersonForm(instance=person)
+#         return render(request, 'installations/person_form.html', {'form': form})
+#     else:  # request.method == "POST":
+#         if id == 0:
+#             form = PersonForm(request.POST)
+#         else:
+#             person = Person.objects.get(pk=id)
+#             form = PersonForm(request.POST, instance=person)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('installations:person-list')  # after save redirect to the Person list
 
 
 def PersonList(request):
@@ -346,7 +346,7 @@ class WaterSystemCreatView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class WaterSystemUpdateView(UpdateView):
     model = Watersystem
-    fields = '__all__'
+    form_class = WatersystemForm
     success_url = reverse_lazy('installations:watersystem-list')
 
 

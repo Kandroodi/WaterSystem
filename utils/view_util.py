@@ -1,6 +1,8 @@
 from django.apps import apps
 import inspect
 import sys
+
+from django.http import HttpResponseRedirect
 from easyaudit.models import CRUDEvent
 # from utils import signal_util
 from utilities.models import instance2name, instance2names

@@ -65,9 +65,7 @@ def edit_model(request, name_space, model_name, app_name, instance_id=None,
             else:
                 return HttpResponseRedirect('/utilities/close/')
     if not form: form = modelform(instance=instance)
-    print('First not')
     if not ffm: ffm = FormsetFactoryManager(name_space, names, instance=instance)
-    print('second not')
     tabs = make_tabs(model_name.lower(), focus_names=focus)
     page_name = 'Edit ' + model_name.lower() if instance_id else 'Add ' + model_name.lower()
     args = {'form': form, 'page_name': page_name, 'crud': crud,

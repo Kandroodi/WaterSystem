@@ -324,8 +324,14 @@ class WatersystemForm(ModelForm):
 
     class Meta:
         model = Watersystem
-        fields = ('name', 'type', 'inventor', 'description', 'secondary_literature')
+        fields = ('name', 'type', 'inventor', 'secondary_literature', 'description')
 
+    def __init__(self, *args, **kwargs):
+        super(WatersystemForm, self).__init__(*args, **kwargs)
+        self.fields['type'].required = False
+        self.fields['inventor'].required = False
+        self.fields['secondary_literature'].required = False
+        self.fields['description'].required = False
 
 # Relations form
 class CityPersonRelationForm(ModelForm):
