@@ -115,20 +115,22 @@ class InstitutionForm(ModelForm):
         widget=InstitutionTypeWidget(
             attrs={'data-placeholder': 'Select institution type',
                    'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
-    purpose = forms.ModelChoiceField(
+                   'data-minimum-input-length': '1'}),
+        required=False)
+    purpose = forms.ModelMultipleChoiceField(
         queryset=Purpose.objects.all(),
         widget=PurposeWidget(
             attrs={'data-placeholder': 'Select purposes',
                    'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
+                   'data-minimum-input-length': '1'}),
+        required=False)
     city = forms.ModelChoiceField(
         queryset=City.objects.all(),
         widget=CityWidget(
             attrs={'data-placeholder': 'Select city',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    neighbourhood = forms.ModelChoiceField(
+    neighbourhood = forms.ModelMultipleChoiceField(
         queryset=Neighbourhood.objects.all(),
         widget=NeighbourhoodWidget(
             attrs={'data-placeholder': 'Select neighbourhood',
