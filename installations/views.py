@@ -166,6 +166,8 @@ def InstitutionDelete(request, id):
 def edit_person(request, pk=None, focus='', view='complete'):
     names = 'personcity_formset,personneighbourhood_formset,personinstitution_formset,'
     names += 'personinstallation_formset,personevidence_formset'
+    print(request)
+    print(pk)
     return edit_model(request, __name__, 'Person', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
 
@@ -276,46 +278,48 @@ class EvidenceListView(ListView):
     model = Evidence
     template_name = 'installations/evidence_list'
     context_object_name = 'evidences'
-    paginate_by = 10
-
-    def get_context_data(self, **kwargs):
-        context = super(EvidenceListView, self).get_context_data(**kwargs)
-        evidences = self.get_queryset()
-        page = self.request.GET.get('page')
-        paginator = Paginator(evidences, self.paginate_by)
-        try:
-            evidences = paginator.page(page)
-        except PageNotAnInteger:
-            evidences = paginator.page(1)
-        except EmptyPage:
-            evidences = paginator.page(paginator.num_pages)
-        context['evidences'] = evidences
-        return context
+    # paginate_by = 10
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super(EvidenceListView, self).get_context_data(**kwargs)
+    #     evidences = self.get_queryset()
+    #     page = self.request.GET.get('page')
+    #     paginator = Paginator(evidences, self.paginate_by)
+    #     try:
+    #         evidences = paginator.page(page)
+    #     except PageNotAnInteger:
+    #         evidences = paginator.page(1)
+    #     except EmptyPage:
+    #         evidences = paginator.page(paginator.num_pages)
+    #     context['evidences'] = evidences
+    #     return context
 
 
 
 @login_required
 def edit_evidence(request, pk=None, focus='', view='complete'):
     names = 'evidenceperson_formset,evidenceinstitution_formset,evidenceinstallation_formset'
+    print(request)
+    print(pk)
     return edit_model(request, __name__, 'Evidence', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
 
 
-@method_decorator(login_required, name='dispatch')
-class EvidenceCreatView(CreateView):
-    model = Evidence
-    # fields = ('title', 'author', 'date', 'secondary_literature', 'description')
-    fields = '__all__'
-    template_name = 'installations/_evidence_form.html'
-    success_url = reverse_lazy('installations:evidence-list')
-
-
-@method_decorator(login_required, name='dispatch')
-class EvidenceUpdateView(UpdateView):
-    # fields = '__all__'
-    model = Evidence
-    form_class = EvidenceForm
-    success_url = reverse_lazy('installations:evidence-list')
+# @method_decorator(login_required, name='dispatch')
+# class EvidenceCreatView(CreateView):
+#     model = Evidence
+#     # fields = ('title', 'author', 'date', 'secondary_literature', 'description')
+#     fields = '__all__'
+#     template_name = 'installations/_evidence_form.html'
+#     success_url = reverse_lazy('installations:evidence-list')
+#
+#
+# @method_decorator(login_required, name='dispatch')
+# class EvidenceUpdateView(UpdateView):
+#     # fields = '__all__'
+#     model = Evidence
+#     form_class = EvidenceForm
+#     success_url = reverse_lazy('installations:evidence-list')
 
     ## if you want to see the detail of updated record you can add a detail view and reverse there. uncomment the following lines
     # def get_success_url(self):

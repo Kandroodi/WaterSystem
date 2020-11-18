@@ -58,7 +58,7 @@ def edit_model(request, name_space, model_name, app_name, instance_id=None,
                     #     app_name + ':edit_' + model_name.lower(),
                     #     kwargs={'pk': instance.pk, 'focus': focus}))
                     return HttpResponseRedirect(reverse(
-                        app_name + ':' + model_name.lower()+'-update',
+                        app_name + ':' + model_name.lower() + '-update',
                         kwargs={'pk': instance.pk, 'focus': focus}))
                 else:
                     print('ERROR', ffm.errors)
@@ -97,7 +97,7 @@ def add_simple_model(request, name_space, model_name, app_name, page_name):
     return render(request, 'utilities/add_simple_model.html', var)
 
 
-@permission_required('utilities.delete_generic')
+# @permission_required('utilities.delete_generic')
 def delete_model(request, name_space, model_name, app_name, pk):
     model = apps.get_model(app_name, model_name)
     instance = get_object_or_404(model, id=pk)
@@ -108,8 +108,11 @@ def delete_model(request, name_space, model_name, app_name, pk):
     if request.method == 'POST':
         if button == 'cancel':
             show_messages(request, button, model_name)
+            # return HttpResponseRedirect(reverse(
+            #     app_name + ':edit_' + model_name.lower(),
+            #     kwargs={'pk': instance.pk, 'focus': focus}))
             return HttpResponseRedirect(reverse(
-                app_name + ':edit_' + model_name.lower(),
+                app_name + ':' + model_name.lower() + '-update',
                 kwargs={'pk': instance.pk, 'focus': focus}))
         if button == 'confirm_delete':
             instance.delete()
