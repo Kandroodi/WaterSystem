@@ -20,7 +20,7 @@ class CityWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
 
-class NeighbourhoodWidget(s2forms.ModelSelect2Widget):
+class NeighbourhoodWidget(s2forms.ModelSelect2MultipleWidget):
     search_fields = ['neighbourhood_number__icontains']
 
 
@@ -49,6 +49,7 @@ class WatersystemWidget(s2forms.ModelSelect2Widget):
 
 
 class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
+    model = Purpose
     search_fields = ['name__icontains']
 
 
@@ -214,7 +215,7 @@ class SecondaryLiteratureForm(ModelForm):
         self.fields['year'].required = False
 
 
-class InstallationForm(ModelForm):
+class :(ModelForm):
     watersystem = forms.ModelChoiceField(
         queryset=Watersystem.objects.all(),  # this line refreshes the list when new item is entered using plus button
         widget=WatersystemWidget(
@@ -222,7 +223,7 @@ class InstallationForm(ModelForm):
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}),
         required=False)
-    purpose = forms.ModelChoiceField(
+    purpose = forms.ModelMultipleChoiceField(
         queryset=Purpose.objects.all().order_by('name'),
         widget=PurposeWidget(
             attrs={'data-placeholder': 'Select purposes',
@@ -235,7 +236,7 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select city',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    neighbourhood = forms.ModelChoiceField(
+    neighbourhood = forms.ModelMultipleChoiceField(
         queryset=Neighbourhood.objects.all(),
         widget=NeighbourhoodWidget(
             attrs={'data-placeholder': 'Select neighbourhood',
