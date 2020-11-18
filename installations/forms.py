@@ -215,7 +215,7 @@ class SecondaryLiteratureForm(ModelForm):
         self.fields['year'].required = False
 
 
-class :(ModelForm):
+class InstallationForm(ModelForm):
     watersystem = forms.ModelChoiceField(
         queryset=Watersystem.objects.all(),  # this line refreshes the list when new item is entered using plus button
         widget=WatersystemWidget(
