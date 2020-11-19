@@ -17,16 +17,17 @@
 
 <div class="tab-content">
     <div class="tab-pane fade" id="Edit">
-{#	{%if page_name == "Edit text" and 'unknown' not in crud.last_update %}#}
-{#		{% include 'utilities/change_log.html' %}#}
-{#		{% else %} <p class="mb-4"></p>#}
-{#	{% endif %}#}
+<!-- 	 {%if page_name == "Edit installation" and 'unknown' not in crud.last_update %}-->
+<!--		{% include 'utilities/change_log.html' %}-->
+<!--		{% else %} <p class="mb-4"></p>-->
+<!--	{% endif %}-->
 	<!-- installation form is defined in a seperate template -->
 	{% include 'installations/_installation_form.html' %}
     </div>
     <div class="tab-pane fade" id="Minimize">
 		<!-- you can minimize the text form -->
 		<br>
+        <h5 class="mb-1">{{form.instance.name}} </h5>
 		<br>
     </div>
 </div>

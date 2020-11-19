@@ -295,7 +295,6 @@ class EvidenceListView(ListView):
     #     return context
 
 
-
 @login_required
 def edit_evidence(request, pk=None, focus='', view='complete'):
     names = 'evidenceperson_formset,evidenceinstitution_formset,evidenceinstallation_formset'
@@ -321,9 +320,9 @@ def edit_evidence(request, pk=None, focus='', view='complete'):
 #     form_class = EvidenceForm
 #     success_url = reverse_lazy('installations:evidence-list')
 
-    ## if you want to see the detail of updated record you can add a detail view and reverse there. uncomment the following lines
-    # def get_success_url(self):
-    #     return reverse_lazy('installations:textualevidence-detail', kwargs={'pk': self.object.id})
+## if you want to see the detail of updated record you can add a detail view and reverse there. uncomment the following lines
+# def get_success_url(self):
+#     return reverse_lazy('installations:textualevidence-detail', kwargs={'pk': self.object.id})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -344,14 +343,22 @@ class WaterSystemCreatView(CreateView):
     model = Watersystem
     form_class = WatersystemForm
     template_name = 'installations/watersystem_form.html'
-    success_url = reverse_lazy('installations:watersystem-list')
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            print(viewmode)
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:watersystem-list')
 
 
 @method_decorator(login_required, name='dispatch')
 class WaterSystemUpdateView(UpdateView):
     model = Watersystem
     form_class = WatersystemForm
-    success_url = reverse_lazy('installations:watersystem-list')
+    success_url = reverse_lazy('utilities:close')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -372,7 +379,15 @@ class PurposeCreatView(CreateView):
     model = Purpose
     fields = '__all__'
     template_name = 'installations/purpose_form.html'
-    success_url = reverse_lazy('installations:purpose-list')
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            print(viewmode)
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:purpose-list')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -568,6 +583,5 @@ class CityInstallationRelationUpdateView(UpdateView):
 class CityInstallationRelationDeleteView(DeleteView):
     model = CityInstallationRelation
     success_url = reverse_lazy("installations:cityinstallationrelation-list")
-
 
 # Functions

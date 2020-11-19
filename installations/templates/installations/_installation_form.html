@@ -10,6 +10,9 @@
            href ="{% url 'installations:watersystem-insert' %}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
+        <!--to open a new page with defined location and size use following line instead above
+         onclick="window.open(this.href, 'mywin',
+            'left=20,top=20,width=500,height=500,toolbar=0,resizable=0'); return false;"><i class="fa fa-plus"></i></a>-->
     </tr>
     <tr class="d-flex">
         <th class="col-2">Construction date</th>
@@ -27,7 +30,7 @@
         <th class="col-2">Purpose</th>
         <td class="col-8">{{form.purpose}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:purpose-insert' %}"
+           href ="{% url 'installations:purpose-insert' 'inline' %}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
