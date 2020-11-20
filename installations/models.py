@@ -88,7 +88,7 @@ class Location(models.Model):
 
 class Religion(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    description = models.TextField()
+    description = models.TextField(blank=True, default='', null=True)
 
     def __str__(self):
         return self.name

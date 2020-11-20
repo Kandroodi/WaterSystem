@@ -7,7 +7,7 @@
         <th class="col-2">Type</th>
         <td class="col-8">{{form.type}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:institutiontype-insert' %}"
+           href ="{% url 'installations:institutiontype-insert' 'inline'%}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
@@ -15,7 +15,7 @@
         <th class="col-2">City</th>
         <td class="col-8">{{form.city}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:city-insert' %}"
+           href ="{% url 'installations:city-insert' 'inline' %}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
@@ -23,7 +23,7 @@
         <th class="col-2">Neighbourhood</th>
         <td class="col-8">{{form.neighbourhood}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:neighbourhood-insert' %}"
+           href ="{% url 'installations:neighbourhood-insert' 'inline' %}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
@@ -43,7 +43,7 @@
         <th class="col-2">Religion</th>
         <td class="col-8">{{form.religion}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:religion-insert' %}"
+           href ="{% url 'installations:religion-insert' 'inline'%}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
@@ -51,7 +51,7 @@
         <th class="col-2">Secondary literature</th>
         <td class="col-8">{{form.secondary_literature}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:secondaryliterature-insert' %}"
+           href ="{% url 'installations:secondaryliterature-insert' 'inline'%}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>
@@ -59,7 +59,7 @@
         <th class="col-2">Evidence</th>
         <td class="col-8">{{form.evidence}}</td>
         <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:evidence-insert' %}"
+           href ="{% url 'installations:evidence-insert' 'inline'%}"
            role="button"><i class="fa fa-plus"></i></a>
         </td>
     </tr>

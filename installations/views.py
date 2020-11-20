@@ -358,7 +358,14 @@ class InstitutionTypeCreatView(CreateView):
     model = InstitutionType
     fields = '__all__'
     template_name = 'installations/institutiontype_form.html'
-    success_url = reverse_lazy('installations:institutiontype-list')
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:institutiontype-list')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -386,7 +393,14 @@ class ReligionCreatView(CreateView):
     model = Religion
     fields = '__all__'
     template_name = 'installations/religion_form.html'
-    success_url = reverse_lazy('installations:religion-list')
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:religion-list')
 
 
 @method_decorator(login_required, name='dispatch')
