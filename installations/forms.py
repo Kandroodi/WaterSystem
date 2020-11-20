@@ -24,6 +24,12 @@ class NeighbourhoodWidget(s2forms.ModelSelect2MultipleWidget):
     search_fields = ['neighbourhood_number__icontains']
 
 
+class NeighbourhoodWidget2(s2forms.ModelSelect2Widget): # this is for o
+    search_fields = [
+        'neighbourhood_number__icontains',
+    ]
+
+
 class LocationWidget(s2forms.ModelSelect2Widget):
     search_fields = [
         'latitude__icontains',
@@ -354,18 +360,20 @@ class CityPersonRelationForm(ModelForm):
 
 
 class NeighbourhoodPersonRelationForm(ModelForm):
-    neighbourhood = forms.ModelChoiceField(
-        queryset=Neighbourhood.objects.all(),
-        widget=NeighbourhoodWidget(
-            attrs={'data-placeholder': 'Select neighbourhood',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
     person = forms.ModelChoiceField(
         queryset=Person.objects.all(),
         widget=PersonWidget(
             attrs={'data-placeholder': 'Select person',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
+
+    neighbourhood = forms.ModelChoiceField(
+        queryset=Neighbourhood.objects.all(),
+        widget=NeighbourhoodWidget2(
+            attrs={'data-placeholder': 'Select neighbourhood',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
 
     class Meta:
         model = NeighbourhoodPersonRelation

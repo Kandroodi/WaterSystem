@@ -62,7 +62,7 @@
 		<tr class ="d-flex">
 		<th class="col-5">City
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:city-insert' %}" role="button">
+				href ="{% url 'installations:city-insert' 'inline'%}" role="button">
 				 <i class="fa fa-plus"></i></a>
         </th>
 		<th class="col-3">Type of involvement </th>
@@ -87,7 +87,7 @@
 		<tr class ="d-flex">
             <th class="col-5">Neighbourhood
                 <a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-                    href ="{% url 'installations:neighbourhood-insert' %}" role="button">
+                    href ="{% url 'installations:neighbourhood-insert' 'inline' %}" role="button">
                      <i class="fa fa-plus"></i></a>
             </th>
             <th class="col-3">Type of involvement </th>
@@ -111,7 +111,7 @@
 		<tr class ="d-flex">
 		<th class="col-5">Institution
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:institution-insert' %}" role="button">
+				href ="{% url 'installations:institution-insert' 'inline'%}" role="button">
 				 <i class="fa fa-plus"></i></a>
         </th>
 		<th class="col-3">Type of involvement</th>
@@ -135,7 +135,7 @@
 		<tr class ="d-flex">
 		<th class="col-5">Installation
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:installation-insert' %}" role="button">
+				href ="{% url 'installations:installation-insert' 'inline'%}" role="button">
 				 <i class="fa fa-plus"></i></a>
         </th>
 		<th class="col-3">Type of involvement </th>
@@ -157,9 +157,9 @@
         {{personevidence_formset.management_form}}
 		<table class="table table-borderless">
 		<tr class ="d-flex">
-		<th class="col-3">Evidence
+		<th class="col-5">Evidence
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-				href ="{% url 'installations:evidence-insert' %}" role="button">
+				href ="{% url 'installations:evidence-insert' 'inline'%}" role="button">
 				 <i class="fa fa-plus"></i></a>
         </th>
 		<th class="col-2">Page number </th>
@@ -169,7 +169,7 @@
 		{{personevidence_formset.management_form}}
 		{% for f in personevidence_formset.forms %}
 			<tr class ="d-flex">
-                <td class="col-3">{{f.evidence}} {{f.evidence.errors}}</td>
+                <td class="col-5">{{f.evidence}} {{f.evidence.errors}}</td>
                 <td class="col-2">{{f.page_number}} {{f.page_number.errors}}</td>
                 <td class="col-6">{{f.description}} {{f.Description.errors}}</td>
                 <td class="col-1">{{f.DELETE}} {{f.id}}</td>
