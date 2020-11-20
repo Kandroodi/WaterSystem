@@ -1,0 +1,18 @@
+{% extends 'installations/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block main_content %}
+
+<h2>Add Location</h2>
+<hr class="my-4">
+<form  method="POST" action="" autocomplete="off" class="form-horizontal">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>
+        <a href="{% url 'installations:home' %}" class="btn btn-default">Cancel</a>
+    </div>
+</form>
+{% endblock main_content %}

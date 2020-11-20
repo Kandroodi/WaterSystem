@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', views.user_login, name='user_login'), # Login
     path('', views.Home, name='home'), # get and post req. for insert operation
     path('city/new/', views.CityCreate, name='city-insert'), # get and post req. for insert operation
+    path('city/new/<str:view>/', views.CityCreate, name='city-insert'),
     path('city/new/<int:id>/', views.CityCreate, name='city-update'), # get and post req. for update operation
     path('city/delete/<int:id>/', views.CityDelete, name='city-delete'),
     path('city/list/', views.CityList, name='city-list'),  # get request to retrieve and display all records
@@ -28,6 +29,7 @@ urlpatterns = [
     path('person/delete/<int:id>/', views.PersonDelete, name='person-delete'),
     path('person/list/', views.PersonList, name='person-list'),
     path('secondaryliterature/new/', views.SecondaryLiteratureCreatView.as_view(), name='secondaryliterature-insert'),
+    path('secondaryliterature/new/<str:view>/', views.SecondaryLiteratureCreatView.as_view(), name='secondaryliterature-insert'),
     url(r'^secondaryliterature/new/(?P<pk>\d+)/$', views.SecondaryLiteratureUpdateView.as_view(), name='secondaryliterature-update'),
     url(r'^secondaryliterature/delete/(?P<pk>\d+)/$', views.SecondaryLiteratureDeleteView.as_view(), name='secondaryliterature-delete'),
     path('secondaryliterature/list/', views.SecondaryLiteratureListView.as_view(), name='secondaryliterature-list'),
@@ -65,7 +67,10 @@ urlpatterns = [
     url(r'^religion/delete/(?P<pk>\d+)/$', views.ReligionDeleteView.as_view(), name='religion-delete'),
     path('religion/list', views.ReligionListView.as_view(), name='religion-list'),
 
-    url(r'^neighbourhood/new/$', views.NeighbourhoodCreatView.as_view(), name='neighbourhood-insert'),
+    path('neighbourhood/new/', views.NeighbourhoodCreatView.as_view(), name='neighbourhood-insert'),
+    path('neighbourhood/new/<str:view>/', views.NeighbourhoodCreatView.as_view(), name='neighbourhood-insert'),
+    path('location/new/', views.LocationCreatView.as_view(), name='location-insert'),
+    path('location/new/<str:view>/', views.LocationCreatView.as_view(), name='location-insert'),
     # Relations
     # ------------------------------------------------------------------------------------------------------------------
     url(r'^citypersonrelation/new/$', views.CityPersonRelationCreatView.as_view(), name='citypersonrelation-insert'),

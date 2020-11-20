@@ -112,7 +112,7 @@ def Home(request):
 
 
 @login_required
-def CityCreate(request, id=0):
+def CityCreate(request, id=0, view=None):
     if request.method == "GET":
         if id == 0:
             form = CityForm()
@@ -128,7 +128,10 @@ def CityCreate(request, id=0):
             form = CityForm(request.POST, instance=city)
         if form.is_valid():
             form.save()
-        return redirect('installations:city-list')  # after save redirect to the city list
+    if view == 'inline':
+        return redirect('utilities:close')
+    else:
+        return redirect('installations:city-list')
 
 
 def CityList(request):
@@ -166,30 +169,8 @@ def InstitutionDelete(request, id):
 def edit_person(request, pk=None, focus='', view='complete'):
     names = 'personcity_formset,personneighbourhood_formset,personinstitution_formset,'
     names += 'personinstallation_formset,personevidence_formset'
-    print(request)
-    print(pk)
     return edit_model(request, __name__, 'Person', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
-
-
-# @login_required
-# def PersonCreate(request, id=0):
-#     if request.method == "GET":
-#         if id == 0:
-#             form = PersonForm()
-#         else:
-#             person = Person.objects.get(pk=id)
-#             form = PersonForm(instance=person)
-#         return render(request, 'installations/person_form.html', {'form': form})
-#     else:  # request.method == "POST":
-#         if id == 0:
-#             form = PersonForm(request.POST)
-#         else:
-#             person = Person.objects.get(pk=id)
-#             form = PersonForm(request.POST, instance=person)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('installations:person-list')  # after save redirect to the Person list
 
 
 def PersonList(request):
@@ -216,7 +197,14 @@ class SecondaryLiteratureCreatView(CreateView):
     model = SecondaryLiterature
     fields = '__all__'
     template_name = 'installations/secondaryliterature_form.html'
-    success_url = reverse_lazy('installations:secondaryliterature-list')
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:secondaryliterature-list')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -237,26 +225,6 @@ def edit_installation(request, pk=None, focus='', view='complete'):
     names = 'installationinstitution_formset,installationperson_formset'
     return edit_model(request, __name__, 'Installation', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
-
-
-# @login_required
-# def InstallationCreate(request, id=0):
-#     if request.method == "GET":
-#         if id == 0:
-#             form = InstallationForm()
-#         else:
-#             installation = Installation.objects.get(pk=id)
-#             form = InstallationForm(instance=installation)
-#         return render(request, 'installations/installation_form.html', {'form': form})
-#     else:  # request.method == "POST":
-#         if id == 0:
-#             form = InstallationForm(request.POST)
-#         else:
-#             installation = Installation.objects.get(pk=id)
-#             form = InstallationForm(request.POST, instance=installation)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('installations:installation-list')  # after save redirect to the installation list
 
 
 def InstallationList(request):
@@ -298,31 +266,8 @@ class EvidenceListView(ListView):
 @login_required
 def edit_evidence(request, pk=None, focus='', view='complete'):
     names = 'evidenceperson_formset,evidenceinstitution_formset,evidenceinstallation_formset'
-    print(request)
-    print(pk)
     return edit_model(request, __name__, 'Evidence', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
-
-
-# @method_decorator(login_required, name='dispatch')
-# class EvidenceCreatView(CreateView):
-#     model = Evidence
-#     # fields = ('title', 'author', 'date', 'secondary_literature', 'description')
-#     fields = '__all__'
-#     template_name = 'installations/_evidence_form.html'
-#     success_url = reverse_lazy('installations:evidence-list')
-#
-#
-# @method_decorator(login_required, name='dispatch')
-# class EvidenceUpdateView(UpdateView):
-#     # fields = '__all__'
-#     model = Evidence
-#     form_class = EvidenceForm
-#     success_url = reverse_lazy('installations:evidence-list')
-
-## if you want to see the detail of updated record you can add a detail view and reverse there. uncomment the following lines
-# def get_success_url(self):
-#     return reverse_lazy('installations:textualevidence-detail', kwargs={'pk': self.object.id})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -347,7 +292,6 @@ class WaterSystemCreatView(CreateView):
     def get_success_url(self):
         if 'view' in self.kwargs:
             viewmode = self.kwargs['view']
-            print(viewmode)
             if viewmode == 'inline':
                 return reverse_lazy('utilities:close')
         else:
@@ -383,7 +327,6 @@ class PurposeCreatView(CreateView):
     def get_success_url(self):
         if 'view' in self.kwargs:
             viewmode = self.kwargs['view']
-            print(viewmode)
             if viewmode == 'inline':
                 return reverse_lazy('utilities:close')
         else:
@@ -464,7 +407,29 @@ class NeighbourhoodCreatView(CreateView):
     model = Neighbourhood
     fields = '__all__'
     template_name = 'installations/neighbourhood_form.html'
-    success_url = reverse_lazy('installations:home')
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:home')  # create a list view for this if needed
+
+
+@method_decorator(login_required, name='dispatch')
+class LocationCreatView(CreateView):
+    model = Location
+    fields = '__all__'
+    template_name = 'installations/location_form.html'
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:home')  # create a list view for this if needed
 
 
 # Relations
