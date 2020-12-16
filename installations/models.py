@@ -164,12 +164,12 @@ class Installation(models.Model):
     construction_date = PartialDateField(blank=True, null=True)
     first_reference = PartialDateField(blank=True, null=True)
     end_functioning_year = PartialDateField(blank=True, null=True)
-    purpose = models.ManyToManyField(Purpose, blank=True, null=True)
+    purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
-    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True, null=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
-    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
-    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
+    evidence = models.ManyToManyField(Evidence, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):

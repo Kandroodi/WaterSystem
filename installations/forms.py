@@ -46,9 +46,16 @@ class SecondaryLiteratureWidget(s2forms.ModelSelect2Widget):
     # search_fields = ['title__startswith'] this can used if you want to search based on first letter
 
 
+class SecondaryLiteratureWidgetMulti(s2forms.ModelSelect2MultipleWidget):
+    search_fields = ['title__icontains']
+    # search_fields = ['title__startswith'] this can used if you want to search based on first letter
+
 class EvidenceWidget(s2forms.ModelSelect2Widget):
     search_fields = ['title__icontains']
 
+
+class EvidenceWidgetMulti(s2forms.ModelSelect2MultipleWidget):
+    search_fields = ['title__icontains']
 
 class WatersystemWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
@@ -256,15 +263,15 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select location',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    secondary_literature = forms.ModelChoiceField(
+    secondary_literature = forms.ModelMultipleChoiceField(
         queryset=SecondaryLiterature.objects.all(),
-        widget=SecondaryLiteratureWidget(
+        widget=SecondaryLiteratureWidgetMulti(
             attrs={'data-placeholder': 'Select secondary literature',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    evidence = forms.ModelChoiceField(
+    evidence = forms.ModelMultipleChoiceField(
         queryset=Evidence.objects.all(),
-        widget=EvidenceWidget(
+        widget=EvidenceWidgetMulti(
             attrs={'data-placeholder': 'Select evidence',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
