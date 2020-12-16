@@ -2,17 +2,29 @@
 {% load crispy_forms_tags %}
 
 {% block main_content %}
+<h2>
+    {% if not form.instance.pk %}
+        Add Location
+    {% else %}
+        Update Location
+    {% endif %}
+</h2>
 
-<h2>Add Location</h2>
-<hr class="my-4">
-<form  method="POST" action="" autocomplete="off" class="form-horizontal">
+
+<form method="post">
     {% csrf_token %}
-    {{ form|crispy }}
-
-
+    <table>
+        {{ form|crispy }}
+    </table>
     <div class="form-group">
-        <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>
-        <a href="{% url 'installations:home' %}" class="btn btn-default">Cancel</a>
+        {% if not form.instance.pk %}
+            <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Save</button>
+        {% else %}
+            <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Update</button>
+        {% endif %}
+        <a href="{% url 'installations:location-list' %}" class="btn btn-default">Cancel</a>
     </div>
+
 </form>
+
 {% endblock main_content %}
