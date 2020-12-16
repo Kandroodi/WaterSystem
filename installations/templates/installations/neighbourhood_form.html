@@ -2,8 +2,14 @@
 {% load crispy_forms_tags %}
 
 {% block main_content %}
+<h2>
+    {% if not form.instance.pk %}
+        Add Neighbourhood
+    {% else %}
+        Update Neighbourhood
+    {% endif %}
+</h2>
 
-<h2>Add Neighbourhood</h2>
 <hr class="my-4">
 <form  method="POST" action="" autocomplete="off" class="form-horizontal">
     {% csrf_token %}

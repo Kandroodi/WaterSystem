@@ -432,6 +432,26 @@ class NeighbourhoodCreatView(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+class NeighbourhoodListView(ListView):
+    model = Neighbourhood
+    template_name = 'installations/neighbourhood_list.html'
+    context_object_name = 'neighbourhoods'
+
+
+@method_decorator(login_required, name='dispatch')
+class NeighbourhoodUpdateView(UpdateView):
+    model = Neighbourhood
+    fields = '__all__'
+    success_url = reverse_lazy('installations:neighbourhood-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class NeighbourhoodDeleteView(DeleteView):
+    model = Neighbourhood
+    success_url = reverse_lazy("installations:neighbourhood-list")
+
+
+@method_decorator(login_required, name='dispatch')
 class LocationCreatView(CreateView):
     model = Location
     fields = '__all__'

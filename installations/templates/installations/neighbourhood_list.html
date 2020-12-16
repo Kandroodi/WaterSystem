@@ -1,0 +1,36 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+    <h2>Neighbourhood list</h2>
+    <table class="table table-borderless">
+        <thead class="border-bottom font-weight-bold">
+            <tr>
+                <th scope="col">City</th>
+                <th scope="col">Neighbourhood_number</th>
+                <td>
+                    <a href="{% url 'installations:neighbourhood-insert' 'inline' %}" class="btn btn-outline-success" > <i class="fa fa-plus"></i> Add New</a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for neighbourhood in neighbourhoods %}
+            <tr>
+                <td>{{neighbourhood.city}}</td>
+                <td>{{neighbourhood.neighbourhood_number}}</td>
+                <td>
+                    <a href="{% url 'installations:neighbourhood-update' neighbourhood.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:neighbourhood-delete' neighbourhood.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
