@@ -42,13 +42,17 @@ class ReligionWidget(s2forms.ModelSelect2Widget):
 
 
 class SecondaryLiteratureWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['title__icontains']
-    # search_fields = ['title__startswith'] this can used if you want to search based on first letter
+    search_fields = [
+        "title__icontains",
+        "author__icontains",
+    ]
 
 
 class SecondaryLiteratureWidgetMulti(s2forms.ModelSelect2MultipleWidget):
-    search_fields = ['title__icontains']
-    # search_fields = ['title__startswith'] this can used if you want to search based on first letter
+    search_fields = [
+        "title__icontains",
+        "author__icontains",
+    ]
 
 class EvidenceWidget(s2forms.ModelSelect2Widget):
     search_fields = ['title__icontains']
@@ -227,7 +231,6 @@ class SecondaryLiteratureForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SecondaryLiteratureForm, self).__init__(*args, **kwargs)
-        self.fields['author'].required = False
         self.fields['journal'].required = False
         self.fields['publisher'].required = False
         self.fields['year'].required = False

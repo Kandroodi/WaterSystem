@@ -96,13 +96,13 @@ class Religion(models.Model):
 
 class SecondaryLiterature(models.Model):
     title = models.CharField(max_length=250, blank=False, default='', null=True)
-    author = models.CharField(max_length=100, blank=True, default='', null=True)
+    author = models.CharField(max_length=100, blank=False, default='', null=True)
     journal = models.CharField(max_length=100, blank=True, default='', null=True)
     publisher = models.CharField(max_length=100, blank=True, default='', null=True)
     year = PartialDateField(blank=True, null=True, default='')
 
     def __str__(self):
-        return self.title
+        return 'Author: ' + self.author + ' | Title: ' + self.title
 
 
 class Evidence(models.Model):
