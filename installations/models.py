@@ -131,7 +131,7 @@ class Person(models.Model):
     death = PartialDateField(blank=True, default='', null=True)
     role = models.CharField(max_length=100, blank=True)  # Role field for person and type of envolvement feild for person-installation relation
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
-    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
@@ -202,7 +202,7 @@ class Institution(models.Model):
     # start_date = ... will be the partitial dat
     end_date = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, null=True)
-    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=False, default='', null=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 

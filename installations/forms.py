@@ -155,9 +155,9 @@ class InstitutionForm(ModelForm):
             attrs={'data-placeholder': 'Select religion',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    secondary_literature = forms.ModelChoiceField(
+    secondary_literature = forms.ModelMultipleChoiceField(
         queryset=SecondaryLiterature.objects.all(),
-        widget=SecondaryLiteratureWidget(
+        widget=SecondaryLiteratureWidgetMulti(
             attrs={'data-placeholder': 'Select secondary literature',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
@@ -195,14 +195,17 @@ class PersonForm(ModelForm):
             "religion": ReligionWidget(attrs={'data-placeholder': 'Select religion',
                                               'style': 'width:100%;', 'class': 'searching',
                                               'data-minimum-input-length': '1'}),
-            "secondary_literature": SecondaryLiteratureWidget(attrs={'data-placeholder': 'Select secondary literature',
-                                                                     'style': 'width:100%;', 'class': 'searching',
-                                                                     'data-minimum-input-length': '1'}),
             "evidence": EvidenceWidget(attrs={'data-placeholder': 'Select evidence',
                                               'style': 'width:100%;', 'class': 'searching',
                                               'data-minimum-input-length': '1'}),
         }
 
+    secondary_literature = forms.ModelMultipleChoiceField(
+        queryset=SecondaryLiterature.objects.all(),
+        widget=SecondaryLiteratureWidgetMulti(
+            attrs={'data-placeholder': 'Select secondary literature',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
     comment = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
