@@ -28,6 +28,14 @@
         </td>
     </tr>
     <tr class="d-flex">
+        <th class="col-2">Location</th>
+        <td class="col-8">{{form.exact_location}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:location-insert' 'inline' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
         <th class="col-2">Period</th>
         <td class="col-8">{{form.policy}}</td>
     </tr>

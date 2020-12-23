@@ -153,6 +153,12 @@ class InstitutionForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
+    exact_location = forms.ModelChoiceField(
+        queryset=Location.objects.all(),
+        widget=LocationWidget(
+            attrs={'data-placeholder': 'Select location',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
     religion = forms.ModelChoiceField(
         queryset=Religion.objects.all(),
         widget=ReligionWidget(

@@ -190,6 +190,7 @@ class Institution(models.Model):
     purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
+    exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     policy = models.CharField(max_length=100, blank=True)
     start_date = PartialDateField(blank=True, null=True) # this field is for test and explaine the partitial dat
     ''''help_text="Date formats:"
