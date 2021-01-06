@@ -13,8 +13,52 @@
 
     <form method="post">
         {% csrf_token %}
-        <table>
-            {{ form|crispy }}
+        <table class="table table-borderless" >
+            <tr class="d-flex">
+                <th class="col-2">Title</th>
+                <td class="col-8">{{form.title}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Author</th>
+                <td class="col-8">{{form.author}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Editor</th>
+                <td class="col-8">{{form.editor}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Book title</th>
+                <td class="col-8">{{form.book_title}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Journal</th>
+                <td class="col-8">{{form.journal}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Publisher</th>
+                <td class="col-8">{{form.publisher}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Volume</th>
+                <td class="col-8">{{form.volume}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Issue</th>
+                <td class="col-8">{{form.issue}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Page number</th>
+                <td class="col-8">{{form.page_number}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Place</th>
+                <td class="col-8">{{form.place}}</td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-2">Year</th>
+                <td class="col-8">{{form.year}}</td>
+            </tr>
+
         </table>
         <div class="form-group">
             {% if not form.instance.pk %}
