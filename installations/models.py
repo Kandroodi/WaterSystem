@@ -97,8 +97,14 @@ class Religion(models.Model):
 class SecondaryLiterature(models.Model):
     title = models.CharField(max_length=250, blank=False, default='', null=True)
     author = models.CharField(max_length=100, blank=False, default='', null=True)
+    editor = models.CharField(max_length=100, blank=True, default='', null=True)
+    book_title = models.CharField(max_length=250, blank=True, default='', null=True)
     journal = models.CharField(max_length=100, blank=True, default='', null=True)
     publisher = models.CharField(max_length=100, blank=True, default='', null=True)
+    volume = models.CharField(max_length=25, blank=True, default='', null=True)
+    issue = models.CharField(max_length=25, blank=True, default='', null=True)
+    page_number = models.CharField(max_length=25, blank=True, default='', null=True)
+    place = models.CharField(max_length=25, blank=True, default='', null=True)
     year = PartialDateField(blank=True, null=True, default='')
 
     def __str__(self):
