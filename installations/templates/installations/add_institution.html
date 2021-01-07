@@ -60,13 +60,13 @@
 				 <i class="fa fa-plus"></i></a>
 			</th>
 		<th class="col-3">type of involvement </th>
-		<th><i class="fa fa-times text-danger"></i></th>
+		<th class="col-1" style="text-align:center"><i class="fa fa-times text-danger"></i></th>
 		</tr>
 		{% for f in institutionperson_formset.forms %}
 			<tr class ="d-flex">
 			<td class="col-5">{{f.person}} {{f.person.errors}}</td>
 			<td class="col-3">{{f.type_of_involvement}} {{f.type_of_involvement.errors}}</td>
-			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
+			<td class="col-1" style="text-align:left">{{f.DELETE}} {{f.id}}</td>
 			</tr>
 		{% endfor %}
 		</table>
@@ -82,7 +82,7 @@
 				 <i class="fa fa-plus"></i></a>
 			</th>
 		<th class="col-3">type of involvement</th>
-		<th><i class="fa fa-times text-danger"></i></th>
+		<th class="col-1" style="text-align:center"><i class="fa fa-times text-danger"></i></th>
 		</tr>
 		{{institutioninstallation_formset.management_form}}
 		{% for f in institutioninstallation_formset.forms %}
@@ -106,7 +106,7 @@
 			</th>
 		<th class="col-2">Page number </th>
         <th class="col-6">Description </th>
-		<th><i class="fa fa-times text-danger"></i></th>
+		<th class="col-1" style="text-align:center"><i class="fa fa-times text-danger"></i></th>
 		</tr>
 		{{institutionevidence_formset.management_form}}
 		{% for f in institutionevidence_formset.forms %}
