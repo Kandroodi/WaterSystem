@@ -17,10 +17,10 @@
 
 <div class="tab-content">
     <div class="tab-pane fade" id="Edit">
-{#<!-- 	 {%if page_name == "Edit installation" and 'unknown' not in crud.last_update %}-->#}
-{#<!--		{% include 'utilities/change_log.html' %}-->#}
-{#<!--		{% else %} <p class="mb-4"></p>-->#}
-{#<!--	{% endif %}-->#}
+        {%if page_name == "Edit installation" and 'unknown' not in crud.last_update %}
+            {% include 'utilities/change_log.html' %}
+        {% else %} <p class="mb-4"></p>
+        {% endif %}
 	<!-- installation form is defined in a seperate template -->
 	{% include 'installations/_installation_form.html' %}
     </div>
