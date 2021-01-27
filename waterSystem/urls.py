@@ -1,3 +1,5 @@
+from installations import views
+
 """waterSystem URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,8 +20,10 @@ from django.conf.urls import url, include
 from django.urls import path
 
 urlpatterns = [
+    path('', views.Home, name='home'),
     url(r'^admin/', admin.site.urls),
-    url('', include(('installations.urls', 'installations'), namespace="installations")),
+    url('installations/', include(('installations.urls', 'installations'), namespace="installations")),
+    path('accounts/',include('accounts.urls')),
     path('utilities/',include('utilities.urls')),
     path("select2/", include("django_select2.urls")),
 ]

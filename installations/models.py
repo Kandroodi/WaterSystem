@@ -4,6 +4,7 @@ from django.urls import reverse
 # from django.contrib.gis.db import models as gismodels
 from django.contrib.auth.models import User
 
+
 # Notes
 # 1) you can add help text for each field using :e.g. help_text='City name!'.
 # 2) on_delete= models.CASCADE: When the referenced object is deleted, also delete the objects that have references
@@ -13,7 +14,6 @@ from django.contrib.auth.models import User
 
 # User model
 class UserProfileInfo(models.Model):
-
     # Create relationship (don't inherit from User!)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -21,7 +21,7 @@ class UserProfileInfo(models.Model):
     # portfolio_site = models.URLField(blank=True)
     # pip install pillow to use this!
     # Optional: pip install pillow --global-option=”build_ext” --global-option=”--disable-jpeg”
-    profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
+    profile_pic = models.ImageField(upload_to='profile_pics', blank=True)
 
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User!
@@ -65,10 +65,10 @@ class Citymap(models.Model):
     end_date = PartialDateField()
 
 
-class Neighbourhood (models.Model):
+class Neighbourhood(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
-    neighbourhood_number = models.PositiveIntegerField (null=True, blank=True)
-    extent_shapefile = models.FileField(upload_to='shapefiles/', null=True, blank=True) # Is it correct way?
+    neighbourhood_number = models.PositiveIntegerField(null=True, blank=True)
+    extent_shapefile = models.FileField(upload_to='shapefiles/', null=True, blank=True)  # Is it correct way?
 
     def __str__(self):
         st = self.city.name + ' ' + str(self.neighbourhood_number)
@@ -115,7 +115,8 @@ class Evidence(models.Model):
     title = models.CharField(max_length=250, blank=False)
     author = models.CharField(max_length=50, blank=True, null=True)
     date = PartialDateField(blank=True, null=True)
-    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',
+                                             null=True)
     description = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
@@ -135,7 +136,8 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER, default='M')
     birth = PartialDateField(blank=True, default='', null=True)
     death = PartialDateField(blank=True, default='', null=True)
-    role = models.CharField(max_length=100, blank=True)  # Role field for person and type of envolvement feild for person-installation relation
+    role = models.CharField(max_length=100,
+                            blank=True)  # Role field for person and type of envolvement feild for person-installation relation
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
@@ -150,7 +152,8 @@ class Watersystem(models.Model):
     type = models.CharField(max_length=100, blank=True, null=True)
     inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(max_length=1000, blank=True, null=True)
-    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='', null=True)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',
+                                             null=True)
 
     def __str__(self):
         return self.name
@@ -198,7 +201,7 @@ class Institution(models.Model):
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     policy = models.CharField(max_length=100, blank=True)
-    start_date = PartialDateField(blank=True, null=True) # this field is for test and explaine the partitial dat
+    start_date = PartialDateField(blank=True, null=True)  # this field is for test and explaine the partitial dat
     ''''help_text="Date formats:"
                                                                        "Day: yyyy-mm-dd 1999-12-04  "
                                                                        "Month: yyyy-mm 1999-12  "
