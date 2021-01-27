@@ -64,15 +64,28 @@
     <hr>
 
     <!-- Place the jumbotron inside the <div class="container"> if you want the jumbotron to NOT extend to the edge of the screen -->
-    <div class="jumbotron">    <!--! for the gray background! -->
-        <div class="container-lg"> <!--! adds a  X px left and right padding to any HTML element. -->
-            {% block main_content %}
-            <!-- Anything outside of this will be inherited if you extend!-->
-            {% endblock main_content %}
+    <div class="jumbotron jumbotron-fluid">    <!--! for the gray background! -->
+        <div class="row">
+            <div class="col-1">
+                {% block left %}
+                {% endblock %}
+            </div>
+
+{#            <div class="container-lg"> <!--! adds a  X px left and right padding to any HTML element. -->#}
+            <div class="col-10">
+                {% block main_content %}
+                <!-- Anything outside of this will be inherited if you extend!-->
+                {% endblock main_content %}
+            </div>
+
+            <div class="col-1">
+                {% block right %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 
-    {% include 'installations/footer.html' %}
+{#    {% include 'installations/footer.html' %}#}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
