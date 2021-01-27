@@ -271,6 +271,10 @@ class InstitutionInstallationRelation(models.Model):
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
     type_of_involvement = models.CharField(max_length=100, blank=False)
 
+    def __str__(self):
+        message = "relation is " + self.type_of_involvement
+        return message
+
 
 class EvidencePersonRelation(models.Model):
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
@@ -291,6 +295,10 @@ class EvidenceInstitutionRelation(models.Model):
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True)
 
+    def __str__(self):
+        message = "relation is " + self.page_number + " " + self.description
+        return message
+
 
 class EvidenceInstallationRelation(models.Model):
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
@@ -298,3 +306,7 @@ class EvidenceInstallationRelation(models.Model):
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True)
+
+    def __str__(self):
+        message = "relation is " + self.page_number + " " + self.description
+        return message
