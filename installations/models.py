@@ -223,11 +223,20 @@ class CityPersonRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
     type_of_involvement = models.CharField(max_length=100, blank=False)
 
+    def __str__(self):
+        message = "relation is " + self.type_of_involvement
+        return message
+
 
 class NeighbourhoodPersonRelation(models.Model):
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
     type_of_involvement = models.CharField(max_length=100, blank=False)
+
+    def __str__(self):
+        # message = "neighbourhood: " + str(self.neighbourhood) + " & " + "person: " + str(self.person) + " relation is " + self.type_of_involvement
+        message = "relation is " + self.type_of_involvement
+        return message
 
 
 class PersonInstitutionRelation(models.Model):
@@ -235,11 +244,19 @@ class PersonInstitutionRelation(models.Model):
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
     type_of_involvement = models.CharField(max_length=50, blank=False)
 
+    def __str__(self):
+        message = "relation is " + self.type_of_involvement
+        return message
+
 
 class PersonInstallationRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
     installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
     type_of_involvement = models.CharField(max_length=100, blank=False)
+
+    def __str__(self):
+        message = "relation is " + self.type_of_involvement
+        return message
 
 
 class CityInstallationRelation(models.Model):
@@ -261,6 +278,10 @@ class EvidencePersonRelation(models.Model):
     page_number = models.CharField(max_length=100,
                                    blank=False)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True, default=0)
+
+    def __str__(self):
+        message = "relation is " + self.page_number + " " + self.description
+        return message
 
 
 class EvidenceInstitutionRelation(models.Model):
