@@ -250,6 +250,12 @@ class InstallationForm(ModelForm):
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}),
         required=False)
+    construction_date_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    construction_date_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
+    first_reference_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    first_reference_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
+    end_functioning_year_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    end_functioning_year_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     purpose = forms.ModelMultipleChoiceField(
         queryset=Purpose.objects.all().order_by('name'),
         widget=PurposeWidget(
@@ -298,7 +304,8 @@ class InstallationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(InstallationForm, self).__init__(*args, **kwargs)
         self.fields['watersystem'].required = False
-        self.fields['construction_date'].required = False
+        self.fields['construction_date_lower'].required = False
+        self.fields['construction_date_upper'].required = False
         self.fields['purpose'].required = False
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False

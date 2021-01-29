@@ -23,7 +23,7 @@
             <tr>
                 <td>{{installation.name }}</td>
                 <td>{{installation.watersystem }}</td>
-                <td>{{installation.construction_date}}</td>
+                <td>{{installation.construction_date_lower}} - {{installation.construction_date_upper}}</td>
                 <td>{{installation.city}}</td>
                 <td>
                     <a href="{% url 'installations:installation-update' installation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
