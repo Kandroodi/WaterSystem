@@ -302,7 +302,7 @@ class WaterSystemCreatView(CreateView):
 class WaterSystemUpdateView(UpdateView):
     model = Watersystem
     form_class = WatersystemForm
-    success_url = reverse_lazy('utilities:close')
+    success_url = reverse_lazy('installations:watersystem-list')
 
 
 @method_decorator(login_required, name='dispatch')

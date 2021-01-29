@@ -62,7 +62,7 @@ class EvidenceWidgetMulti(s2forms.ModelSelect2MultipleWidget):
     search_fields = ['title__icontains']
 
 class WatersystemWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['name__icontains']
+    search_fields = ['original_term__icontains']
 
 
 class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
@@ -352,7 +352,7 @@ class WatersystemForm(ModelForm):
 
     class Meta:
         model = Watersystem
-        fields = ('name', 'type', 'inventor', 'secondary_literature', 'description')
+        fields = ('original_term', 'type', 'inventor', 'secondary_literature', 'description')
 
     def __init__(self, *args, **kwargs):
         super(WatersystemForm, self).__init__(*args, **kwargs)

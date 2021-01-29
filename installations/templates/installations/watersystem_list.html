@@ -5,7 +5,7 @@
     <table class="table table-borderless">
         <thead class="border-bottom font-weight-bold">
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col">Original term</th>
                 <th scope="col">Type</th>
                 <th scope="col">Inventor</th>
                 <th scope="col">Description</th>
@@ -21,7 +21,7 @@
         <tbody>
             {% for watersystem in watersystems %}
             <tr>
-                <td>{{watersystem.name}}</td>
+                <td>{{watersystem.original_term}}</td>
                 <td>{{watersystem.type}}</td>
                 <td>{{watersystem.inventor}}</td>
                 <td>{{watersystem.description}}</td>
@@ -29,7 +29,7 @@
                     <a href="{% url 'installations:watersystem-update' watersystem.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:watersystem-delete' watersystem.id %}" method="post" class="d-inline">
                         {% csrf_token %}
-                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete {{watersystem.name}} and all entities connected to this from the database?')">
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete {{watersystem.original_term}} and all entities connected to this from the database?')">
                         <i class="fa fa-trash fa-lg text-danger float-right"></i>
                         </button>
                     </form>
