@@ -194,6 +194,7 @@ class InstitutionForm(ModelForm):
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False
         self.fields['policy'].required = False
+        self.fields['exact_location'].required = False
         self.fields['start_date_lower'].required = False
         self.fields['start_date_upper'].required = False
         self.fields['end_date_lower'].required = False
