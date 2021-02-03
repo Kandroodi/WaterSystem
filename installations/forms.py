@@ -321,6 +321,10 @@ class InstallationForm(ModelForm):
         self.fields['watersystem'].required = False
         self.fields['construction_date_lower'].required = False
         self.fields['construction_date_upper'].required = False
+        self.fields['first_reference_lower'].required = False
+        self.fields['first_reference_upper'].required = False
+        self.fields['end_functioning_year_lower'].required = False
+        self.fields['end_functioning_year_upper'].required = False
         self.fields['purpose'].required = False
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False
@@ -348,11 +352,11 @@ class EvidenceForm(ModelForm):
         model = Evidence
         fields = ('title', 'author', 'date_lower', 'date_upper', 'secondary_literature', 'description')
 
-        def __init__(self, *args, **kwargs):
-            super(EvidenceForm, self).__init__(*args, **kwargs)
-            self.fields['author'].required = False
-            self.fields['date_lower'].required = False
-            self.fields['date_upper'].required = False
+    def __init__(self, *args, **kwargs):
+        super(EvidenceForm, self).__init__(*args, **kwargs)
+        self.fields['author'].required = False
+        self.fields['date_lower'].required = False
+        self.fields['date_upper'].required = False
 
 
 
