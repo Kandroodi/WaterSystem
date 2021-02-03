@@ -134,8 +134,10 @@ class Person(models.Model):
         ('O', 'Other'),
     )
     gender = models.CharField(max_length=1, choices=GENDER, default='M')
-    birth = PartialDateField(blank=True, default='', null=True)
-    death = PartialDateField(blank=True, default='', null=True)
+    birth_lower = PartialDateField(blank=True, default='', null=True)
+    birth_upper = PartialDateField(blank=True, default='', null=True)
+    death_lower = PartialDateField(blank=True, default='', null=True)
+    death_upper = PartialDateField(blank=True, default='', null=True)
     role = models.CharField(max_length=100,
                             blank=True)  # Role field for person and type of envolvement feild for person-installation relation
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)

@@ -216,6 +216,10 @@ class PersonForm(ModelForm):
                                               'data-minimum-input-length': '1'}),
         }
 
+    birth_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    birth_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
+    death_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    death_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     secondary_literature = forms.ModelMultipleChoiceField(
         queryset=SecondaryLiterature.objects.all(),
         widget=SecondaryLiteratureWidgetMulti(
@@ -230,6 +234,10 @@ class PersonForm(ModelForm):
         super(PersonForm, self).__init__(*args, **kwargs)
         self.fields['gender'].required = False
         self.fields['secondary_literature'].required = False
+        self.fields['birth_lower'].required = False
+        self.fields['birth_upper'].required = False
+        self.fields['death_lower'].required = False
+        self.fields['death_upper'].required = False
         # self.fields['religion'].empty_label = "Select religion"
         self.fields['secondary_literature'].empty_label = "Select secondary literature"
         self.fields['gender'].empty_label = "Select gender"
