@@ -330,6 +330,8 @@ class InstallationForm(ModelForm):
 
 
 class EvidenceForm(ModelForm):
+    date_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    date_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     secondary_literature = forms.ModelChoiceField(
         queryset=SecondaryLiterature.objects.all(),
         widget=SecondaryLiteratureWidget(
@@ -343,12 +345,13 @@ class EvidenceForm(ModelForm):
 
     class Meta:
         model = Evidence
-        fields = ('title', 'author', 'date', 'secondary_literature', 'description')
+        fields = ('title', 'author', 'date_lower', 'date_upper', 'secondary_literature', 'description')
 
         def __init__(self, *args, **kwargs):
             super(EvidenceForm, self).__init__(*args, **kwargs)
             self.fields['author'].required = False
-            self.fields['date'].required = True
+            self.fields['date_lower'].required = False
+            self.fields['date_upper'].required = False
 
 
 
