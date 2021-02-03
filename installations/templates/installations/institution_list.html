@@ -29,11 +29,14 @@
                 <td>{{institution.type}}</td>
                 <td>{{institution.city}}</td>
                 <td>{{institution.policy}}</td>
-                <td>{{institution.start_date}}</td>
+                <td>
+                    {% if institution.start_date_lower == institution.start_date_upper %}
+                    {{institution.start_date_lower}}
+                    {% else %}
+                    {{institution.start_date_lower}} - {{institution.start_date_upper}}
+                    {% endif %}
+                </td>
                 <td>{{institution.religion}}</td>
-<!--                <td>{{institution.bibliography}}</td>-->
-<!--                <td>{{institution.textual_evidence}}</td>-->
-<!--                <td>{{institution.material_evidence}}</td>-->
                 <td>
                     <a href="{% url 'installations:institution-update' institution.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:institution-delete' institution.id %}" method="post" class="d-inline">
