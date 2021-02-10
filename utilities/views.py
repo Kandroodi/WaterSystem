@@ -41,7 +41,6 @@ def edit_model(request, name_space, model_name, app_name, instance_id=None,
             return delete_model(request, name_space, model_name, app_name, instance_id)
         if button == 'saveas' and instance: instance = copy_complete(instance)
         form = modelform(request.POST, request.FILES, instance=instance)
-        print('form before validation : ', type(form))
         if form.is_valid():
             print('form is valid: ', form.cleaned_data, type(form))
 

@@ -113,7 +113,7 @@ class SecondaryLiterature(models.Model):
 
 class Evidence(models.Model):
     title = models.CharField(max_length=250, blank=False)
-    author = models.CharField(max_length=50, blank=True, null=True)
+    author = models.CharField(max_length=100, blank=False, default='', null=True)
     date_lower = PartialDateField(blank=True, null=True)
     date_upper = PartialDateField(blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',

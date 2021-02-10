@@ -430,3 +430,11 @@ def make_tabs(tab_type, focus=0, focus_names=''):
         t = 'Persons,institutions,installations'
         relations = Tab(t, focus)
         return Tabs([minimize, relations], 'minimize,relations', focus_names)
+
+
+def generate_num(app_name, model_name):
+    """Function to get the next ID(pk) to generate automated names in form initialization"""
+    model = apps.get_model(app_name, model_name)
+    last_instance = model.objects.latest('id')
+    num = last_instance.id + 1
+    return num

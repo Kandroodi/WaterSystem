@@ -7,6 +7,7 @@ from django import forms
 
 from .models import City, Institution, Person, UserProfileInfo
 from .models import *
+from utils.view_util import generate_num
 from crispy_forms.helper import FormHelper
 from django_select2 import forms as s2forms
 
@@ -195,6 +196,7 @@ class InstitutionForm(ModelForm):
         required=False)
 
     def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
         super(InstitutionForm, self).__init__(*args, **kwargs)
         self.fields['type'].required = False
         self.fields['city'].required = False
@@ -208,6 +210,9 @@ class InstitutionForm(ModelForm):
         self.fields['religion'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['evidence'].required = False
+
+        if not instance:
+            self.initial['name'] = 'Institution-' + str(generate_num('installations', 'Institution')).zfill(4)
 
 
 class PersonForm(ModelForm):
@@ -325,6 +330,7 @@ class InstallationForm(ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
         super(InstallationForm, self).__init__(*args, **kwargs)
         self.fields['watersystem'].required = False
         self.fields['construction_date_lower'].required = False
@@ -340,8 +346,9 @@ class InstallationForm(ModelForm):
         self.fields['secondary_literature'].required = False
         self.fields['evidence'].required = False
         self.fields['comment'].required = False
-        self.initial['name'] = 'Installation-'
-        # name = forms.CharField(initial='Installation-')
+
+        if not instance:
+            self.initial['name'] = 'Installation-' + str(generate_num('installations', 'Installation')).zfill(4)
 
 
 class EvidenceForm(ModelForm):
