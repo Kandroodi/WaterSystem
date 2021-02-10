@@ -316,7 +316,7 @@ class InstallationForm(ModelForm):
         model = Installation
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self , *args, **kwargs):
         super(InstallationForm, self).__init__(*args, **kwargs)
         self.fields['watersystem'].required = False
         self.fields['construction_date_lower'].required = False
@@ -332,6 +332,9 @@ class InstallationForm(ModelForm):
         self.fields['secondary_literature'].required = False
         self.fields['evidence'].required = False
         self.fields['comment'].required = False
+        self.initial['name'] = 'Installation-'
+            # name = forms.CharField(initial='Installation-')
+
 
 
 class EvidenceForm(ModelForm):

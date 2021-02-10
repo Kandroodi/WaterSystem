@@ -428,7 +428,7 @@ class NeighbourhoodCreatView(CreateView):
             if viewmode == 'inline':
                 return reverse_lazy('utilities:close')
         else:
-            return reverse_lazy('installations:home')  # create a list view for this if needed
+            return reverse_lazy('installations:neighbourhood-list')  # create a list view for this if needed
 
 
 @method_decorator(login_required, name='dispatch')
