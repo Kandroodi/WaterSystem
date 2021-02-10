@@ -24,7 +24,7 @@ class NeighbourhoodWidget(s2forms.ModelSelect2MultipleWidget):
     search_fields = ['neighbourhood_number__icontains']
 
 
-class NeighbourhoodWidget2(s2forms.ModelSelect2Widget): # this is for o
+class NeighbourhoodWidget2(s2forms.ModelSelect2Widget):  # this is for o
     search_fields = [
         'neighbourhood_number__icontains',
     ]
@@ -54,12 +54,20 @@ class SecondaryLiteratureWidgetMulti(s2forms.ModelSelect2MultipleWidget):
         "author__icontains",
     ]
 
+
 class EvidenceWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['title__icontains']
+    search_fields = [
+        "title__icontains",
+        "author__icontains",
+    ]
 
 
 class EvidenceWidgetMulti(s2forms.ModelSelect2MultipleWidget):
-    search_fields = ['title__icontains']
+    search_fields = [
+        "title__icontains",
+        "author__icontains",
+    ]
+
 
 class WatersystemWidget(s2forms.ModelSelect2Widget):
     search_fields = ['original_term__icontains']
@@ -186,8 +194,6 @@ class InstitutionForm(ModelForm):
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
 
-
-
     def __init__(self, *args, **kwargs):
         super(InstitutionForm, self).__init__(*args, **kwargs)
         self.fields['type'].required = False
@@ -269,8 +275,10 @@ class InstallationForm(ModelForm):
     construction_date_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     first_reference_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
     first_reference_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
-    end_functioning_year_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
-    end_functioning_year_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
+    end_functioning_year_lower = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    end_functioning_year_upper = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     purpose = forms.ModelMultipleChoiceField(
         queryset=Purpose.objects.all().order_by('name'),
         widget=PurposeWidget(
@@ -316,7 +324,7 @@ class InstallationForm(ModelForm):
         model = Installation
         fields = '__all__'
 
-    def __init__(self , *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(InstallationForm, self).__init__(*args, **kwargs)
         self.fields['watersystem'].required = False
         self.fields['construction_date_lower'].required = False
@@ -333,8 +341,7 @@ class InstallationForm(ModelForm):
         self.fields['evidence'].required = False
         self.fields['comment'].required = False
         self.initial['name'] = 'Installation-'
-            # name = forms.CharField(initial='Installation-')
-
+        # name = forms.CharField(initial='Installation-')
 
 
 class EvidenceForm(ModelForm):
@@ -362,7 +369,6 @@ class EvidenceForm(ModelForm):
         self.fields['date_upper'].required = False
 
 
-
 class WatersystemForm(ModelForm):
     inventor = forms.ModelChoiceField(
         queryset=Person.objects.all(),
@@ -370,7 +376,6 @@ class WatersystemForm(ModelForm):
             attrs={'data-placeholder': 'Select inventor',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-
 
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}))
@@ -380,7 +385,6 @@ class WatersystemForm(ModelForm):
             attrs={'data-placeholder': 'Select secondary literature',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-
 
     class Meta:
         model = Watersystem
@@ -392,6 +396,7 @@ class WatersystemForm(ModelForm):
         self.fields['inventor'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['description'].required = False
+
 
 # Relations form
 class CityPersonRelationForm(ModelForm):
@@ -424,7 +429,6 @@ class NeighbourhoodPersonRelationForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-
 
     class Meta:
         model = NeighbourhoodPersonRelation

@@ -121,7 +121,7 @@ class Evidence(models.Model):
     description = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
-        return self.title
+        return 'Author: ' + self.author + ' | Title: ' + self.title
 
     def get_absolute_url(self):
         return reverse("installations:home", kwargs={'pk': self.pk})
