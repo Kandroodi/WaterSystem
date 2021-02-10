@@ -150,49 +150,16 @@ class Person(models.Model):
         return self.name
 
 
-class Watersystem(models.Model):
-    original_term = models.CharField(max_length=100, blank=False)
-    type = models.CharField(max_length=100, blank=True, null=True)
-    inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True, null=True)
-    description = models.TextField(max_length=1000, blank=True, null=True)
-    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',
-                                             null=True)
-
-    def __str__(self):
-        return self.original_term
-
-
-class Purpose(models.Model):
-    name = models.CharField(max_length=100)
+class InstitutionType(models.Model):
+    name = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.name
 
 
-class Installation(models.Model):
-    name = models.CharField(max_length=250, blank=True, default='')
-    watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=True, null=True)
-    construction_date_lower = PartialDateField(blank=True, null=True)
-    construction_date_upper = PartialDateField(blank=True, null=True)
-    first_reference_lower = PartialDateField(blank=True, null=True)
-    first_reference_upper = PartialDateField(blank=True, null=True)
-    end_functioning_year_lower = PartialDateField(blank=True, null=True)
-    end_functioning_year_upper = PartialDateField(blank=True, null=True)
-    purpose = models.ManyToManyField(Purpose, blank=True)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
-    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
-    exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
-    secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
-    evidence = models.ManyToManyField(Evidence, blank=True)
-    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class InstitutionType(models.Model):
-    name = models.CharField(max_length=100, blank=False)
+class Purpose(models.Model):
+    name = models.CharField(max_length=100)
     description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
@@ -222,6 +189,41 @@ class Institution(models.Model):
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=False, default='', null=True)
+    comment = models.TextField(max_length=1000, blank=True, default='', null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Watersystem(models.Model):
+    original_term = models.CharField(max_length=100, blank=False)
+    type = models.CharField(max_length=100, blank=True, null=True)
+    inventor = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True, null=True)
+    description = models.TextField(max_length=1000, blank=True, null=True)
+    secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',
+                                             null=True)
+
+    def __str__(self):
+        return self.original_term
+
+
+
+class Installation(models.Model):
+    name = models.CharField(max_length=250, blank=True, default='')
+    watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=True, null=True)
+    construction_date_lower = PartialDateField(blank=True, null=True)
+    construction_date_upper = PartialDateField(blank=True, null=True)
+    first_reference_lower = PartialDateField(blank=True, null=True)
+    first_reference_upper = PartialDateField(blank=True, null=True)
+    end_functioning_year_lower = PartialDateField(blank=True, null=True)
+    end_functioning_year_upper = PartialDateField(blank=True, null=True)
+    purpose = models.ManyToManyField(Purpose, blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
+    exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
+    institution_as_location = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, null=True)
+    secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
+    evidence = models.ManyToManyField(Evidence, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):

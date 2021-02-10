@@ -309,6 +309,12 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select location',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
+    institution_as_location = forms.ModelChoiceField(
+        queryset=Institution.objects.all(),
+        widget=InstitutionWidget(
+            attrs={'data-placeholder': 'Select institution as location ',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
     secondary_literature = forms.ModelMultipleChoiceField(
         queryset=SecondaryLiterature.objects.all(),
         widget=SecondaryLiteratureWidgetMulti(
@@ -343,6 +349,7 @@ class InstallationForm(ModelForm):
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False
         self.fields['exact_location'].required = False
+        self.fields['institution_as_location'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['evidence'].required = False
         self.fields['comment'].required = False
