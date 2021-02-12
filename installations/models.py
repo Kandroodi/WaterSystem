@@ -207,7 +207,6 @@ class Watersystem(models.Model):
         return self.original_term
 
 
-
 class Installation(models.Model):
     name = models.CharField(max_length=250, blank=True, default='')
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=True, null=True)

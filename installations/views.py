@@ -222,7 +222,7 @@ class SecondaryLiteratureDeleteView(DeleteView):
 
 @login_required
 def edit_installation(request, pk=None, focus='', view='complete'):
-    names = 'installationinstitution_formset,installationperson_formset'
+    names = 'installationinstitution_formset,installationperson_formset,installationevidence_formset'
     return edit_model(request, __name__, 'Installation', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
 

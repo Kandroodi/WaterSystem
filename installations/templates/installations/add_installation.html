@@ -44,6 +44,9 @@
     <li class="nav-item">
         <a class="nav-link" id="Personsa" data-toggle="tab" href="#Persons" role="tab" aria-controls="Persons" aria-selected="false">Persons</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" id="Evidencesa" data-toggle="tab" href="#Evidences" role="tab" aria-controls="Evidences" aria-selected="false">Evidences</a>
+    </li>
 </ul>
 
 
@@ -96,6 +99,34 @@
 		{% endfor %}
 		</table>
     </div>
+
+    <!--Evidences -->
+    <div class="tab-pane fade" id="Evidences">
+		{{installationevidence_formset.management_form}}
+		<table class="table table-borderless">
+		<tr class ="d-flex">
+		    <th class="col-5">Evidence
+			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+				href ="{% url 'installations:evidence-insert' 'inline'%}" role="button">
+				 <i class="fa fa-plus"></i></a>
+			</th>
+		<th class="col-2">Page number </th>
+        <th class="col-5">Description </th>
+		<th class="col-1" style="text-align:center"><i class="fa fa-times text-danger"></i></th>
+		</tr>
+		{{installationevidence_formset.management_form}}
+		{% for f in installationevidence_formset.forms %}
+			<tr class ="d-flex">
+			<td class="col-5">{{f.evidence}} {{f.evidence.errors}}</td>
+			<td class="col-2">{{f.page_number}} {{f.page_number.errors}}</td>
+            <td class="col-5">{{f.description}} {{f.Description.errors}}</td>
+			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+
+
 </div>
 
 
