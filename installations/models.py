@@ -222,7 +222,6 @@ class Installation(models.Model):
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     institution_as_location = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
-    evidence = models.ManyToManyField(Evidence, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):

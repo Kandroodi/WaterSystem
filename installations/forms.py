@@ -321,12 +321,6 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select secondary literature',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    evidence = forms.ModelMultipleChoiceField(
-        queryset=Evidence.objects.all(),
-        widget=EvidenceWidgetMulti(
-            attrs={'data-placeholder': 'Select evidence',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
     comment = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
@@ -351,7 +345,6 @@ class InstallationForm(ModelForm):
         self.fields['exact_location'].required = False
         self.fields['institution_as_location'].required = False
         self.fields['secondary_literature'].required = False
-        self.fields['evidence'].required = False
         self.fields['comment'].required = False
 
         if not instance:
