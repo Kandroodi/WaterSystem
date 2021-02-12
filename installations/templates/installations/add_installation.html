@@ -57,7 +57,7 @@
         {{installationinstitution_formset.management_form}}
 		<table class="table table-borderless">
 		<tr class ="d-flex">
-		<th class="col-5">Institution
+		<th class="col-4">Institution
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
 				href ="{% url 'installations:institution-insert' 'inline' %}" role="button">
 				 <i class="fa fa-plus"></i></a>
@@ -68,7 +68,7 @@
 		{{installationinstitution_formset.management_form}}
 		{% for f in installationinstitution_formset.forms %}
 			<tr class ="d-flex">
-                <td class="col-5">{{f.institution}} {{f.institution.errors}}</td>
+                <td class="col-4">{{f.institution}} {{f.institution.errors}}</td>
                 <td class="col-3">{{f.type_of_involvement}} {{f.type_of_involvement.errors}}</td>
                 <td class="col-1">{{f.DELETE}} {{f.id}}</td>
 			</tr>
@@ -81,7 +81,7 @@
         {{installationperson_formset.management_form}}
 		<table class="table table-borderless">
 		<tr class ="d-flex">
-		<th class="col-5">Person
+		<th class="col-4">Person
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
 				href ="{% url 'installations:person-insert' 'inline' %}" role="button">
 				 <i class="fa fa-plus"></i></a>
@@ -92,7 +92,7 @@
 		{{installationperson_formset.management_form}}
 		{% for f in installationperson_formset.forms %}
 			<tr class ="d-flex">
-                <td class="col-5">{{f.person}} {{f.person.errors}}</td>
+                <td class="col-4">{{f.person}} {{f.person.errors}}</td>
                 <td class="col-3">{{f.type_of_involvement}} {{f.type_of_involvement.errors}}</td>
                 <td class="col-1">{{f.DELETE}} {{f.id}}</td>
 			</tr>
@@ -105,7 +105,7 @@
 		{{installationevidence_formset.management_form}}
 		<table class="table table-borderless">
 		<tr class ="d-flex">
-		    <th class="col-5">Evidence
+		    <th class="col-4">Evidence
 			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
 				href ="{% url 'installations:evidence-insert' 'inline'%}" role="button">
 				 <i class="fa fa-plus"></i></a>
@@ -117,7 +117,7 @@
 		{{installationevidence_formset.management_form}}
 		{% for f in installationevidence_formset.forms %}
 			<tr class ="d-flex">
-			<td class="col-5">{{f.evidence}} {{f.evidence.errors}}</td>
+			<td class="col-4">{{f.evidence}} {{f.evidence.errors}}</td>
 			<td class="col-2">{{f.page_number}} {{f.page_number.errors}}</td>
             <td class="col-5">{{f.description}} {{f.Description.errors}}</td>
 			<td class="col-1">{{f.DELETE}} {{f.id}}</td>
