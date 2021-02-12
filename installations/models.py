@@ -188,7 +188,6 @@ class Institution(models.Model):
     end_date_upper = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
-    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=False, default='', null=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):

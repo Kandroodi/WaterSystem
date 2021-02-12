@@ -184,13 +184,6 @@ class InstitutionForm(ModelForm):
             attrs={'data-placeholder': 'Select secondary literature',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    evidence = forms.ModelChoiceField(
-        queryset=Evidence.objects.all(),
-        widget=EvidenceWidget(
-            attrs={'data-placeholder': 'Select evidence',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}),
-        required=False)
     comment = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
@@ -209,7 +202,6 @@ class InstitutionForm(ModelForm):
         self.fields['end_date_upper'].required = False
         self.fields['religion'].required = False
         self.fields['secondary_literature'].required = False
-        self.fields['evidence'].required = False
 
         if not instance:
             self.initial['name'] = 'Institution-' + str(generate_num('installations', 'Institution')).zfill(4)
