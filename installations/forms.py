@@ -245,7 +245,6 @@ class PersonForm(ModelForm):
         # self.fields['religion'].empty_label = "Select religion"
         self.fields['secondary_literature'].empty_label = "Select secondary literature"
         self.fields['gender'].empty_label = "Select gender"
-        self.fields['evidence'].empty_label = "Select evidence"
 
 
 class SecondaryLiteratureForm(ModelForm):

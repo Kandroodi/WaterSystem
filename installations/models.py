@@ -143,7 +143,6 @@ class Person(models.Model):
                             blank=True)  # Role field for person and type of envolvement feild for person-installation relation
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
-    evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE, blank=True, default='', null=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
