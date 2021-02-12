@@ -265,7 +265,7 @@ class EvidenceListView(ListView):
 
 @login_required
 def edit_evidence(request, pk=None, focus='', view='complete'):
-    names = 'evidenceperson_formset,evidenceinstitution_formset,evidenceinstallation_formset'
+    names = ''
     return edit_model(request, __name__, 'Evidence', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
 

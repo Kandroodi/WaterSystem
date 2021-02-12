@@ -427,7 +427,7 @@ def make_tabs(tab_type, focus=0, focus_names=''):
         relations = Tab(t, focus)
         return Tabs([minimize, relations], 'minimize,relations', focus_names)
     if tab_type == 'evidence':
-        t = 'Persons,institutions,installations'
+        t = ''
         relations = Tab(t, focus)
         return Tabs([minimize, relations], 'minimize,relations', focus_names)
 
