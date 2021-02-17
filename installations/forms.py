@@ -368,13 +368,6 @@ class EvidenceForm(ModelForm):
 
 
 class WatersystemForm(ModelForm):
-    inventor = forms.ModelChoiceField(
-        queryset=Person.objects.all(),
-        widget=PersonWidget(
-            attrs={'data-placeholder': 'Select inventor',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
-
     description = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}))
     secondary_literature = forms.ModelChoiceField(
@@ -386,12 +379,11 @@ class WatersystemForm(ModelForm):
 
     class Meta:
         model = Watersystem
-        fields = ('original_term', 'type', 'inventor', 'secondary_literature', 'description')
+        fields = ('original_term', 'type', 'secondary_literature', 'description')
 
     def __init__(self, *args, **kwargs):
         super(WatersystemForm, self).__init__(*args, **kwargs)
         self.fields['type'].required = False
-        self.fields['inventor'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['description'].required = False
 

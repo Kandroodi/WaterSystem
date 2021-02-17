@@ -7,7 +7,6 @@
             <tr>
                 <th scope="col">Original term</th>
                 <th scope="col">Type</th>
-                <th scope="col">Inventor</th>
                 <th scope="col">Description</th>
                 <td>
                     <a href= "{% url 'installations:watersystem-insert' %}"
@@ -23,7 +22,6 @@
             <tr>
                 <td>{{watersystem.original_term}}</td>
                 <td>{{watersystem.type}}</td>
-                <td>{{watersystem.inventor}}</td>
                 <td>{{watersystem.description}}</td>
                 <td>
                     <a href="{% url 'installations:watersystem-update' watersystem.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
