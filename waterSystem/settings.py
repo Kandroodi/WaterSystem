@@ -25,7 +25,7 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'installations/media')
 SECRET_KEY = 'l2a!l=e(cc3!5re)2shwf1uw4tmo*3fj85xbg&*&_#7ewhb=!%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'waterSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '../writable/db.sqlite3'),
     }
 }
 
@@ -141,12 +141,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # alternative setup
 CACHES = {"default": {
     "BACKEND": "django_redis.cache.RedisCache",
-    "LOCATION": "redis://127.0.0.1:6379/1",
+    "LOCATION": "redis://127.0.0.1:2021/1",
     "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient", }
 },
     "select2": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
+        "LOCATION": "redis://127.0.0.1:2021/2",
         "TIMEOUT": None,
         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient", }
     }
@@ -204,9 +204,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 # MEDIA
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
