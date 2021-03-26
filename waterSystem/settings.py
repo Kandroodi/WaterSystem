@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import socket
-
+from .secret_key import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'installations/templates')
@@ -22,10 +22,10 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'installations/media')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'l2a!l=e(cc3!5re)2shwf1uw4tmo*3fj85xbg&*&_#7ewhb=!%'
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -141,12 +141,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # alternative setup
 CACHES = {"default": {
     "BACKEND": "django_redis.cache.RedisCache",
-    "LOCATION": "redis://127.0.0.1:2021/1",
+    "LOCATION": "redis://127.0.0.1:6379/1",
     "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient", }
 },
     "select2": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:2021/2",
+        "LOCATION": "redis://127.0.0.1:6379/2",
         "TIMEOUT": None,
         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient", }
     }

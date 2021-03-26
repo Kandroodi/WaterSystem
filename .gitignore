@@ -59,10 +59,14 @@ env.bak/
 venv.bak/
 
 .idea/
-=======
+
+# KEYS
+*/secret_key.py
+
+
 # Directory
 */media/*
-*/static/*
+static/
 
 # migrations except __init__.py
 */migrations/*
