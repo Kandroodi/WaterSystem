@@ -62,7 +62,7 @@ venv.bak/
 =======
 # Directory
 */media/*
-
+*/static/*
 
 # migrations except __init__.py
 */migrations/*
