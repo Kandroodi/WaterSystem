@@ -38,6 +38,7 @@ def register(request):
             user = user_form.save()
             # Hash the password
             user.set_password(user.password)
+            user.is_active = False
             # Update with Hashed password
             user.save()
             # Now we deal with the extra info!
