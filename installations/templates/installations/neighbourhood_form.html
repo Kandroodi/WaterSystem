@@ -11,10 +11,26 @@
 </h2>
 
 <hr class="my-4">
-<form  method="POST" action="" autocomplete="off" class="form-horizontal">
+<form  method="POST" action="" enctype="multipart/form-data" autocomplete="off">
     {% csrf_token %}
-    {{ form|crispy }}
+{#    {{ form.as_p }}#}
 
+    <table class="table table-borderless table-sm">
+        <tr class="d-flex">
+            <th class="col-2">City</th>
+            <td class="col-8">{{form.city}}</td>
+        </tr>
+        <tr class="d-flex">
+            <th class="col-2">Neighbourhood number</th>
+            <td class="col-8">{{form.neighbourhood_number}}</td>
+        </tr>
+        <tr class="d-flex">
+            <th class="col-2">Extent shapefile</th>
+            <td class="col-8">{{form.extent_shapefile}} </td>
+        </tr>
+
+
+    </table>
 
     <div class="form-group">
         <button type="submit" class="btn btn-success"><i class="fa fa-database"></i> Save </button>

@@ -6,7 +6,8 @@
         <thead class="border-bottom font-weight-bold">
             <tr>
                 <th scope="col">City</th>
-                <th scope="col">Neighbourhood_number</th>
+                <th scope="col">Neighbourhood number</th>
+                <th scope="col">Extent shapefile</th>
                 <td>
                     <a href="{% url 'installations:neighbourhood-insert' 'inline' %}" class="btn btn-outline-success" > <i class="fa fa-plus"></i> Add New</a>
                 </td>
@@ -17,6 +18,7 @@
             <tr>
                 <td>{{neighbourhood.city}}</td>
                 <td>{{neighbourhood.neighbourhood_number}}</td>
+                <td>{{ neighbourhood.extent_shapefile.name}}</td>
                 <td>
                     <a href="{% url 'installations:neighbourhood-update' neighbourhood.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:neighbourhood-delete' neighbourhood.id %}" method="post" class="d-inline">

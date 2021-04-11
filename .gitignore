@@ -67,6 +67,7 @@ venv.bak/
 # Directory
 */media/*
 static/
+media/
 
 # migrations except __init__.py
 */migrations/*

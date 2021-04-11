@@ -18,6 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.Home, name='home'),
@@ -27,3 +29,6 @@ urlpatterns = [
     path('utilities/',include('utilities.urls')),
     path("select2/", include("django_select2.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

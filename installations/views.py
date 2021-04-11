@@ -420,6 +420,7 @@ class ReligionDeleteView(DeleteView):
 @method_decorator(login_required, name='dispatch')
 class NeighbourhoodCreatView(CreateView):
     model = Neighbourhood
+    form_class = NeighbourhoodForms
     fields = '__all__'
     template_name = 'installations/neighbourhood_form.html'
 

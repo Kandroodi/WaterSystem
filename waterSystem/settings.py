@@ -17,7 +17,7 @@ from .secret_key import *
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'installations/templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'installations/static')
-MEDIA_DIR = os.path.join(BASE_DIR, 'installations/media')
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 

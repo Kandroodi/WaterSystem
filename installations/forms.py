@@ -10,6 +10,7 @@ from .models import *
 from utils.view_util import generate_num
 from crispy_forms.helper import FormHelper
 from django_select2 import forms as s2forms
+from django.forms.widgets import ClearableFileInput
 
 
 # Widgets
@@ -386,6 +387,14 @@ class WatersystemForm(ModelForm):
         self.fields['type'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['description'].required = False
+
+
+class NeighbourhoodForms(ModelForm):
+    extent_shapefile = forms.FileField(widget=forms.ClearableFileInput)
+
+    class Meta:
+        model = Neighbourhood
+        fields = ('city', 'neighbourhood_number', 'extent_shapefile')
 
 
 # Relations form
