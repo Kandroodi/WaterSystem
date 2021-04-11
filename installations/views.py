@@ -421,7 +421,6 @@ class ReligionDeleteView(DeleteView):
 class NeighbourhoodCreatView(CreateView):
     model = Neighbourhood
     form_class = NeighbourhoodForms
-    fields = '__all__'
     template_name = 'installations/neighbourhood_form.html'
 
     def get_success_url(self):
