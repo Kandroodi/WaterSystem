@@ -229,7 +229,7 @@ class Installation(models.Model):
 class CityPersonRelation(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    type_of_involvement = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         message = "relation is " + self.type_of_involvement
@@ -239,7 +239,7 @@ class CityPersonRelation(models.Model):
 class NeighbourhoodPersonRelation(models.Model):
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
-    type_of_involvement = models.CharField(max_length=100, blank=False)
+    type_of_involvement = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         # message = "neighbourhood: " + str(self.neighbourhood) + " & " + "person: " + str(self.person) + " relation is " + self.type_of_involvement
