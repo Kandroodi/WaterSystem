@@ -248,9 +248,9 @@ class NeighbourhoodPersonRelation(models.Model):
 
 
 class PersonInstitutionRelation(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
-    type_of_involvement = models.CharField(max_length=50, blank=False)
+    type_of_involvement = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         message = "relation is " + self.type_of_involvement
