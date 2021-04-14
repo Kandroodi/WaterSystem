@@ -172,7 +172,6 @@ class Institution(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     exact_location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
-    policy = models.CharField(max_length=100, blank=True)
     start_date_lower = PartialDateField(blank=True, null=True)  # this field is for test and explaine the partitial dat
     start_date_upper = PartialDateField(blank=True, null=True)
     ''''help_text="Date formats:"
