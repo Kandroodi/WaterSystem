@@ -258,9 +258,9 @@ class PersonInstitutionRelation(models.Model):
 
 
 class PersonInstallationRelation(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=False)
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
-    type_of_involvement = models.CharField(max_length=100, blank=False)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, blank=True)
+    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=True, default='')
+    type_of_involvement = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         message = "relation is " + self.type_of_involvement
@@ -276,8 +276,8 @@ class CityInstallationRelation(models.Model):
 
 class InstitutionInstallationRelation(models.Model):
     institution = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, default='')
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False)
-    type_of_involvement = models.CharField(max_length=100, blank=False)
+    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=True)
+    type_of_involvement = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         message = "relation is " + self.type_of_involvement
@@ -310,9 +310,9 @@ class EvidenceInstitutionRelation(models.Model):
 
 class EvidenceInstallationRelation(models.Model):
     evidence = models.ForeignKey(Evidence, on_delete=models.CASCADE)
-    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=False, default='')
+    installation = models.ForeignKey(Installation, on_delete=models.CASCADE, blank=True, default='')
     page_number = models.CharField(max_length=100,
-                                   blank=False)  # I think maybe it's better if we had letter as page numbers also
+                                   blank=True)  # I think maybe it's better if we had letter as page numbers also
     description = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
