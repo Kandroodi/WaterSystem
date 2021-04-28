@@ -563,13 +563,13 @@ class InstallationInstallationRelationForm(ModelForm):
     primary = forms.ModelChoiceField(
         queryset=Installation.objects.all(),
         widget=InstallationWidget(
-            attrs={'data-placeholder': 'Select installation',
+            attrs={'data-placeholder': 'Select institution',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
     secondary = forms.ModelChoiceField(
         queryset=Installation.objects.all(),
         widget=InstallationWidget(
-            attrs={'data-placeholder': 'Select installation',
+            attrs={'data-placeholder': 'Select institution',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
     description = forms.CharField(widget=forms.Textarea(
@@ -578,7 +578,7 @@ class InstallationInstallationRelationForm(ModelForm):
 
     class Meta:
         model = InstallationInstallationRelation
-        fields = ('secondary', 'description')
+        fields = ('primary', 'secondary', 'description')
 
 
 class InstitutionInstitutionRelationForm(ModelForm):
@@ -601,6 +601,29 @@ class InstitutionInstitutionRelationForm(ModelForm):
     class Meta:
         model = InstitutionInstallationRelation
         fields = ('primary', 'secondary', 'description')
+
+
+class PersonPersonRelationForm(ModelForm):
+    primary = forms.ModelChoiceField(
+        queryset=Person.objects.all(),
+        widget=PersonWidget(
+            attrs={'data-placeholder': 'Select person',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    secondary = forms.ModelChoiceField(
+        queryset=Person.objects.all(),
+        widget=PersonWidget(
+            attrs={'data-placeholder': 'Select person',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+
+    class Meta:
+        model = PersonPersonRelation
+        fields = ('primary', 'secondary', 'description')
+
 
 # Formsets
 personcity_formset = inlineformset_factory(
@@ -640,7 +663,12 @@ evidenceinstitution_formset = inlineformset_factory(
     Evidence, EvidenceInstitutionRelation, form=EvidenceInstitutionRelationForm, extra=1)
 
 installationinstallation_formset = inlineformset_factory(
-    Installation, InstallationInstallationRelation, fk_name='primary', fields='__all__', extra=1, form=InstitutionInstallationRelationForm)
+    Installation, InstallationInstallationRelation, fk_name='primary', fields='__all__', extra=1,
+    form=InstitutionInstallationRelationForm)
 
 institutioninstitution_formset = inlineformset_factory(
-    Institution, InstitutionInstitutionRelation, fk_name='primary', fields='__all__', extra=1, form=InstitutionInstitutionRelationForm)
+    Institution, InstitutionInstitutionRelation, fk_name='primary', fields='__all__', extra=1,
+    form=InstitutionInstitutionRelationForm)
+
+personperson_formset = inlineformset_factory(
+    Person, PersonPersonRelation, fk_name='primary', fields='__all__', extra=1, form=PersonPersonRelationForm)

@@ -168,7 +168,7 @@ def InstitutionDelete(request, id):
 
 @login_required
 def edit_person(request, pk=None, focus='', view='complete'):
-    names = 'personcity_formset,personneighbourhood_formset,personinstitution_formset,'
+    names = 'personperson_formset,personcity_formset,personneighbourhood_formset,personinstitution_formset,'
     names += 'personinstallation_formset,personevidence_formset'
     return edit_model(request, __name__, 'Person', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
