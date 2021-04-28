@@ -183,6 +183,8 @@ class Institution(models.Model):
                                                                        "Century: <integer>c 20c 1900-2000  "
                                                                        "Millennium: <integer>m 2m 1000-2000  "'''
     # start_date = ... will be the partitial dat
+    first_reference_lower = PartialDateField(blank=True, null=True)
+    first_reference_upper = PartialDateField(blank=True, null=True)
     end_date_lower = PartialDateField(blank=True, null=True)
     end_date_upper = PartialDateField(blank=True, null=True)
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, null=True)

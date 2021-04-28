@@ -171,6 +171,8 @@ class InstitutionForm(ModelForm):
                    'data-minimum-input-length': '1'}))
     start_date_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
     start_date_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
+    first_reference_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
+    first_reference_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     end_date_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
     end_date_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     religion = forms.ModelChoiceField(
@@ -198,6 +200,8 @@ class InstitutionForm(ModelForm):
         self.fields['exact_location'].required = False
         self.fields['start_date_lower'].required = False
         self.fields['start_date_upper'].required = False
+        self.fields['first_reference_lower'].required = False
+        self.fields['first_reference_upper'].required = False
         self.fields['end_date_lower'].required = False
         self.fields['end_date_upper'].required = False
         self.fields['religion'].required = False
