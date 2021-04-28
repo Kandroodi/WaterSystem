@@ -545,7 +545,7 @@ class EvidenceInstitutionRelationForm(ModelForm):
                    'data-minimum-input-length': '1'}))
     institution = forms.ModelChoiceField(
         queryset=Institution.objects.all(),
-        widget=InstallationWidget(
+        widget=InstitutionWidget(
             attrs={'data-placeholder': 'Select institution',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
@@ -557,6 +557,28 @@ class EvidenceInstitutionRelationForm(ModelForm):
     class Meta:
         model = EvidenceInstitutionRelation
         fields = ('evidence', 'institution', 'page_number', 'description')
+
+
+class InstallationInstallationRelationForm(ModelForm):
+    primary = forms.ModelChoiceField(
+        queryset=Installation.objects.all(),
+        widget=InstallationWidget(
+            attrs={'data-placeholder': 'Select installation',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    secondary = forms.ModelChoiceField(
+        queryset=Installation.objects.all(),
+        widget=InstallationWidget(
+            attrs={'data-placeholder': 'Select installation',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+
+    class Meta:
+        model = InstallationInstallationRelation
+        fields = ('secondary', 'description')
 
 
 # Formsets
@@ -595,3 +617,6 @@ institutionevidence_formset = inlineformset_factory(
     Institution, EvidenceInstitutionRelation, form=EvidenceInstitutionRelationForm, extra=1)
 evidenceinstitution_formset = inlineformset_factory(
     Evidence, EvidenceInstitutionRelation, form=EvidenceInstitutionRelationForm, extra=1)
+
+installationinstallation_formset = inlineformset_factory(
+    Installation, InstallationInstallationRelation, fk_name='primary', fields='__all__', extra=1, form=InstitutionInstallationRelationForm)

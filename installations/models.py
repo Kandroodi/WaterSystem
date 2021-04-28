@@ -68,7 +68,8 @@ class Citymap(models.Model):
 class Neighbourhood(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood_number = models.PositiveIntegerField(null=True, blank=True)
-    extent_shapefile = models.FileField(upload_to='shapefiles/', max_length= 50, null=True, blank=True)  # Is it correct way?
+    extent_shapefile = models.FileField(upload_to='shapefiles/', max_length=50, null=True,
+                                        blank=True)  # Is it correct way?
 
     # def __str__(self):
     #     st = self.city + ' ' + str(self.neighbourhood_number)
@@ -317,3 +318,9 @@ class EvidenceInstallationRelation(models.Model):
     def __str__(self):
         message = "relation is " + self.page_number + " " + self.description
         return message
+
+
+class InstallationInstallationRelation(models.Model):
+    primary = models.ForeignKey(Installation, related_name='primary', on_delete=models.CASCADE)
+    secondary = models.ForeignKey(Installation, related_name='secondary', on_delete=models.CASCADE)
+    description = models.CharField(max_length=1000, blank=True)

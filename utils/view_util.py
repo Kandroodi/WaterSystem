@@ -419,7 +419,7 @@ def make_tabs(tab_type, focus=0, focus_names=''):
         relations = Tab(t, focus)
         return Tabs([minimize, relations], 'minimize,relations', focus_names)
     if tab_type == 'installation':
-        t = 'Institutions, Persons, Evidences'
+        t = 'Installations, Institutions, Persons, Evidences'
         relations = Tab(t, focus)
         return Tabs([minimize, relations], 'minimize,relations', focus_names)
     if tab_type == 'institution':
