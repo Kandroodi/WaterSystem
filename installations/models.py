@@ -324,3 +324,9 @@ class InstallationInstallationRelation(models.Model):
     primary = models.ForeignKey(Installation, related_name='primary', on_delete=models.CASCADE)
     secondary = models.ForeignKey(Installation, related_name='secondary', on_delete=models.CASCADE)
     description = models.CharField(max_length=1000, blank=True)
+
+
+class InstitutionInstitutionRelation(models.Model):
+    primary = models.ForeignKey(Institution, related_name='primary', on_delete=models.CASCADE)
+    secondary = models.ForeignKey(Institution, related_name='secondary', on_delete=models.CASCADE)
+    description = models.CharField(max_length=1000, blank=True)

@@ -37,6 +37,9 @@
 <!-- -->
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
+        <a class="nav-link" id="Institutionsa" data-toggle="tab" href="#Institutions" role="tab" aria-controls="Institutions" aria-selected="true">Institutions</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" id="Personsa" data-toggle="tab" href="#Persons" role="tab" aria-controls="Persons" aria-selected="true">Persons</a>
     </li>
     <li class="nav-item">
@@ -49,6 +52,28 @@
 
 
 <div class="tab-content" id="myTabContent">
+    <!--Institutions -->
+    <div class="tab-pane fade" id="Institutions">
+		{{institutioninstitution_formset.management_form}}
+		<table class="table table-borderless">
+		<tr class ="d-flex">
+		<th class="col-4">Institution
+			<a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+				href ="{% url 'installations:institution-insert' 'inline' %}" role="button">
+				 <i class="fa fa-plus"></i></a>
+			</th>
+		<th class="col-5">Description </th>
+		<th class="col-1" style="text-align:center"><i class="fa fa-times text-danger"></i></th>
+		</tr>
+		{% for f in institutioninstitution_formset.forms %}
+			<tr class ="d-flex">
+			<td class="col-4">{{f.secondary}} {{f.secondary.errors}}</td>
+			<td class="col-5">{{f.description}} {{f.description.errors}}</td>
+			<td class="col-1" style="text-align:left">{{f.DELETE}} {{f.id}}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
     <!--Persons -->
     <div class="tab-pane fade" id="Persons">
 		{{institutionperson_formset.management_form}}

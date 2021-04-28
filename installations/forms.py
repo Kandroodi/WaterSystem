@@ -581,6 +581,27 @@ class InstallationInstallationRelationForm(ModelForm):
         fields = ('secondary', 'description')
 
 
+class InstitutionInstitutionRelationForm(ModelForm):
+    primary = forms.ModelChoiceField(
+        queryset=Institution.objects.all(),
+        widget=InstitutionWidget(
+            attrs={'data-placeholder': 'Select institution',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    secondary = forms.ModelChoiceField(
+        queryset=Institution.objects.all(),
+        widget=InstitutionWidget(
+            attrs={'data-placeholder': 'Select institution',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+
+    class Meta:
+        model = InstitutionInstallationRelation
+        fields = ('primary', 'secondary', 'description')
+
 # Formsets
 personcity_formset = inlineformset_factory(
     Person, CityPersonRelation, form=CityPersonRelationForm, extra=1)
@@ -620,3 +641,6 @@ evidenceinstitution_formset = inlineformset_factory(
 
 installationinstallation_formset = inlineformset_factory(
     Installation, InstallationInstallationRelation, fk_name='primary', fields='__all__', extra=1, form=InstitutionInstallationRelationForm)
+
+institutioninstitution_formset = inlineformset_factory(
+    Institution, InstitutionInstitutionRelation, fk_name='primary', fields='__all__', extra=1, form=InstitutionInstitutionRelationForm)

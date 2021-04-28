@@ -149,7 +149,7 @@ def CityDelete(request, id):
 
 @login_required
 def edit_institution(request, pk=None, focus='', view='complete'):
-    names = 'institutionperson_formset,institutioninstallation_formset,institutionevidence_formset'
+    names = 'institutioninstitution_formset,institutionperson_formset,institutioninstallation_formset,institutionevidence_formset'
     return edit_model(request, __name__, 'Institution', 'installations', pk, formset_names=names,
                       focus=focus, view=view)
 
