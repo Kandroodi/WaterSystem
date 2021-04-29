@@ -490,7 +490,7 @@ class EvidencePersonRelationForm(ModelForm):
                    'data-minimum-input-length': '1'}))
     page_number = forms.CharField(required=False)
     description = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 1}),
+        attrs={'style': 'width:100%', 'rows': 4}),
         required=False)
 
     class Meta:
@@ -532,7 +532,7 @@ class EvidenceInstallationRelationForm(ModelForm):
                    'data-minimum-input-length': '1'}))
     page_number = forms.CharField(required=False)
     description = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 1}),
+        attrs={'style': 'width:100%', 'rows': 4}),
         required=False)
 
     class Meta:
@@ -555,7 +555,7 @@ class EvidenceInstitutionRelationForm(ModelForm):
                    'data-minimum-input-length': '1'}))
     page_number = forms.CharField(required=False)
     description = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 1}),
+        attrs={'style': 'width:100%', 'rows': 4}),
         required=False)
 
     class Meta:
