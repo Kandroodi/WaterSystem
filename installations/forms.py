@@ -298,12 +298,8 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    exact_location = forms.ModelChoiceField(
-        queryset=Location.objects.all(),
-        widget=LocationWidget(
-            attrs={'data-placeholder': 'Select location',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
+    latitude = forms.DecimalField(max_digits=7, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'latitude'}))
+    longitude = forms.DecimalField(max_digits=7, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'longitude'}))
     institution_as_location = forms.ModelChoiceField(
         queryset=Institution.objects.all(),
         widget=InstitutionWidget(
@@ -337,7 +333,8 @@ class InstallationForm(ModelForm):
         self.fields['purpose'].required = False
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False
-        self.fields['exact_location'].required = False
+        self.fields['latitude'].required = False
+        self.fields['longitude'].required = False
         self.fields['institution_as_location'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['comment'].required = False
