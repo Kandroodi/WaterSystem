@@ -163,12 +163,10 @@ class InstitutionForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    exact_location = forms.ModelChoiceField(
-        queryset=Location.objects.all(),
-        widget=LocationWidget(
-            attrs={'data-placeholder': 'Select location',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
+    latitude = forms.DecimalField(max_digits=7, decimal_places=5,
+                                  widget=forms.NumberInput(attrs={'placeholder': 'latitude'}))
+    longitude = forms.DecimalField(max_digits=7, decimal_places=5,
+                                   widget=forms.NumberInput(attrs={'placeholder': 'longitude'}))
     start_date_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
     start_date_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     first_reference_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
@@ -197,7 +195,8 @@ class InstitutionForm(ModelForm):
         self.fields['type'].required = False
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False
-        self.fields['exact_location'].required = False
+        self.fields['latitude'].required = False
+        self.fields['longitude'].required = False
         self.fields['start_date_lower'].required = False
         self.fields['start_date_upper'].required = False
         self.fields['first_reference_lower'].required = False

@@ -29,11 +29,8 @@
     </tr>
     <tr class="d-flex">
         <th class="col-2">Location</th>
-        <td class="col-8">{{form.exact_location}}</td>
-        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:location-insert' 'inline' %}"
-           role="button"><i class="fa fa-plus"></i></a>
-        </td>
+        <td class="col-4">{{form.latitude}}</td>
+        <td class="col-4">{{form.longitude}}</td>
     </tr>
     <tr class="d-flex">
         <th class="col-2">Start date</th>
