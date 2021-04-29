@@ -76,17 +76,6 @@ class Neighbourhood(models.Model):
     #     return st
 
 
-class Location(models.Model):
-    ''''The location used for exact location'''
-    gpsargs = {'blank': True, 'null': True, 'max_digits': 8, 'decimal_places': 5}
-    latitude = models.DecimalField(**gpsargs)
-    longitude = models.DecimalField(**gpsargs)
-
-    def __str__(self):
-        st = str(self.latitude) + '  ' + str(self.longitude)
-        return st
-
-
 class Religion(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=True, default='', null=True)
@@ -172,8 +161,8 @@ class Institution(models.Model):
     purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
-    latitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
-    longitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
+    latitude = models.DecimalField(max_digits=8, decimal_places=5, default=0)
+    longitude = models.DecimalField(max_digits=8, decimal_places=5, default=0)
     start_date_lower = PartialDateField(blank=True, null=True)  # this field is for test and explaine the partitial dat
     start_date_upper = PartialDateField(blank=True, null=True)
     ''''help_text="Date formats:"
@@ -219,8 +208,8 @@ class Installation(models.Model):
     purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
-    latitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
-    longitude = models.DecimalField(max_digits=7, decimal_places=5, default=0)
+    latitude = models.DecimalField(max_digits=8, decimal_places=5, default=0)
+    longitude = models.DecimalField(max_digits=8, decimal_places=5, default=0)
     institution_as_location = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)

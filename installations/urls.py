@@ -74,11 +74,7 @@ urlpatterns = [
     path('neighbourhood/new/<int:pk>', views.NeighbourhoodUpdateView.as_view(), name='neighbourhood-update'),
     url(r'^neighbourhood/delete/(?P<pk>\d+)/$', views.NeighbourhoodDeleteView.as_view(), name='neighbourhood-delete'),
     path('neighbourhood/list', views.NeighbourhoodListView.as_view(), name='neighbourhood-list'),
-    path('location/new/', views.LocationCreatView.as_view(), name='location-insert'),
-    path('location/new/<str:view>/', views.LocationCreatView.as_view(), name='location-insert'),
-    path('location/new/<int:pk>', views.LocationUpdateView.as_view(), name='location-update'),
-    url(r'^location/delete/(?P<pk>\d+)/$', views.LocationDeleteView.as_view(), name='location-delete'),
-    path('location/list', views.LocationListView.as_view(), name='location-list'),
+
     # Relations
     # ------------------------------------------------------------------------------------------------------------------
     url(r'^citypersonrelation/new/$', views.CityPersonRelationCreatView.as_view(), name='citypersonrelation-insert'),

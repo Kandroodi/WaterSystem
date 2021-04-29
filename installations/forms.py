@@ -32,13 +32,6 @@ class NeighbourhoodWidget2(s2forms.ModelSelect2Widget):  # this is for o
     ]
 
 
-class LocationWidget(s2forms.ModelSelect2Widget):
-    search_fields = [
-        'latitude__icontains',
-        'longitude__icontains',
-    ]
-
-
 class ReligionWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
@@ -163,10 +156,10 @@ class InstitutionForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    latitude = forms.DecimalField(max_digits=7, decimal_places=5,
-                                  widget=forms.NumberInput(attrs={'placeholder': 'latitude'}))
-    longitude = forms.DecimalField(max_digits=7, decimal_places=5,
-                                   widget=forms.NumberInput(attrs={'placeholder': 'longitude'}))
+    latitude = forms.DecimalField(max_digits=8, decimal_places=5,
+                                  widget=forms.NumberInput(attrs={'placeholder': 'Latitude'}))
+    longitude = forms.DecimalField(max_digits=8, decimal_places=5,
+                                   widget=forms.NumberInput(attrs={'placeholder': 'Longitude'}))
     start_date_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
     start_date_upper = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter upper bound'}))
     first_reference_lower = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please enter lower bound'}))
@@ -297,8 +290,8 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    latitude = forms.DecimalField(max_digits=7, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'latitude'}))
-    longitude = forms.DecimalField(max_digits=7, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'longitude'}))
+    latitude = forms.DecimalField(max_digits=8, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'Latitude'}))
+    longitude = forms.DecimalField(max_digits=8, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'Longitude'}))
     institution_as_location = forms.ModelChoiceField(
         queryset=Institution.objects.all(),
         widget=InstitutionWidget(

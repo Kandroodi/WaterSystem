@@ -451,42 +451,6 @@ class NeighbourhoodDeleteView(DeleteView):
     model = Neighbourhood
     success_url = reverse_lazy("installations:neighbourhood-list")
 
-
-@method_decorator(login_required, name='dispatch')
-class LocationCreatView(CreateView):
-    model = Location
-    fields = '__all__'
-    template_name = 'installations/location_form.html'
-
-    def get_success_url(self):
-        if 'view' in self.kwargs:
-            viewmode = self.kwargs['view']
-            if viewmode == 'inline':
-                return reverse_lazy('utilities:close')
-        else:
-            return reverse_lazy('installations:location-list')  # create a list view for this if needed
-
-
-@method_decorator(login_required, name='dispatch')
-class LocationListView(ListView):
-    model = Location
-    template_name = 'installations/location_list.html'
-    context_object_name = 'locations'
-
-
-@method_decorator(login_required, name='dispatch')
-class LocationUpdateView(UpdateView):
-    model = Location
-    fields = '__all__'
-    success_url = reverse_lazy('installations:location-list')
-
-
-@method_decorator(login_required, name='dispatch')
-class LocationDeleteView(DeleteView):
-    model = Location
-    success_url = reverse_lazy("installations:location-list")
-
-
 # Relations
 # ----------------------------------------------------------------------------------------------------------------------
 # CityPersonRelation
