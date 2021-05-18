@@ -161,8 +161,8 @@ class Institution(models.Model):
     purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
-    latitude = models.DecimalField(max_digits=8, decimal_places=5, default=0)
-    longitude = models.DecimalField(max_digits=8, decimal_places=5, default=0)
+    latitude = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True, default=0)
+    longitude = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True, default=0)
     start_date_lower = PartialDateField(blank=True, null=True)  # this field is for test and explaine the partitial dat
     start_date_upper = PartialDateField(blank=True, null=True)
     ''''help_text="Date formats:"
