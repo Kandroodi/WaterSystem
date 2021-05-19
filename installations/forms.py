@@ -23,14 +23,16 @@ class CityWidget(s2forms.ModelSelect2Widget):
 
 
 class NeighbourhoodWidget(s2forms.ModelSelect2MultipleWidget):
-    search_fields = ['neighbourhood_number__icontains']
-
+    search_fields = [
+        'neighbourhood_number__icontains',
+        'city__name__icontains',
+     ]
 
 class NeighbourhoodWidget2(s2forms.ModelSelect2Widget):  # this is for o
     search_fields = [
         'neighbourhood_number__icontains',
+        'city__name__icontains',
     ]
-
 
 class ReligionWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
@@ -290,8 +292,10 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select neighbourhood',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
-    latitude = forms.DecimalField(max_digits=8, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'Latitude'}))
-    longitude = forms.DecimalField(max_digits=8, decimal_places=5, widget=forms.NumberInput(attrs={'placeholder': 'Longitude'}))
+    latitude = forms.DecimalField(max_digits=8, decimal_places=5,
+                                  widget=forms.NumberInput(attrs={'placeholder': 'Latitude'}))
+    longitude = forms.DecimalField(max_digits=8, decimal_places=5,
+                                   widget=forms.NumberInput(attrs={'placeholder': 'Longitude'}))
     institution_as_location = forms.ModelChoiceField(
         queryset=Institution.objects.all(),
         widget=InstitutionWidget(

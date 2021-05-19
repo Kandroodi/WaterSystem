@@ -66,14 +66,22 @@ class Citymap(models.Model):
 
 
 class Neighbourhood(models.Model):
-    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=False, null=False, default='')
     neighbourhood_number = models.PositiveIntegerField(null=True, blank=True)
     extent_shapefile = models.FileField(upload_to='shapefiles/', max_length=50, null=True,
                                         blank=True)  # Is it correct way?
 
+    def __str__(self):
+        st = self.city.name + ' ' + str(self.neighbourhood_number)
+        return st
+
+    # @property
+    # def name(self):
+    #     return '{0} {1}'.format(self.city.name, str(self.neighbourhood_number))
+    #
     # def __str__(self):
-    #     st = self.city + ' ' + str(self.neighbourhood_number)
-    #     return st
+    #     return self.name
+
 
 
 class Religion(models.Model):
