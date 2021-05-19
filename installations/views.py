@@ -229,7 +229,13 @@ def edit_installation(request, pk=None, focus='', view='complete'):
 
 
 def InstallationList(request):
-    context = {'installation_list': Installation.objects.all()}
+    query = request.GET.get("q")
+    query_set = Installation.objects.all()
+    if query is not None:
+        query_set = query_set.filter(name__icontains=query)
+    context = {'installation_list': query_set,
+               'nentries': len(query_set),
+               'query': query}
     return render(request, 'installations/installation_list.html', context)
 
 
