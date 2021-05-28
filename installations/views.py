@@ -8,12 +8,8 @@ from django.views.generic import (View, TemplateView, ListView,
                                   DetailView, CreateView, UpdateView,
                                   DeleteView)
 from django.urls import reverse_lazy
-from django.views.decorators.csrf import csrf_exempt
-import json
-from django.apps import apps
-import sys
-import inspect
-from django.contrib import messages
+from django.db.models import Q
+
 
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
@@ -155,7 +151,17 @@ def edit_institution(request, pk=None, focus='', view='complete'):
 
 
 def InstitutionList(request):
-    context = {'institution_list': Institution.objects.all()}
+    query = request.GET.get("q")
+    query_set = Institution.objects.all()
+    if query is not None:
+        query_set = query_set.filter(
+            Q(name__icontains=query) |
+            Q(type__name__icontains=query) |
+            Q(city__name__icontains=query)
+        )
+    context = {'institution_list': query_set,
+               'nentries': len(query_set),
+               'query': query}
     return render(request, 'installations/institution_list.html', context)
 
 
