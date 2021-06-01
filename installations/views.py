@@ -10,13 +10,13 @@ from django.views.generic import (View, TemplateView, ListView,
 from django.urls import reverse_lazy
 from django.db.models import Q
 
-
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
+from utilities.views import search
 
 
 # Create your views here.
@@ -235,10 +235,11 @@ def edit_installation(request, pk=None, focus='', view='complete'):
 
 
 def InstallationList(request):
+    query_set = search(request, 'installations', 'installation')
     query = request.GET.get("q")
-    query_set = Installation.objects.all()
-    if query is not None:
-        query_set = query_set.filter(name__icontains=query)
+    # query_set = Installation.objects.all()
+    # if query is not None:
+    #     query_set = query_set.filter(name__icontains=query)
     context = {'installation_list': query_set,
                'nentries': len(query_set),
                'query': query}
@@ -462,6 +463,7 @@ class NeighbourhoodUpdateView(UpdateView):
 class NeighbourhoodDeleteView(DeleteView):
     model = Neighbourhood
     success_url = reverse_lazy("installations:neighbourhood-list")
+
 
 # Relations
 # ----------------------------------------------------------------------------------------------------------------------

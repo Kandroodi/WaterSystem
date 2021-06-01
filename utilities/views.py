@@ -8,6 +8,11 @@ from utils import view_util
 from utils.view_util import Crud, Cruds, make_tabs, FormsetFactoryManager
 from .models import copy_complete
 from utilities.search import Search
+from django.db.models import CharField, ForeignKey
+from partial_date import PartialDateField
+from django.db.models import Q
+
+
 
 
 def list_view(request, model_name, app_name):
@@ -52,7 +57,7 @@ def edit_model(request, name_space, model_name, app_name, instance_id=None,
                     show_messages(request, button, model_name)
                     if button == 'add_another':
                         # return HttpResponseRedirect(reverse(app_name + ':add_' + model_name.lower()))
-                        return HttpResponseRedirect(reverse(app_name + ':' + model_name.lower()+'-insert'))
+                        return HttpResponseRedirect(reverse(app_name + ':' + model_name.lower() + '-insert'))
                     # return HttpResponseRedirect(reverse(
                     #     app_name + ':edit_' + model_name.lower(),
                     #     kwargs={'pk': instance.pk, 'focus': focus}))
@@ -156,3 +161,50 @@ def show_messages(request, button, model_name):
 def close(request):
     '''page that closes itself for on the fly creation of model instances (loaded in a new tab).'''
     return render(request, 'utilities/close.html')
+
+
+def search(request, app_name, model_name):
+    '''Search function between all fields in a model.
+    app_name : application name
+    model_name : model name for search
+    '''
+    model = apps.get_model(app_name, model_name)
+    query = request.GET.get("q")
+    query_set = model.objects.all()
+    # Extract all fields except the relations
+    # to include relations, use sorted(model._meta.concrete_fields + model._meta.many_to_many)
+    # all_fields = [field.name for field in sorted(model._meta.concrete_fields)]
+
+    ####### General way to implement search----------------------
+    # if query is not None:
+    #     fields_cf = [f for f in model._meta.fields if isinstance(f, CharField)]  # cf: CharField
+    #     queries = [Q(**{f.name: query}) for f in fields_cf]
+    #
+    #     fields_fk = [f for f in model._meta.fields if isinstance(f, PartialDateField)]  # cf: CharField
+    #     queries.append([Q(**{f.name: PartialDateField(query)}) for f in fields_fk])
+    #
+    #     print(fields_fk)
+    #     print(queries)
+    #
+    #     qs = Q()
+    #     for que in queries:
+    #         qs = qs | que
+    #
+    #     query_set = model.objects.filter(qs)
+    # -----------------------------------------------------------
+
+    if query is not None:
+        query_set = query_set.filter(
+            Q(name__icontains=query) |
+            Q(watersystem__original_term__icontains=query) |
+            Q(construction_date_lower__icontains=query) |
+            Q(construction_date_upper__icontains=query) |
+            Q(first_reference_lower__icontains=query) |
+            Q(first_reference_upper__icontains=query) |
+            Q(end_functioning_year_lower__icontains=query) |
+            Q(end_functioning_year_upper__icontains=query) |
+            Q(city__name__icontains=query) |
+            Q(purpose__name__icontains=query)
+        )
+
+    return query_set
