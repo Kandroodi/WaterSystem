@@ -5,11 +5,26 @@
     <table class="table table-borderless">
         <thead class="border-bottom font-weight-bold">
             <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Journal</th>
-                <th scope="col">Publisher</th>
-                <th scope="col">Year</th>
+                <th scope="col">Title
+                    <a href="?q={{query}}&order_by=title&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=title&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Author
+                    <a href="?q={{query}}&order_by=author&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=author&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Journal
+                    <a href="?q={{query}}&order_by=journal&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=journal&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Publisher
+                    <a href="?q={{query}}&order_by=publisher&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=publisher&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Year
+                    <a href="?q={{query}}&order_by=year&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=year&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
                 <td>
                     <a href="{% url 'installations:secondaryliterature-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
                 </td>
