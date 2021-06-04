@@ -9,12 +9,23 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td>Name</td>
-            <td>Water System</td>
-            <td>Construction Date</td>
-            <td>City</td>
-<!--            <td>Publisher</td>-->
-<!--            <td>Year</td>-->
+            <td>Name
+                <a href="?q={{query}}&order_by=name"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-name"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>Water System
+                <a href="?q={{query}}&order_by=watersystem"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-watersystem"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>Construction Date
+                <a href="?q={{query}}&order_by=construction_date_lower"><i class="fas fa-sort-down"></i></a>
+                <a href="?q={{query}}&order_by=-construction_date_lower"><i class="fas fa-sort-up"></i></a>
+            </td>
+            <td>City
+                <a href="?q={{query}}&order_by=city"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-city"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+
             <td>
                  <a href="{% url 'installations:installation-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>

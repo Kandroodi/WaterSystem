@@ -13,8 +13,6 @@ from partial_date import PartialDateField
 from django.db.models import Q
 
 
-
-
 def list_view(request, model_name, app_name):
     '''list view of a model.'''
     s = Search(request, model_name, app_name)
@@ -169,8 +167,9 @@ def search(request, app_name, model_name):
     model_name : model name for search
     '''
     model = apps.get_model(app_name, model_name)
-    query = request.GET.get("q")
-    query_set = model.objects.all()
+    query = request.GET.get("q", "")
+    order_by = request.GET.get("order_by", "id")
+    query_set = model.objects.all().order_by(order_by)
     # Extract all fields except the relations
     # to include relations, use sorted(model._meta.concrete_fields + model._meta.many_to_many)
     # all_fields = [field.name for field in sorted(model._meta.concrete_fields)]
@@ -205,6 +204,6 @@ def search(request, app_name, model_name):
             Q(end_functioning_year_upper__icontains=query) |
             Q(city__name__icontains=query) |
             Q(purpose__name__icontains=query)
-        )
+        ).order_by(order_by)
 
     return query_set

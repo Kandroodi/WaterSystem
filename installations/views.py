@@ -236,7 +236,7 @@ def edit_installation(request, pk=None, focus='', view='complete'):
 
 def InstallationList(request):
     query_set = search(request, 'installations', 'installation')
-    query = request.GET.get("q")
+    query = request.GET.get("q","")
     # query_set = Installation.objects.all()
     # if query is not None:
     #     query_set = query_set.filter(name__icontains=query)
