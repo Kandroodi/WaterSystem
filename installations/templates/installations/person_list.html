@@ -7,10 +7,22 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td>Name</td>
-            <td>Gender</td>
-            <td>Role</td>
-            <td>Religion</td>
+            <td>Name
+                <a href="?q={{query}}&order_by=name"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-name"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>Gender
+                <a href="?q={{query}}&order_by=gender"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-gender"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>Role
+                <a href="?q={{query}}&order_by=role"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-role"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>Religion
+                <a href="?q={{query}}&order_by=role"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-role"> <i class="fas fa-sort-up"></i> </a>
+            </td>
             <td>
                  <a href="{% url 'installations:person-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>

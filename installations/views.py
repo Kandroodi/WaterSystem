@@ -182,7 +182,10 @@ def edit_person(request, pk=None, focus='', view='complete'):
 
 
 def PersonList(request):
-    context = {'person_list': Person.objects.all()}
+    query = request.GET.get("q", "")
+    order_by = request.GET.get("order_by", "id")
+    query_set = Person.objects.all().order_by(order_by)
+    context = {'person_list': query_set}
     return render(request, 'installations/person_list.html', context)
 
 
