@@ -5,9 +5,18 @@
     <table class="table table-borderless">
         <thead class="border-bottom font-weight-bold">
             <tr>
-                <th scope="col">City</th>
-                <th scope="col">Neighbourhood number</th>
-                <th scope="col">Extent shapefile</th>
+                <th scope="col">City
+                    <a href="?q={{query}}&order_by=city&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=city&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Neighbourhood number
+                    <a href="?q={{query}}&order_by=neighbourhood_number&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=neighbourhood_number&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Extent shapefile
+                    <a href="?q={{query}}&order_by=extent_shapefile&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=extent_shapefile&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
                 <td>
                     <a href="{% url 'installations:neighbourhood-insert' 'inline' %}" class="btn btn-outline-success" > <i class="fa fa-plus"></i> Add New</a>
                 </td>
