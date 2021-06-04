@@ -8,16 +8,26 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>city</td>
-            <td>Policy</td>
-            <td>Start date</td>
-            <td>Religion</td>
-<!--            <td>Bibliography</td>-->
-<!--            <td>Textual evidence</td>-->
-<!--            <td>Material evidence</td>-->
-
+            <td>Name
+                <a href="?q={{query}}&order_by=name"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-name"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>Type
+                <a href="?q={{query}}&order_by=type"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-type"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>city
+                <a href="?q={{query}}&order_by=city"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-city"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>Start date
+                <a href="?q={{query}}&order_by=start_date_lower"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-start_date_lower"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+            <td>religion
+                <a href="?q={{query}}&order_by=start_date_lower"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-start_date_lower"> <i class="fas fa-sort-up"></i> </a>
+            </td>
             <td>
                  <a href="{% url 'installations:institution-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>
@@ -29,7 +39,6 @@
                 <td>{{institution.name }}</td>
                 <td>{{institution.type}}</td>
                 <td>{{institution.city}}</td>
-                <td>{{institution.policy}}</td>
                 <td>
                     {% if institution.start_date_lower == institution.start_date_upper %}
                     {{institution.start_date_lower}}

@@ -151,14 +151,15 @@ def edit_institution(request, pk=None, focus='', view='complete'):
 
 
 def InstitutionList(request):
-    query = request.GET.get("q")
-    query_set = Institution.objects.all()
+    query = request.GET.get("q", "")
+    order_by = request.GET.get("order_by", "id")
+    query_set = Institution.objects.all().order_by(order_by)
     if query is not None:
         query_set = query_set.filter(
             Q(name__icontains=query) |
             Q(type__name__icontains=query) |
             Q(city__name__icontains=query)
-        )
+        ).order_by(order_by)
     context = {'institution_list': query_set,
                'nentries': len(query_set),
                'query': query}
