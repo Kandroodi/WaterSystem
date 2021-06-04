@@ -419,6 +419,22 @@ class InstitutionTypeListView(ListView):
     template_name = 'installations/institutiontype_list.html'
     context_object_name = 'institutiontypes'
 
+    def get_queryset(self):
+        query = self.request.GET.get("q", "")
+        order_by = self.request.GET.get("order_by", "id")
+        direction = self.request.GET.get("direction", "ascending")
+        if direction == "ascending":
+            query_set = self.model.objects.all().order_by(Lower(order_by))
+        else:
+            query_set = self.model.objects.all().order_by(Lower(order_by)).reverse()
+        return query_set
+
+    def get_context_data(self, **kwargs):
+        context = super(InstitutionTypeListView, self).get_context_data(**kwargs)
+        context["order_by"] = self.request.GET.get("order_by", "id")
+        context["direction"] = self.request.GET.get("direction", "ascending")
+        return context
+
 
 @method_decorator(login_required, name='dispatch')
 class InstitutionTypeCreatView(CreateView):
