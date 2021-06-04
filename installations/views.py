@@ -17,6 +17,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
 from utilities.views import search
+from django.db.models.functions import Lower
 
 
 # Create your views here.
@@ -240,7 +241,7 @@ def edit_installation(request, pk=None, focus='', view='complete'):
 
 def InstallationList(request):
     query_set = search(request, 'installations', 'installation')
-    query = request.GET.get("q","")
+    query = request.GET.get("q", "")
     # query_set = Installation.objects.all()
     # if query is not None:
     #     query_set = query_set.filter(name__icontains=query)
@@ -264,6 +265,23 @@ class EvidenceListView(ListView):
     model = Evidence
     template_name = 'installations/evidence_list'
     context_object_name = 'evidences'
+
+    def get_queryset(self):
+        query = self.request.GET.get("q", "")
+        order_by = self.request.GET.get("order_by", "id")
+        direction = self.request.GET.get("direction", "ascending")
+        if direction == "ascending":
+            query_set = self.model.objects.all().order_by(Lower(order_by))
+        else:
+            query_set = self.model.objects.all().order_by(Lower(order_by)).reverse()
+        return query_set
+
+    def get_context_data(self, **kwargs):
+        context = super(EvidenceListView, self).get_context_data(**kwargs)
+        context["order_by"] = self.request.GET.get("order_by", "id")
+        context["direction"] = self.request.GET.get("direction", "ascending")
+        return context
+
     # paginate_by = 10
     #
     # def get_context_data(self, **kwargs):

@@ -5,14 +5,24 @@
     <table class="table table-borderless">
         <thead class="border-bottom font-weight-bold">
             <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Author</th>
-                <th scope="col">Description</th>
+                <th scope="col">Title
+                    <a href="?q={{query}}&order_by=title&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=title&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Author
+                    <a href="?q={{query}}&order_by=author&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=author&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
+                <th scope="col">Description
+                    <a href="?q={{query}}&order_by=description&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=description&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </th>
                 <td>
                     <a href= "{% url 'installations:evidence-insert' %}"
                        class="btn btn-outline-success"
-                       target="popup"
-                       onclick="window.open('{% url 'installations:evidence-insert' %}','popup','width=600,height=600'); return false;">
+{#                       target="popup"#}
+{#                       onclick="window.open('{% url 'installations:evidence-insert' %}','popup','width=600,height=600'); return false;"#}
+                    >
                         <i class="fa fa-plus"></i> Add New</a>
                 </td>
             </tr>
