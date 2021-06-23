@@ -4,7 +4,7 @@ beautifulsoup4==4.8.2
 certifi==2019.11.28
 cffi==1.14.0
 chardet==3.0.4
-Django==2.2.20
+Django==2.2.24
 django-appconf==1.0.3
 django-bootstrap4==1.0.1
 django-countries==5.5
@@ -19,7 +19,7 @@ django-smart-selects==1.5.4
 django-widget-tweaks==1.4.8
 idna==2.8
 partial-date==0.1
-Pillow==8.1.2
+Pillow==8.2.0
 pycparser==2.20
 python-decouple==3.1
 pytz==2019.3
