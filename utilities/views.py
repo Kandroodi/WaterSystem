@@ -191,19 +191,44 @@ def search(request, app_name, model_name):
     #
     #     query_set = model.objects.filter(qs)
     # -----------------------------------------------------------
-
+    queries = query.split()
     if query is not None:
-        query_set = query_set.filter(
-            Q(name__icontains=query) |
-            Q(watersystem__original_term__icontains=query) |
-            Q(construction_date_lower__icontains=query) |
-            Q(construction_date_upper__icontains=query) |
-            Q(first_reference_lower__icontains=query) |
-            Q(first_reference_upper__icontains=query) |
-            Q(end_functioning_year_lower__icontains=query) |
-            Q(end_functioning_year_upper__icontains=query) |
-            Q(city__name__icontains=query) |
-            Q(purpose__name__icontains=query)
-        ).order_by(order_by)
+        query_setall = model.objects.none()
+        for qs in queries:
+            query_seti = query_set.filter(
+                Q(name__icontains=qs) |
+                Q(watersystem__original_term__icontains=qs) |
+                Q(construction_date_lower__icontains=qs) |
+                Q(construction_date_upper__icontains=qs) |
+                Q(first_reference_lower__icontains=qs) |
+                Q(first_reference_upper__icontains=qs) |
+                Q(end_functioning_year_lower__icontains=qs) |
+                Q(end_functioning_year_upper__icontains=qs) |
+                Q(city__name__icontains=qs) |
+                Q(purpose__name__icontains=qs) |
+                Q(neighbourhood__neighbourhood_number__icontains=qs) |
+                Q(latitude__icontains=qs) |
+                Q(longitude__icontains=qs) |
+                Q(institution_as_location__name__icontains=qs) |
+                Q(secondary_literature__title__icontains=qs) |
+                Q(comment__icontains=qs)
+
+            )
+            query_setall = query_setall | query_seti
+        query_set = query_setall.order_by(order_by)
+    if query == "":
+        query_set = model.objects.all().order_by(order_by)
+        # query_set = query_set.filter(
+        #     Q(name__icontains=query) |
+        #     Q(watersystem__original_term__icontains=query) |
+        #     Q(construction_date_lower__icontains=query) |
+        #     Q(construction_date_upper__icontains=query) |
+        #     Q(first_reference_lower__icontains=query) |
+        #     Q(first_reference_upper__icontains=query) |
+        #     Q(end_functioning_year_lower__icontains=query) |
+        #     Q(end_functioning_year_upper__icontains=query) |
+        #     Q(city__name__icontains=query) |
+        #     Q(purpose__name__icontains=query)
+        # ).order_by(order_by)
 
     return query_set

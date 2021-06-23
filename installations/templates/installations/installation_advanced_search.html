@@ -1,17 +1,15 @@
 {% extends 'installations/base.html' %}
-{% load widget_tweaks %}
+
 
 {% block main_content %}
-<table class="table table-borderless">
-    <tr class="d-flex">
-        <td class="col-9">
-            {% include 'utilities/list_search_bar.html' %}
-        </td>
-        <td class="col-3">
-            <a href="{% url 'installations:installation-advancedsearch' %}" class="btn btn-link mb-0"> <i class="fas fa-search-plus"></i> Advanced search</a>
-        </td>
-    </tr>
-</table>
+
+<form method="GET">
+{% csrf_token %}
+    {{ filter.form }}
+    <br> <br>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
 
 
 <h2>Installation list</h2>
@@ -19,20 +17,20 @@
     <thead class="border-bottom font-weight-bold">
         <tr>
             <td>Name
-                <a href="?q={{query}}&order_by=name"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-name"> <i class="fas fa-sort-up"></i> </a>
+                <a href="?q={{query}}&order_by=name&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=name&direction=descending"> <i class="fas fa-sort-up"></i> </a>
             </td>
             <td>Water System
-                <a href="?q={{query}}&order_by=watersystem"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-watersystem"> <i class="fas fa-sort-up"></i> </a>
+                <a href="?q={{query}}&order_by=watersystem&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=watersystem&direction=descending"> <i class="fas fa-sort-up"></i> </a>
             </td>
             <td>Construction Date
-                <a href="?q={{query}}&order_by=construction_date_lower"><i class="fas fa-sort-down"></i></a>
-                <a href="?q={{query}}&order_by=-construction_date_lower"><i class="fas fa-sort-up"></i></a>
+                <a href="?q={{query}}&order_by=construction_date_lower&direction=ascending"><i class="fas fa-sort-down"></i></a>
+                <a href="?q={{query}}&order_by=construction_date_lower&direction=descending"><i class="fas fa-sort-up"></i></a>
             </td>
             <td>City
-                <a href="?q={{query}}&order_by=city"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-city"> <i class="fas fa-sort-up"></i> </a>
+                <a href="?q={{query}}&order_by=city&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=city&direction=descending"> <i class="fas fa-sort-up"></i> </a>
             </td>
 
             <td>
@@ -41,7 +39,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for installation in installation_list %}
+        {% for installation in filter.qs %}
             <tr>
                 <td>{{installation.name }}</td>
                 <td>{{installation.watersystem }}</td>
@@ -69,5 +67,8 @@
     </tbody>
 
 </table>
+
+
+
 
 {% endblock main_content %}

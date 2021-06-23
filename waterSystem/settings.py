@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'leaflet',
     'django_select2',
     'easyaudit',
+    'django_filters',
 ]
 
 # CRISPY_TEMPLATE_PACK = 'uni_form'

@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
 from utilities.views import search
 from django.db.models.functions import Lower
+from .filters import *
 
 
 # Create your views here.
@@ -267,6 +268,28 @@ def InstallationList(request):
     return render(request, 'installations/installation_list.html', context)
 
 
+class InstallationListView(ListView):
+    model = Installation
+    template_name = "installations/installation_advanced_search.html"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q", "")
+        order_by = self.request.GET.get("order_by", "id")
+        direction = self.request.GET.get("direction", "ascending")
+        if direction == "ascending":
+            query_set = self.model.objects.all().order_by(Lower(order_by))
+        if direction == "descending":
+            query_set = self.model.objects.all().order_by(Lower(order_by)).reverse()
+        return query_set
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = InstallationFilter(self.request.GET, queryset=self.get_queryset())
+        context["order_by"] = self.request.GET.get("order_by", "id")
+        context["direction"] = self.request.GET.get("direction", "ascending")
+        return context
+
+
 @login_required
 def InstallationDelete(request, id):
     installation = get_object_or_404(Installation, pk=id)
@@ -400,6 +423,7 @@ class PurposeListView(ListView):
         context["order_by"] = self.request.GET.get("order_by", "id")
         context["direction"] = self.request.GET.get("direction", "ascending")
         return context
+
 
 @method_decorator(login_required, name='dispatch')
 class PurposeCreatView(CreateView):

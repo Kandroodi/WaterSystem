@@ -30,3 +30,5 @@ soupsieve==1.9.5
 sqlparse==0.3.0
 urllib3==1.25.8
 virtualenv==16.7.9
+
+django-filter~=2.4.0
