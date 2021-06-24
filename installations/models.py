@@ -166,6 +166,7 @@ class Purpose(models.Model):
 class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
     type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True, null=True)
+    type_many = models.ManyToManyField(InstitutionType, related_name='installations', blank=True, default='')
     purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
     neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)

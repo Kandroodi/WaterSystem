@@ -13,8 +13,8 @@
                 <a href="?q={{query}}&order_by=-name"> <i class="fas fa-sort-up"></i> </a>
             </td>
             <td>Type
-                <a href="?q={{query}}&order_by=type"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-type"> <i class="fas fa-sort-up"></i> </a>
+                <a href="?q={{query}}&order_by=type_many"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-type_many"> <i class="fas fa-sort-up"></i> </a>
             </td>
             <td>city
                 <a href="?q={{query}}&order_by=city"> <i class="fas fa-sort-down"></i> </a>
@@ -37,7 +37,15 @@
         {% for institution in institution_list %}
             <tr>
                 <td>{{institution.name }}</td>
-                <td>{{institution.type}}</td>
+                <td>
+                    {% for t in institution.type_many.all %}
+                        {% if t %}
+                            {{ t.name }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td>{{institution.city}}</td>
                 <td>
                     {% if institution.start_date_lower == institution.start_date_upper %}

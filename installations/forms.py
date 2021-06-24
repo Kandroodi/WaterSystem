@@ -18,6 +18,10 @@ class InstitutionTypeWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
 
+class InstitutionTypeWidgetMulti(s2forms.ModelSelect2MultipleWidget):
+    search_fields = ['name__icontains']
+
+
 class CityWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
@@ -26,13 +30,15 @@ class NeighbourhoodWidget(s2forms.ModelSelect2MultipleWidget):
     search_fields = [
         'neighbourhood_number__icontains',
         'city__name__icontains',
-     ]
+    ]
+
 
 class NeighbourhoodWidget2(s2forms.ModelSelect2Widget):  # this is for o
     search_fields = [
         'neighbourhood_number__icontains',
         'city__name__icontains',
     ]
+
 
 class ReligionWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
@@ -87,10 +93,6 @@ class PersonWidget(s2forms.ModelSelect2Widget):
     search_fields = ['name__icontains']
 
 
-class InstitutionTypeWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['name__icontains']
-
-
 # User form
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -135,6 +137,14 @@ class InstitutionForm(ModelForm):
         queryset=InstitutionType.objects.all(),
         # this line refreshes the list when a new item is entered using the plus button
         widget=InstitutionTypeWidget(
+            attrs={'data-placeholder': 'Select institution type',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}),
+        required=False)
+
+    type_many = forms.ModelMultipleChoiceField(
+        queryset=InstitutionType.objects.all(),
+        widget=InstitutionTypeWidgetMulti(
             attrs={'data-placeholder': 'Select institution type',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}),
@@ -187,7 +197,7 @@ class InstitutionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance', None)
         super(InstitutionForm, self).__init__(*args, **kwargs)
-        self.fields['type'].required = False
+        self.fields['type_many'].required = False
         self.fields['city'].required = False
         self.fields['neighbourhood'].required = False
         self.fields['latitude'].required = False
