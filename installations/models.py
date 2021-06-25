@@ -222,6 +222,7 @@ class Installation(models.Model):
     institution_as_location = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
+    status = models.BooleanField("Completed", default=False, help_text="Complete")
 
     def __str__(self):
         return self.name

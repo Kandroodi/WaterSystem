@@ -322,6 +322,8 @@ class InstallationForm(ModelForm):
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
 
+    status = forms.BooleanField()
+
     class Meta:
         model = Installation
         fields = '__all__'

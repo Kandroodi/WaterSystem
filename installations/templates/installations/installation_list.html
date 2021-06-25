@@ -34,6 +34,10 @@
                 <a href="?q={{query}}&order_by=city"> <i class="fas fa-sort-down"></i> </a>
                 <a href="?q={{query}}&order_by=-city"> <i class="fas fa-sort-up"></i> </a>
             </td>
+            <td>Status
+                <a href="?q={{query}}&order_by=status"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-status"> <i class="fas fa-sort-up"></i> </a>
+            </td>
 
             <td>
                  <a href="{% url 'installations:installation-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
@@ -54,6 +58,13 @@
                     {% endif %}
                 </td>
                 <td>{{installation.city}}</td>
+                <td>
+                    {% if installation.status %}
+                        <span class="Gdot"></span>
+                    {% else %}
+                        <span class="Rdot"></span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{% url 'installations:installation-update' installation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:installation-delete' installation.id %}" method="post" class="d-inline">
