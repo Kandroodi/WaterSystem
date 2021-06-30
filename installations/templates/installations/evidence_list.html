@@ -17,6 +17,11 @@
                     <a href="?q={{query}}&order_by=description&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
                     <a href="?q={{query}}&order_by=description&direction=descending"> <i class="fas fa-sort-up"></i> </a>
                 </th>
+                <td>Status
+                <a href="?q={{query}}&order_by=status&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=status&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </td>
+
                 <td>
                     <a href= "{% url 'installations:evidence-insert' %}"
                        class="btn btn-outline-success"
@@ -33,6 +38,13 @@
                 <td>{{evidence.title}}</td>
                 <td>{{evidence.author}}</td>
                 <td>{{evidence.description}}</td>
+                <td>
+                    {% if evidence.status %}
+                        <span class="Gdot"></span>
+                    {% else %}
+                        <span class="Rdot"></span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{% url 'installations:evidence-update' evidence.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:evidence-delete' evidence.id %}" method="post" class="d-inline">

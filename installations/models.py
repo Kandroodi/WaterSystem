@@ -117,6 +117,7 @@ class Evidence(models.Model):
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',
                                              null=True)
     description = models.TextField(max_length=1000, blank=True, default='', null=True)
+    status = models.BooleanField("Completed", default=False, blank=True)
 
     def __str__(self):
         return 'Author: ' + self.author + ' | Title: ' + self.title
