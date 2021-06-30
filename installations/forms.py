@@ -194,6 +194,8 @@ class InstitutionForm(ModelForm):
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
 
+    status = forms.BooleanField()
+
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance', None)
         super(InstitutionForm, self).__init__(*args, **kwargs)
@@ -210,6 +212,7 @@ class InstitutionForm(ModelForm):
         self.fields['end_date_upper'].required = False
         self.fields['religion'].required = False
         self.fields['secondary_literature'].required = False
+        self.fields['status'].required = False
 
         if not instance:
             self.initial['name'] = 'Institution-' + str(generate_num('installations', 'Institution')).zfill(4)
@@ -346,6 +349,7 @@ class InstallationForm(ModelForm):
         self.fields['institution_as_location'].required = False
         self.fields['secondary_literature'].required = False
         self.fields['comment'].required = False
+        self.fields['status'].required = False
 
         if not instance:
             self.initial['name'] = 'Installation-' + str(generate_num('installations', 'Installation')).zfill(4)

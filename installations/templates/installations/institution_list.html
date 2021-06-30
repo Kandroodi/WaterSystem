@@ -28,6 +28,11 @@
                 <a href="?q={{query}}&order_by=start_date_lower"> <i class="fas fa-sort-down"></i> </a>
                 <a href="?q={{query}}&order_by=-start_date_lower"> <i class="fas fa-sort-up"></i> </a>
             </td>
+            <td>Status
+                <a href="?q={{query}}&order_by=status"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-status"> <i class="fas fa-sort-up"></i> </a>
+            </td>
+
             <td>
                  <a href="{% url 'installations:institution-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>
@@ -55,6 +60,13 @@
                     {% endif %}
                 </td>
                 <td>{{institution.religion}}</td>
+                <td>
+                    {% if institution.status %}
+                        <span class="Gdot"></span>
+                    {% else %}
+                        <span class="Rdot"></span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{% url 'installations:institution-update' institution.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:institution-delete' institution.id %}" method="post" class="d-inline">
