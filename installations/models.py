@@ -104,6 +104,7 @@ class SecondaryLiterature(models.Model):
     page_number = models.CharField(max_length=25, blank=True, default='', null=True)
     place = models.CharField(max_length=25, blank=True, default='', null=True)
     year = PartialDateField(blank=True, null=True, default='')
+    status = models.BooleanField("Completed", default=False, blank=True)
 
     def __str__(self):
         return 'Author: ' + self.author + ' | Title: ' + self.title

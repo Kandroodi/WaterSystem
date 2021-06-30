@@ -25,6 +25,10 @@
                     <a href="?q={{query}}&order_by=year&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
                     <a href="?q={{query}}&order_by=year&direction=descending"> <i class="fas fa-sort-up"></i> </a>
                 </th>
+                <td>Status
+                    <a href="?q={{query}}&order_by=status&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
+                    <a href="?q={{query}}&order_by=status&direction=descending"> <i class="fas fa-sort-up"></i> </a>
+                </td>
                 <td>
                     <a href="{% url 'installations:secondaryliterature-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
                 </td>
@@ -38,6 +42,13 @@
                 <td>{{secondaryliterature.journal}}</td>
                 <td>{{secondaryliterature.publisher}}</td>
                 <td>{{secondaryliterature.year}}</td>
+                <td>
+                    {% if secondaryliterature.status %}
+                        <span class="Gdot"></span>
+                    {% else %}
+                        <span class="Rdot"></span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{% url 'installations:secondaryliterature-update' secondaryliterature.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:secondaryliterature-delete' secondaryliterature.id %}" method="post" class="d-inline">

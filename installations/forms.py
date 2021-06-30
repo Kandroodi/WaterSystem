@@ -270,6 +270,7 @@ class SecondaryLiteratureForm(ModelForm):
         self.fields['journal'].required = False
         self.fields['publisher'].required = False
         self.fields['year'].required = False
+        self.fields['status'].required = False
 
 
 class InstallationForm(ModelForm):
