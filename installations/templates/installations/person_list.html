@@ -23,6 +23,10 @@
                 <a href="?q={{query}}&order_by=role"> <i class="fas fa-sort-down"></i> </a>
                 <a href="?q={{query}}&order_by=-role"> <i class="fas fa-sort-up"></i> </a>
             </td>
+            <td>Status
+                <a href="?q={{query}}&order_by=status"> <i class="fas fa-sort-down"></i> </a>
+                <a href="?q={{query}}&order_by=-status"> <i class="fas fa-sort-up"></i> </a>
+            </td>
             <td>
                  <a href="{% url 'installations:person-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>
@@ -35,6 +39,13 @@
                 <td>{{person.gender}}</td>
                 <td>{{person.role}}</td>
                 <td>{{person.religion}}</td>
+                <td>
+                    {% if person.status %}
+                        <span class="Gdot"></span>
+                    {% else %}
+                        <span class="Rdot"></span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{% url 'installations:person-update' person.pk %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:person-delete' person.pk %}" method="post" class="d-inline">

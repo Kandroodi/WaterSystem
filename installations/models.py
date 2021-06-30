@@ -142,6 +142,7 @@ class Person(models.Model):
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
+    status = models.BooleanField("Completed", default=False, blank=True)
 
     def __str__(self):
         return self.name

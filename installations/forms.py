@@ -244,6 +244,7 @@ class PersonForm(ModelForm):
     comment = forms.CharField(widget=forms.Textarea(
         attrs={'style': 'width:100%', 'rows': 3}),
         required=False)
+    status = forms.BooleanField()
 
     def __init__(self, *args, **kwargs):
         super(PersonForm, self).__init__(*args, **kwargs)
@@ -253,6 +254,7 @@ class PersonForm(ModelForm):
         self.fields['birth_upper'].required = False
         self.fields['death_lower'].required = False
         self.fields['death_upper'].required = False
+        self.fields['status'].required = False
         # self.fields['religion'].empty_label = "Select religion"
         self.fields['secondary_literature'].empty_label = "Select secondary literature"
         self.fields['gender'].empty_label = "Select gender"
