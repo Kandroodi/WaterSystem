@@ -83,7 +83,6 @@ class Neighbourhood(models.Model):
     #     return self.name
 
 
-
 class Religion(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=True, default='', null=True)
@@ -206,7 +205,11 @@ class Watersystem(models.Model):
                                              null=True)
 
     def __str__(self):
-        return self.original_term
+        if self.type is not None:
+            s = self.original_term + ' (' + self.type + ')'
+        else:
+            s = self.original_term
+        return s
 
 
 class Installation(models.Model):
