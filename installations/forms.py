@@ -375,7 +375,7 @@ class EvidenceForm(ModelForm):
 
     class Meta:
         model = Evidence
-        fields = ('title', 'author', 'date_lower', 'date_upper', 'secondary_literature', 'description')
+        fields = ('title', 'author', 'date_lower', 'date_upper', 'secondary_literature', 'description', 'status')
 
     def __init__(self, *args, **kwargs):
         super(EvidenceForm, self).__init__(*args, **kwargs)
