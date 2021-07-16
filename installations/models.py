@@ -145,10 +145,16 @@ class Person(models.Model):
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
     status = models.BooleanField("Completed", default=False, blank=True)
+    # searchable fields for fields with diacritics  (un: unaccent)
+    un_name = models.CharField(max_length=250, blank=True, default='')  # searchable field with normalize diacritics
 
     def __str__(self):
         return self.name
 
+    def save(self):
+        if not self.id:
+            self.un_name = unidecode.unidecode(self.name)
+        super(Person, self).save()
 
 class InstitutionType(models.Model):
     name = models.CharField(max_length=100, blank=False)

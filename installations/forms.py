@@ -90,7 +90,7 @@ class InstitutionWidget(s2forms.ModelSelect2Widget):
 
 
 class PersonWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['name__icontains']
+    search_fields = ['un_name__icontains']
 
 
 # User form
