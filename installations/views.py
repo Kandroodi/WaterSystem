@@ -17,7 +17,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
 from utilities.views import search
-from utilities.views import unaccent_installations
+from utilities.views import unaccent_installations, unaccent_institution
 from django.db.models.functions import Lower
 from .filters import *
 
@@ -716,6 +716,9 @@ def Accessory(request):
     if action == "un_installation":
         unaccent_installations(request, 'installations', 'installation')
     print(action)
+
+    if action == "un_institution":
+        unaccent_institution(request, 'installations', 'institution')
 
     return render(request, 'installations/accessory.html')
 

@@ -193,9 +193,16 @@ class Institution(models.Model):
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
     status = models.BooleanField("Completed", default=False, blank=True)
+    # searchable fields for fields with diacritics  (un: unaccent)
+    un_name = models.CharField(max_length=250, blank=True, default='')  # searchable field with normalize diacritics
 
     def __str__(self):
         return self.name
+
+    def save(self):
+        if not self.id:
+            self.un_name = unidecode.unidecode(self.name)
+        super(Institution, self).save()
 
 
 class Watersystem(models.Model):
@@ -241,11 +248,6 @@ class Installation(models.Model):
         if not self.id:
             self.un_name = unidecode.unidecode(self.name)
         super(Installation, self).save()
-
-    # @property
-    # def search_name(self):
-    #     s = unidecode.unidecode(self.name)
-    #     return s
 
 
 # Relations
