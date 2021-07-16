@@ -17,6 +17,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
 from utilities.views import search
+from utilities.views import unaccent_installations
 from django.db.models.functions import Lower
 from .filters import *
 
@@ -707,4 +708,16 @@ class CityInstallationRelationDeleteView(DeleteView):
     model = CityInstallationRelation
     success_url = reverse_lazy("installations:cityinstallationrelation-list")
 
+
+# Accessory page View
+@login_required(login_url='/admin/')
+def Accessory(request):
+    action = request.GET.get("unaccent_action", "")
+    if action == "un_installation":
+        unaccent_installations(request, 'installations', 'installation')
+    print(action)
+
+    return render(request, 'installations/accessory.html')
+
+#
 # Functions

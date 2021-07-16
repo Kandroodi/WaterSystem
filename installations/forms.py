@@ -82,7 +82,7 @@ class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
 
 
 class InstallationWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['name__icontains']
+    search_fields = ['un_name__icontains']
 
 
 class InstitutionWidget(s2forms.ModelSelect2Widget):

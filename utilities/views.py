@@ -11,6 +11,7 @@ from utilities.search import Search
 from django.db.models import CharField, ForeignKey
 from partial_date import PartialDateField
 from django.db.models import Q
+import unidecode
 
 
 def list_view(request, model_name, app_name):
@@ -232,3 +233,22 @@ def search(request, app_name, model_name):
         # ).order_by(order_by)
 
     return query_set
+
+
+# methods for unaccent the fields for search
+
+def unaccent_installations(request, app_name, model_name):
+    """"This method copies unaccented version of the data to a new un_<field name> which will used for search without
+    diacritics. For instance, if field <name> has a diacritics then <un_name> field won't.
+    Search fields for installation are:
+    - name --> un_name
+    -
+
+    """
+    model = apps.get_model(app_name, model_name)
+    query_set = model.objects.all()
+    for query in query_set:
+        if query.name is not None:
+            query.un_name = unidecode.unidecode(query.name)
+            query.save()
+

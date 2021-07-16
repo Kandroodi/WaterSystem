@@ -4,7 +4,7 @@ beautifulsoup4==4.8.2
 certifi==2019.11.28
 cffi==1.14.0
 chardet==3.0.4
-Django==2.2.24
+Django~=2.2.20
 django-appconf==1.0.3
 django-bootstrap4==1.0.1
 django-countries==5.5
@@ -32,3 +32,4 @@ urllib3==1.25.8
 virtualenv==16.7.9
 
 django-filter~=2.4.0
+Unidecode~=1.2.0

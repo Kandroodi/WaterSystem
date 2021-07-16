@@ -94,4 +94,8 @@ urlpatterns = [
     url(r'^cityinstallationrelation/new/(?P<pk>\d+)/$', views.CityInstallationRelationUpdateView.as_view(), name='cityinstallationrelation-update'),
     url(r'^cityinstallationrelation/delete/(?P<pk>\d+)/$', views.CityInstallationRelationDeleteView.as_view(), name='cityinstallationrelation-delete'),
     path('cityinstallationrelation/list', views.CityInstallationRelationListView.as_view(), name='cityinstallationrelation-list'),
+
+    # Accessory
+    # ------------------------------------------------------------------------------------------------------------------
+    path('accessory/', views.Accessory, name='accessory'),
 ]

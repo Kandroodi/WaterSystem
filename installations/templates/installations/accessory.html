@@ -1,0 +1,19 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+    <h2>
+        Accessory page
+    </h2>
+    <p>
+    This page is accessible to Admin. <br>
+    In this page you have access to run some admin methods to the database.
+    </p>
+
+    <h1> Installations</h1>
+    <p> Following button converts the searchable fields of Installation model to Unaccented</p>
+    <form method='GET'>
+    <button type='submit' name="unaccent_action" value="un_installation" class ="btn btn-success">Unaccent Installation</button>
+    </form>
+
+
+{% endblock %}
