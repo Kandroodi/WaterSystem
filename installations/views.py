@@ -17,7 +17,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
 from utilities.views import search
-from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, unaccent_watersystem
+from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, unaccent_watersystem, unaccent_institutiontype
 from django.db.models.functions import Lower
 from .filters import *
 
@@ -480,7 +480,7 @@ class InstitutionTypeListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class InstitutionTypeCreatView(CreateView):
     model = InstitutionType
-    fields = '__all__'
+    fields = ('name', 'description')
     template_name = 'installations/institutiontype_form.html'
 
     def get_success_url(self):
@@ -728,6 +728,9 @@ def Accessory(request):
 
     if action == "un_watersystem":
         unaccent_watersystem(request, 'installations', 'watersystem')
+
+    if action == "un_institutiontype":
+        unaccent_institutiontype(request, 'installations', 'institutiontype')
 
     return render(request, 'installations/accessory.html')
 

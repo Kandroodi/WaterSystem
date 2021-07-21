@@ -321,3 +321,19 @@ def unaccent_watersystem(request, app_name, model_name):
         if query.original_term is not None:
             query.un_original_term = unidecode.unidecode(query.original_term)
             query.save()
+
+
+def unaccent_institutiontype(request, app_name, model_name):
+    """"This method copies unaccented version of the data to a new un_<field name> which will used for search without
+        diacritics. For instance, if field <name> has a diacritics then <un_name> field won't.
+        Search fields for institution type are:
+        - name --> un_name
+        -
+
+        """
+    model = apps.get_model(app_name, model_name)
+    query_set = model.objects.all()
+    for query in query_set:
+        if query.name is not None:
+            query.un_name = unidecode.unidecode(query.name)
+            query.save()

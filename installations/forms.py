@@ -15,11 +15,17 @@ from django.forms.widgets import ClearableFileInput
 
 # Widgets
 class InstitutionTypeWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['name__icontains']
+    search_fields = [
+        'name__icontains',
+        'un_name__icontains',
+    ]
 
 
 class InstitutionTypeWidgetMulti(s2forms.ModelSelect2MultipleWidget):
-    search_fields = ['name__icontains']
+    search_fields = [
+        'name__icontains',
+        'un_name__icontains',
+    ]
 
 
 class CityWidget(s2forms.ModelSelect2Widget):
@@ -428,6 +434,14 @@ class NeighbourhoodForms(ModelForm):
     class Meta:
         model = Neighbourhood
         fields = ('city', 'neighbourhood_number', 'extent_shapefile')
+
+
+class InstitutionTypeForms(ModelForm):
+    name = forms.CharField()
+
+    class Meta:
+        model = InstitutionType
+        fields = ('name', 'description')
 
 
 # Relations form

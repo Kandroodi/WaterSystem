@@ -167,12 +167,20 @@ class Person(models.Model):
             self.un_name = unidecode.unidecode(self.name)
         super(Person, self).save()
 
+
 class InstitutionType(models.Model):
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length=1000, blank=True)
+    # searchable fields for fields with diacritics  (un: unaccent)
+    un_name = models.CharField(max_length=100, blank=True, default='')  # searchable field with normalize diacritics
 
     def __str__(self):
         return self.name
+
+    def save(self):
+        if not self.id:
+            self.un_name = unidecode.unidecode(self.name)
+        super(InstitutionType, self).save()
 
 
 class Purpose(models.Model):
@@ -185,7 +193,8 @@ class Purpose(models.Model):
 
 class Institution(models.Model):
     name = models.CharField(max_length=100, blank=False)
-    type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True, null=True)
+    type = models.ForeignKey(InstitutionType, on_delete=models.CASCADE, blank=True, null=True)  # this will not be
+    # used in the future. I didn't delete this because there is data saved for some entries on the database.
     type_many = models.ManyToManyField(InstitutionType, related_name='installations', blank=True, default='')
     purpose = models.ManyToManyField(Purpose, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=True, null=True)
@@ -229,7 +238,8 @@ class Watersystem(models.Model):
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',
                                              null=True)
     # searchable fields for fields with diacritics  (un: unaccent)
-    un_original_term = models.CharField(max_length=100, blank=True, default='')  # searchable field with normalize diacritics
+    un_original_term = models.CharField(max_length=100, blank=True,
+                                        default='')  # searchable field with normalize diacritics
 
     def __str__(self):
         if self.type is not None:
@@ -263,7 +273,7 @@ class Installation(models.Model):
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
     status = models.BooleanField("Completed", default=False, blank=True, help_text="Complete")
     # searchable fields for fields with diacritics  (un: unaccent)
-    un_name = models.CharField(max_length=250, blank=True, default='')   # searchable field with normalize diacritics
+    un_name = models.CharField(max_length=250, blank=True, default='')  # searchable field with normalize diacritics
 
     def __str__(self):
         return self.name
