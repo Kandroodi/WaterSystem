@@ -306,3 +306,18 @@ def unaccent_evidence(request, app_name, model_name):
         if query.description is not None:
             query.un_description = unidecode.unidecode(query.description)
             query.save()
+
+
+def unaccent_watersystem(request, app_name, model_name):
+    """"This method copies unaccented version of the data to a new un_<field name> which will used for search without
+        diacritics. For instance, if field <name> has a diacritics then <un_name> field won't.
+        Search fields for water system are:
+        - original_term --> un_original_term
+
+        """
+    model = apps.get_model(app_name, model_name)
+    query_set = model.objects.all()
+    for query in query_set:
+        if query.original_term is not None:
+            query.un_original_term = unidecode.unidecode(query.original_term)
+            query.save()

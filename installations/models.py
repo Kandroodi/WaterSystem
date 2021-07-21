@@ -228,6 +228,8 @@ class Watersystem(models.Model):
     description = models.TextField(max_length=1000, blank=True, null=True)
     secondary_literature = models.ForeignKey(SecondaryLiterature, on_delete=models.CASCADE, blank=True, default='',
                                              null=True)
+    # searchable fields for fields with diacritics  (un: unaccent)
+    un_original_term = models.CharField(max_length=100, blank=True, default='')  # searchable field with normalize diacritics
 
     def __str__(self):
         if self.type is not None:
@@ -235,6 +237,11 @@ class Watersystem(models.Model):
         else:
             s = self.original_term
         return s
+
+    def save(self):
+        if not self.id:
+            self.un_original_term = unidecode.unidecode(self.original_term)
+        super(Watersystem, self).save()
 
 
 class Installation(models.Model):

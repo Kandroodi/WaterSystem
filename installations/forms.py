@@ -77,7 +77,10 @@ class EvidenceWidgetMulti(s2forms.ModelSelect2MultipleWidget):
 
 
 class WatersystemWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['original_term__icontains']
+    search_fields = [
+        'original_term__icontains',
+        'un_original_term__icontains',
+    ]
 
 
 class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
@@ -86,11 +89,17 @@ class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
 
 
 class InstallationWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['un_name__icontains']
+    search_fields = [
+        'name__icontains',
+        'un_name__icontains',
+    ]
 
 
 class InstitutionWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['un_name__icontains']
+    search_fields = [
+        'name__icontains',
+        'un_name__icontains',
+    ]
 
 
 class PersonWidget(s2forms.ModelSelect2Widget):
