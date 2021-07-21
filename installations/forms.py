@@ -62,6 +62,8 @@ class EvidenceWidget(s2forms.ModelSelect2Widget):
     search_fields = [
         "title__icontains",
         "author__icontains",
+        "un_title__icontains",
+        "un_author__icontains",
     ]
 
 
@@ -69,6 +71,8 @@ class EvidenceWidgetMulti(s2forms.ModelSelect2MultipleWidget):
     search_fields = [
         "title__icontains",
         "author__icontains",
+        "un_title__icontains",
+        "un_author__icontains",
     ]
 
 
@@ -90,7 +94,10 @@ class InstitutionWidget(s2forms.ModelSelect2Widget):
 
 
 class PersonWidget(s2forms.ModelSelect2Widget):
-    search_fields = ['un_name__icontains']
+    search_fields = [
+        'name__icontains',
+        'un_name__icontains',
+    ]
 
 
 # User form

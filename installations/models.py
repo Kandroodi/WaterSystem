@@ -119,9 +119,20 @@ class Evidence(models.Model):
                                              null=True)
     description = models.TextField(max_length=1000, blank=True, default='', null=True)
     status = models.BooleanField("Completed", default=False, blank=True)
+    # searchable fields for fields with diacritics  (un: unaccent)
+    un_title = models.CharField(max_length=250, blank=True, default='')  # searchable field with normalize diacritics
+    un_author = models.CharField(max_length=250, blank=True, default='')
+    un_description = models.TextField(max_length=1000, blank=True, default='')
 
     def __str__(self):
         return 'Author: ' + self.author + ' | Title: ' + self.title
+
+    def save(self):
+        if not self.id:
+            self.un_title = unidecode.unidecode(self.title)
+            self.un_author = unidecode.unidecode(self.author)
+            self.un_description = unidecode.unidecode(self.description)
+        super(Evidence, self).save()
 
     def get_absolute_url(self):
         return reverse("installations:home", kwargs={'pk': self.pk})

@@ -283,3 +283,26 @@ def unaccent_person(request, app_name, model_name):
         if query.name is not None:
             query.un_name = unidecode.unidecode(query.name)
             query.save()
+
+
+def unaccent_evidence(request, app_name, model_name):
+    """"This method copies unaccented version of the data to a new un_<field name> which will used for search without
+        diacritics. For instance, if field <name> has a diacritics then <un_name> field won't.
+        Search fields for evidence are:
+        - title --> un_title
+        - author --> un_author
+        - description --> un_description
+
+        """
+    model = apps.get_model(app_name, model_name)
+    query_set = model.objects.all()
+    for query in query_set:
+        if query.title is not None:
+            query.un_title = unidecode.unidecode(query.title)
+            query.save()
+        if query.author is not None:
+            query.un_author = unidecode.unidecode(query.author)
+            query.save()
+        if query.description is not None:
+            query.un_description = unidecode.unidecode(query.description)
+            query.save()
