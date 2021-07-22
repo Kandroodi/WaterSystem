@@ -162,6 +162,7 @@ def close(request):
     return render(request, 'utilities/close.html')
 
 
+# simple search methods
 def search(request, app_name, model_name):
     '''Search function between all fields in a model.
     app_name : application name
@@ -214,6 +215,7 @@ def search(request, app_name, model_name):
                 Q(longitude__icontains=qs) |
                 Q(institution_as_location__name__icontains=qs) |
                 Q(secondary_literature__title__icontains=qs) |
+                Q(secondary_literature__author__icontains=qs) |
                 Q(comment__icontains=qs) |
                 Q(un_comment__icontains=qs)
 
@@ -238,14 +240,58 @@ def search(request, app_name, model_name):
     return query_set
 
 
-# methods for unaccent the fields for search
+def institutionsimplesearch(request):
+    '''
+    Simple search function between specified fields in the institution model.
+    Simple search return the OR result between the search result for each field
+    '''
+    model = apps.get_model('installations', 'institution')  # app_name, model_name
+    query = request.GET.get("q", "")
+    order_by = request.GET.get("order_by", "id")
+    query_set = model.objects.all().order_by(order_by)
 
+    queries = query.split()
+    if query is not None:
+        query_setall = model.objects.none()
+        for qs in queries:
+            query_seti = query_set.filter(
+                Q(name__icontains=qs) |
+                Q(un_name__icontains=qs) |
+                Q(type_many__name__icontains=qs) |
+                Q(type_many__un_name__icontains=qs) |
+                Q(purpose__name__icontains=qs) |
+                Q(city__name__icontains=qs) |
+                Q(neighbourhood__neighbourhood_number__icontains=qs) |
+                Q(latitude__icontains=qs) |
+                Q(longitude__icontains=qs) |
+                Q(start_date_lower__icontains=qs) |
+                Q(start_date_upper__icontains=qs) |
+                Q(first_reference_lower__icontains=qs) |
+                Q(first_reference_upper__icontains=qs) |
+                Q(end_date_lower__icontains=qs) |
+                Q(end_date_upper__icontains=qs) |
+                Q(religion__name__icontains=qs) |
+                Q(secondary_literature__title__icontains=qs) |
+                Q(secondary_literature__author__icontains=qs) |
+                Q(comment__icontains=qs) |
+                Q(un_comment__icontains=qs)
+
+            )
+            query_setall = query_setall | query_seti
+        query_set = query_setall.order_by(order_by)
+    if query == "":
+        query_set = model.objects.all().order_by(order_by)
+
+    return query_set
+
+
+# methods for unaccent the fields for search
 def unaccent_installations(request, app_name, model_name):
     """"This method copies unaccented version of the data to a new un_<field name> which will used for search without
     diacritics. For instance, if field <name> has a diacritics then <un_name> field won't.
     Search fields for installation are:
     - name --> un_name
-    -
+    - comment --> un_comment
 
     """
     model = apps.get_model(app_name, model_name)
@@ -264,7 +310,7 @@ def unaccent_institution(request, app_name, model_name):
         diacritics. For instance, if field <name> has a diacritics then <un_name> field won't.
         Search fields for institution are:
         - name --> un_name
-        -
+        - comment --> un_comment
 
         """
     model = apps.get_model(app_name, model_name)
@@ -272,6 +318,9 @@ def unaccent_institution(request, app_name, model_name):
     for query in query_set:
         if query.name is not None:
             query.un_name = unidecode.unidecode(query.name)
+            query.save()
+        if query.comment is not None:
+            query.un_comment = unidecode.unidecode(query.comment)
             query.save()
 
 

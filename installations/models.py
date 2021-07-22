@@ -221,6 +221,7 @@ class Institution(models.Model):
     status = models.BooleanField("Completed", default=False, blank=True)
     # searchable fields for fields with diacritics  (un: unaccent)
     un_name = models.CharField(max_length=250, blank=True, default='')  # searchable field with normalize diacritics
+    un_comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -228,6 +229,7 @@ class Institution(models.Model):
     def save(self):
         if not self.id:
             self.un_name = unidecode.unidecode(self.name)
+            self.un_comment = unidecode.unidecode(self.comment)
         super(Institution, self).save()
 
 
