@@ -237,7 +237,7 @@ def search(request, app_name, model_name):
         #     Q(purpose__name__icontains=query)
         # ).order_by(order_by)
 
-    return query_set
+    return query_set.distinct()
 
 
 def institutionsimplesearch(request):
