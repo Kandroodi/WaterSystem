@@ -150,14 +150,15 @@ class Person(models.Model):
     birth_upper = PartialDateField(blank=True, default='', null=True)
     death_lower = PartialDateField(blank=True, default='', null=True)
     death_upper = PartialDateField(blank=True, default='', null=True)
-    role = models.CharField(max_length=100,
-                            blank=True)  # Role field for person and type of envolvement feild for person-installation relation
+    role = models.CharField(max_length=100, blank=True)  # Role field for person and type of involvement field for person-installation relation
     religion = models.ForeignKey(Religion, on_delete=models.CASCADE, blank=True, default='', null=True)
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
     status = models.BooleanField("Completed", default=False, blank=True)
     # searchable fields for fields with diacritics  (un: unaccent)
     un_name = models.CharField(max_length=250, blank=True, default='')  # searchable field with normalize diacritics
+    un_role = models.CharField(max_length=250, blank=True, default='')
+    un_comment = models.TextField(max_length=1000, blank=True, default='', null=True)
 
     def __str__(self):
         return self.name
@@ -165,6 +166,8 @@ class Person(models.Model):
     def save(self):
         if not self.id:
             self.un_name = unidecode.unidecode(self.name)
+            self.un_role = unidecode.unidecode(self.role)
+            self.un_comment = unidecode.unidecode(self.comment)
         super(Person, self).save()
 
 

@@ -329,7 +329,8 @@ def unaccent_person(request, app_name, model_name):
         diacritics. For instance, if field <name> has a diacritics then <un_name> field won't.
         Search fields for person are:
         - name --> un_name
-        -
+        - role --> un_role
+        - comment --> un_comment
 
         """
     model = apps.get_model(app_name, model_name)
@@ -337,6 +338,12 @@ def unaccent_person(request, app_name, model_name):
     for query in query_set:
         if query.name is not None:
             query.un_name = unidecode.unidecode(query.name)
+            query.save()
+        if query.role is not None:
+            query.un_role = unidecode.unidecode(query.role)
+            query.save()
+        if query.comment is not None:
+            query.un_comment = unidecode.unidecode(query.comment)
             query.save()
 
 
