@@ -282,7 +282,7 @@ def institutionsimplesearch(request):
     if query == "":
         query_set = model.objects.all().order_by(order_by)
 
-    return query_set
+    return query_set.distinct()
 
 
 # methods for unaccent the fields for search
