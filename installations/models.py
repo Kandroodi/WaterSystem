@@ -274,6 +274,8 @@ class Installation(models.Model):
     latitude = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True, default=0)
     longitude = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True, default=0)
     institution_as_location = models.ForeignKey(Institution, on_delete=models.CASCADE, blank=True, null=True)
+    extent_shapefile = models.FileField(upload_to='shapefiles/', max_length=50, null=True,
+                                        blank=True)  # Is it correct way?
     secondary_literature = models.ManyToManyField(SecondaryLiterature, blank=True)
     comment = models.TextField(max_length=1000, blank=True, default='', null=True)
     status = models.BooleanField("Completed", default=False, blank=True, help_text="Complete")

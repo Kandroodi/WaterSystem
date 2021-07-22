@@ -340,6 +340,7 @@ class InstallationForm(ModelForm):
             attrs={'data-placeholder': 'Select institution as location ',
                    'style': 'width:100%;', 'class': 'searching',
                    'data-minimum-input-length': '1'}))
+    extent_shapefile = forms.FileField(widget=forms.ClearableFileInput)
     secondary_literature = forms.ModelMultipleChoiceField(
         queryset=SecondaryLiterature.objects.all(),
         widget=SecondaryLiteratureWidgetMulti(
@@ -372,6 +373,7 @@ class InstallationForm(ModelForm):
         self.fields['latitude'].required = False
         self.fields['longitude'].required = False
         self.fields['institution_as_location'].required = False
+        self.fields['extent_shapefile'].required =False
         self.fields['secondary_literature'].required = False
         self.fields['comment'].required = False
         self.fields['status'].required = False
