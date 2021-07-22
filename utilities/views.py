@@ -198,7 +198,9 @@ def search(request, app_name, model_name):
         for qs in queries:
             query_seti = query_set.filter(
                 Q(name__icontains=qs) |
+                Q(un_name__icontains=qs) |
                 Q(watersystem__original_term__icontains=qs) |
+                Q(watersystem__un_original_term__icontains=qs) |
                 Q(construction_date_lower__icontains=qs) |
                 Q(construction_date_upper__icontains=qs) |
                 Q(first_reference_lower__icontains=qs) |
@@ -212,7 +214,8 @@ def search(request, app_name, model_name):
                 Q(longitude__icontains=qs) |
                 Q(institution_as_location__name__icontains=qs) |
                 Q(secondary_literature__title__icontains=qs) |
-                Q(comment__icontains=qs)
+                Q(comment__icontains=qs) |
+                Q(un_comment__icontains=qs)
 
             )
             query_setall = query_setall | query_seti
@@ -250,6 +253,9 @@ def unaccent_installations(request, app_name, model_name):
     for query in query_set:
         if query.name is not None:
             query.un_name = unidecode.unidecode(query.name)
+            query.save()
+        if query.comment is not None:
+            query.un_comment = unidecode.unidecode(query.comment)
             query.save()
 
 
