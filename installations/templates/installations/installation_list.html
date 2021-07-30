@@ -18,28 +18,28 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td>Name
+            <td class="col-4">Name
                 <a href="?q={{query}}&order_by=name"> <i class="fas fa-sort-down"></i> </a>
                 <a href="?q={{query}}&order_by=-name"> <i class="fas fa-sort-up"></i> </a>
             </td>
-            <td>Water System
+            <td class="col-2">Water System
                 <a href="?q={{query}}&order_by=watersystem"> <i class="fas fa-sort-down"></i> </a>
                 <a href="?q={{query}}&order_by=-watersystem"> <i class="fas fa-sort-up"></i> </a>
             </td>
-            <td>Construction Date
+            <td class="col-2">Construction Date
                 <a href="?q={{query}}&order_by=construction_date_lower"><i class="fas fa-sort-down"></i></a>
                 <a href="?q={{query}}&order_by=-construction_date_lower"><i class="fas fa-sort-up"></i></a>
             </td>
-            <td>City
+            <td class="col-1">City
                 <a href="?q={{query}}&order_by=city"> <i class="fas fa-sort-down"></i> </a>
                 <a href="?q={{query}}&order_by=-city"> <i class="fas fa-sort-up"></i> </a>
             </td>
-            <td>Status
+            <td class="col-1">Status
                 <a href="?q={{query}}&order_by=status"> <i class="fas fa-sort-down"></i> </a>
                 <a href="?q={{query}}&order_by=-status"> <i class="fas fa-sort-up"></i> </a>
             </td>
 
-            <td>
+            <td class="col-2">
                  <a href="{% url 'installations:installation-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>
         </tr>
