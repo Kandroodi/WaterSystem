@@ -1,0 +1,127 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+
+
+    <table class="table table-borderless" >
+    <tr class="d-flex">
+        <h1>{{ institution.name }}</h1>
+
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Type</th>
+        <td class="col-8">
+            {% for t in institution.type_many.all %}
+                        {% if t %}
+                            {{ t }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">City</th>
+        <td class="col-8">
+            {% if institution.city %}
+                {{institution.city}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Neighbourhood</th>
+        <td class="col-8">
+            {% for t in institution.neighbourhood.all %}
+                        {% if t %}
+                            {{ t }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Location</th>
+        <td class="col-8">
+            {% if institution.latitude %}
+                Latitude: {{institution.latitude}},
+            {% endif %}
+            {%  if institution.longitude %}
+                Longitude: {{institution.longitude}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Start date</th>
+        <td class="col-8">
+            {% if institution.start_date_lower and institution.start_date_upper %}
+                {{institution.start_date_lower}} - {{institution.start_date_upper}}
+            {% elif institution.start_date_lower %}
+                {{institution.start_date_lower}}
+            {% elif institution.start_date_upper %}
+                {{institution.start_date_upper}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">First reference</th>
+        <td class="col-8">
+            {% if institution.first_reference_lower and institution.first_reference_upper %}
+                {{institution.first_reference_lower}} - {{institution.first_reference_upper}}
+            {% elif institution.first_reference_lower %}
+                {{institution.first_reference_lower}}
+            {% elif institution.first_reference_upper %}
+                {{institution.first_reference_upper}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">End date</th>
+        <td class="col-8">
+            {% if institution.end_date_lower and institution.end_date_upper %}
+                {{institution.end_date_lower}} - {{institution.end_date_upper}}
+            {% elif institution.end_date_lower %}
+                {{institution.end_date_lower}}
+            {% elif institution.end_date_upper %}
+                {{institution.end_date_upper}}
+            {% endif %}
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Religion</th>
+            <td class="col-8">
+                {% if institution.religion %}
+                    {{institution.religion}}
+                {% endif %}
+            </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Secondary literature</th>
+        <td class="col-8">
+            {% for t in institution.secondary_literature.all %}
+                        {% if t %}
+                            {{ t }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Comment</th>
+        <td class="col-8">{{institution.comment}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Status </th>
+        <td class="col-1" align="left">
+            {% if institution.status == True %}
+                Completed
+            {% else %}
+                Uncompleted
+            {% endif %}
+
+        </td>
+    </tr>
+</table>
+    <hr>
+
+{% endblock main_content %}

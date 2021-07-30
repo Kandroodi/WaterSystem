@@ -41,7 +41,9 @@
     <tbody>
         {% for institution in institution_list %}
             <tr>
-                <td>{{institution.name }}</td>
+                <td>
+                    <a href="{% url 'installations:institution-detail' institution.id %}"> {{institution.name }} </a>
+                </td>
                 <td>
                     {% for t in institution.type_many.all %}
                         {% if t %}

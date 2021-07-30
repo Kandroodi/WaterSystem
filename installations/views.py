@@ -177,6 +177,11 @@ def InstitutionDelete(request, id):
     return redirect('installations:institution-list')
 
 
+@method_decorator(login_required, name='dispatch')
+class InstitutionDetailView(DetailView):
+    model = Institution
+
+
 @login_required
 def edit_person(request, pk=None, focus='', view='complete'):
     names = 'personperson_formset,personcity_formset,personneighbourhood_formset,personinstitution_formset,'
