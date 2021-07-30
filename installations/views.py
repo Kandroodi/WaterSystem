@@ -299,6 +299,11 @@ def InstallationDelete(request, id):
     return redirect('installations:installation-list')
 
 
+@method_decorator(login_required, name='dispatch')
+class InstallationDetailView(DetailView):
+    model = Installation
+
+
 # Using Class based View
 
 @method_decorator(login_required, name='dispatch')

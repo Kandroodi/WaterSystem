@@ -1,0 +1,145 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+
+
+    <table class="table table-borderless" >
+    <tr class="d-flex">
+        <h1>{{ installation.name }}</h1>
+
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Water system</th>
+        <td class="col-8">
+            {% if installation.watersystem %}
+                {{installation.watersystem}}
+            {% else %}
+                {# I used blank space #}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Construction date</th>
+        <td class="col-8">
+            {% if installation.construction_date_lower and installation.construction_date_upper %}
+                {{installation.construction_date_lower}} - {{installation.construction_date_upper}}
+            {% elif installation.construction_date_lower %}
+                {{installation.construction_date_lower}}
+            {% elif installation.construction_date_upper %}
+                {{installation.construction_date_upper}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">First reference</th>
+        <td class="col-8">
+            {% if installation.first_reference_lower and installation.first_reference_upper %}
+                {{installation.first_reference_lower}} - {{installation.first_reference_upper}}
+            {% elif installation.first_reference_lower %}
+                {{installation.first_reference_lower}}
+            {% elif installation.first_reference_upper %}
+                {{installation.first_reference_upper}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">End functioning year</th>
+        <td class="col-8">
+            {% if installation.end_functioning_year_lower and installation.end_functioning_year_upper %}
+                {{installation.end_functioning_year_lower}} - {{installation.end_functioning_year_upper}}
+            {% elif installation.end_functioning_year_lower %}
+                {{installation.end_functioning_year_lower}}
+            {% elif installation.end_functioning_year_upper %}
+                {{installation.end_functioning_year_upper}}
+            {% endif %}
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Purpose</th>
+            <td class="col-8">
+                {% for t in installation.purpose.all %}
+                        {% if t %}
+                            {{ t.name }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+            </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">City</th>
+        <td class="col-8">
+            {% if installation.city %}
+                {{installation.city}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Neighbourhood</th>
+        <td class="col-8">
+            {% for t in installation.neighbourhood.all %}
+                        {% if t %}
+                            {{ t }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Location</th>
+        <td class="col-8">
+            {% if installation.latitude %}
+                Latitude: {{installation.latitude}},
+            {% endif %}
+            {%  if installation.longitude %}
+                Longitude: {{installation.longitude}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Institution as location</th>
+        <td class="col-8">
+            {% if  installation.institution_as_location %}
+                {{installation.institution_as_location}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Extent shapefile</th>
+        <td class="col-8">
+            {% if installation.extent_shapefile %}
+                {{installation.extent_shapefile}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Secondary literature</th>
+        <td class="col-8">
+            {% for t in installation.secondary_literature.all %}
+                        {% if t %}
+                            {{ t }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Comment</th>
+        <td class="col-8">{{installation.comment}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Status </th>
+        <td class="col-1" align="left">
+            {% if installation.status == True %}
+                Completed
+            {% else %}
+                Uncompleted
+            {% endif %}
+
+        </td>
+    </tr>
+</table>
+    <hr>
+
+{% endblock main_content %}

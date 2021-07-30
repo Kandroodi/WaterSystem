@@ -47,7 +47,9 @@
     <tbody>
         {% for installation in installation_list %}
             <tr>
-                <td>{{installation.name }}</td>
+                <td>
+                    <a href="{% url 'installations:installation-detail' installation.id %}"> {{installation.name }} </a>
+                </td>
                 <td>{{installation.watersystem }}</td>
 
                 <td>
