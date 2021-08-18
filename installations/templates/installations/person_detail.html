@@ -1,0 +1,92 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+
+
+    <table class="table table-borderless" >
+    <tr class="d-flex">
+        <h1>{{ person.name }}</h1>
+
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Gender</th>
+        <td class="col-8">
+            {% if person.gender == 'M' %}
+                Male
+            {% elif person.gender == 'F' %}
+                Female
+            {% else %}
+                Other
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Birth</th>
+        <td class="col-8">
+            {% if person.birth_lower and person.birth_upper %}
+                {{person.birth_lower}} - {{person.birth_upper}}
+            {% elif person.birth_lower %}
+                {{person.birth_lower}}
+            {% elif person.birth_upper %}
+                {{person.birth_upper}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Death</th>
+        <td class="col-8">
+            {% if person.death_lower and person.death_upper %}
+                {{person.death_lower}} - {{person.death_upper}}
+            {% elif person.death_lower %}
+                {{person.death_lower}}
+            {% elif person.death_upper %}
+                {{person.death_upper}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Role</th>
+        <td class="col-8">
+            {% if person.role %}
+                {{person.role}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Religion</th>
+        <td class="col-8">
+            {% if person.religion %}
+                {{person.religion}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Secondary literature</th>
+        <td class="col-8">
+            {% for t in person.secondary_literature.all %}
+                        {% if t %}
+                            {{ t }},
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Comment</th>
+        <td class="col-8">{{person.comment}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Status </th>
+        <td class="col-1" align="left">
+            {% if person.status == True %}
+                Completed
+            {% else %}
+                Uncompleted
+            {% endif %}
+        </td>
+    </tr>
+</table>
+    <hr>
+
+{% endblock main_content %}

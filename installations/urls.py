@@ -29,6 +29,7 @@ urlpatterns = [
     path('person/new/<int:pk>/<str:focus>', views.edit_person, name='person-update'),
     path('person/delete/<int:id>/', views.PersonDelete, name='person-delete'),
     path('person/list/', views.PersonList, name='person-list'),
+    path('person/<int:pk>', views.PersonDetailView.as_view(), name='person-detail'),
     path('secondaryliterature/new/', views.SecondaryLiteratureCreatView.as_view(), name='secondaryliterature-insert'),
     path('secondaryliterature/new/<str:view>/', views.SecondaryLiteratureCreatView.as_view(), name='secondaryliterature-insert'),
     path('secondaryliterature/new/<int:pk>', views.SecondaryLiteratureUpdateView.as_view(), name='secondaryliterature-update'),

@@ -35,7 +35,9 @@
     <tbody>
         {% for person in person_list %}
             <tr>
-                <td>{{person.name }}</td>
+                <td>
+                    <a href="{% url 'installations:person-detail' person.id %}"> {{person.name }} </a>
+                </td>
                 <td>{{person.gender}}</td>
                 <td>{{person.role}}</td>
                 <td>{{person.religion}}</td>

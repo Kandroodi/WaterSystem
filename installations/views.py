@@ -206,6 +206,11 @@ def PersonDelete(request, id):
 
 
 @method_decorator(login_required, name='dispatch')
+class PersonDetailView(DetailView):
+    model = Person
+
+
+@method_decorator(login_required, name='dispatch')
 class SecondaryLiteratureListView(ListView):
     model = SecondaryLiterature
     template_name = 'installations/secondaryliterature_list.html'
