@@ -88,5 +88,88 @@
     </tr>
 </table>
     <hr>
+{# --------------------------------------------------------------------------------------------------------------------- #}
+    <h3 style="color:limegreen" align="center">Connections</h3>
+<table class="table table-borderless">
+    <tr class="d-flex">
+        <th class="col-2">Persons</th>
+        <td class="col-8">
+            {% for t in person.primary.all %}
+                        {% if t %}
+                            {{ t.secondary.name }}, <strong>Description: </strong>{{ t.description }}<br>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
 
+    <tr class="d-flex">
+        <th class="col-2">Cities</th>
+        <td class="col-8">
+            {% for t in person.citypersonrelation_set.all %}
+                        {% if t %}
+                            {{ t.city }}, <strong>Type of involvement: </strong>{{ t.type_of_involvement }}<br>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Neighbourhoods</th>
+        <td class="col-8">
+            {% for t in person.neighbourhoodpersonrelation_set.all %}
+                        {% if t %}
+                            {{ t.neighbourhood }}, <strong>Type of involvement: </strong>{{ t.type_of_involvement }}<br>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Institutions </th>
+        <td class="col-8">
+            {% for t in person.personinstitutionrelation_set.all %}
+                        {% if t %}
+                            {{ t.institution }}, <strong>Type of involvement: </strong>{{ t.type_of_involvement }}<br>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Installations </th>
+        <td class="col-8">
+            {% for t in person.personinstallationrelation_set.all %}
+                        {% if t %}
+                            {{ t.installation }}, <strong>Type of involvement: </strong>{{ t.type_of_involvement }}<br>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Evidences</th>
+        <td class="col-8">
+            {% for t in person.evidencepersonrelation_set.all %}
+                        {% if t %}
+                            {{ t.evidence }},
+                            <strong>Page number: </strong> {{ t.page_number }},
+                            <strong>Description: </strong>{{ t.description }}<br>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+        </td>
+    </tr>
+
+</table>
 {% endblock main_content %}
