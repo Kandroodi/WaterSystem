@@ -17,7 +17,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
 from utilities.views import search, institutionsimplesearch
-from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, unaccent_watersystem, unaccent_institutiontype
+from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, \
+    unaccent_watersystem, unaccent_institutiontype
 from django.db.models.functions import Lower
 from .filters import *
 
@@ -366,6 +367,11 @@ def edit_evidence(request, pk=None, focus='', view='complete'):
 class EvidenceDeleteView(DeleteView):
     model = Evidence
     success_url = reverse_lazy("installations:evidence-list")
+
+
+@method_decorator(login_required, name='dispatch')
+class EvidenceDetailView(DetailView):
+    model = Evidence
 
 
 @method_decorator(login_required, name='dispatch')

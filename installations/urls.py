@@ -52,6 +52,7 @@ urlpatterns = [
     path('evidence/new/<int:pk>/<str:focus>', views.edit_evidence, name='evidence-update'),
     url(r'^evidence/delete/(?P<pk>\d+)/$', views.EvidenceDeleteView.as_view(), name='evidence-delete'),
     path('evidence/list', views.EvidenceListView.as_view(), name='evidence-list'),
+    path('evidence/<int:pk>', views.EvidenceDetailView.as_view(), name='evidence-detail'),
     path('watersystem/new/', views.WaterSystemCreatView.as_view(), name='watersystem-insert'),
     path('watersystem/new/<str:view>/', views.WaterSystemCreatView.as_view(), name='watersystem-insert'),
     path('watersystem/new/<int:pk>', views.WaterSystemUpdateView.as_view(), name='watersystem-update'),

@@ -1,0 +1,56 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+
+
+    <table class="table table-borderless" >
+    <tr class="d-flex">
+        <h1>{{ evidence.title }}</h1>
+
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Author</th>
+        <td class="col-8">
+            {% if evidence.author %}
+                {{ evidence.author }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Date</th>
+        <td class="col-8">
+            {% if evidence.date_lower and evidence.date_upper %}
+                {{evidence.date_lower}} - {{evidence.date_upper}}
+            {% elif evidence.date_lower %}
+                {{evidence.date_lower}}
+            {% elif evidence.date_upper %}
+                {{evidence.date_upper}}
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Secondary literature</th>
+        <td class="col-8">
+            {% if evidence.secondary_literature %}
+                {{ evidence.secondary_literature }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Description</th>
+        <td class="col-8">{{evidence.description}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Status </th>
+        <td class="col-1" align="left">
+            {% if evidence.status == True %}
+                Completed
+            {% else %}
+                Uncompleted
+            {% endif %}
+        </td>
+    </tr>
+</table>
+    <hr>
+{% endblock main_content %}

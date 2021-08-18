@@ -35,7 +35,9 @@
         <tbody>
             {% for evidence in evidences %}
             <tr>
-                <td>{{evidence.title}}</td>
+                <td>
+                    <a href="{% url 'installations:evidence-detail' evidence.id %}"> {{evidence.title}} </a>
+                </td>
                 <td>{{evidence.author}}</td>
                 <td>{{evidence.description}}</td>
                 <td>
