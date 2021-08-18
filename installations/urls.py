@@ -35,6 +35,7 @@ urlpatterns = [
     path('secondaryliterature/new/<int:pk>', views.SecondaryLiteratureUpdateView.as_view(), name='secondaryliterature-update'),
     url(r'^secondaryliterature/delete/(?P<pk>\d+)/$', views.SecondaryLiteratureDeleteView.as_view(), name='secondaryliterature-delete'),
     path('secondaryliterature/list/', views.SecondaryLiteratureListView.as_view(), name='secondaryliterature-list'),
+    path('secondaryliterature/<int:pk>', views.SecondaryLiteratureDetailView.as_view(), name='secondaryliterature-detail'),
     # path('installation/new/', views.InstallationCreate, name='installation-insert'),
     path('installation/new/', views.edit_installation, name='installation-insert'),
     path('installation/new/<str:view>/', views.edit_installation, name='installation-insert'),

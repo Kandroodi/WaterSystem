@@ -261,6 +261,10 @@ class SecondaryLiteratureDeleteView(DeleteView):
     model = SecondaryLiterature
     success_url = reverse_lazy("installations:secondaryliterature-list")
 
+@method_decorator(login_required, name='dispatch')
+class SecondaryLiteratureDetailView(DetailView):
+    model = SecondaryLiterature
+
 
 @login_required
 def edit_installation(request, pk=None, focus='', view='complete'):

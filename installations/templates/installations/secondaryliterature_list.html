@@ -37,7 +37,9 @@
         <tbody>
             {% for secondaryliterature in secondaryliteratures %}
             <tr>
-                <td>{{secondaryliterature.title}}</td>
+                <td>
+                    <a href="{% url 'installations:secondaryliterature-detail' secondaryliterature.id %}"> {{secondaryliterature.title}} </a>
+                </td>
                 <td>{{secondaryliterature.author}}</td>
                 <td>{{secondaryliterature.journal}}</td>
                 <td>{{secondaryliterature.publisher}}</td>

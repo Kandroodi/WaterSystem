@@ -1,0 +1,111 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+
+
+    <table class="table table-borderless" >
+    <tr class="d-flex">
+        <h1>{{ secondaryliterature.title }}</h1>
+
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Author</th>
+        <td class="col-8">
+            {% if secondaryliterature.author %}
+                {{secondaryliterature.author}}
+            {% else %}
+                {# I used blank space #}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Editor</th>
+        <td class="col-8">
+            {% if secondaryliterature.editor %}
+                {{secondaryliterature.editor}}
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Book title</th>
+        <td class="col-8">
+            {% if secondaryliterature.book_title %}
+                {{secondaryliterature.book_title}}
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Journal</th>
+        <td class="col-8">
+            {% if secondaryliterature.journal %}
+                {{secondaryliterature.journal}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Publisher</th>
+        <td class="col-8">
+            {% if secondaryliterature.publisher %}
+                {{secondaryliterature.publisher}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Volume</th>
+        <td class="col-8">
+            {% if secondaryliterature.volume %}
+                {{secondaryliterature.volume}}
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Issue</th>
+        <td class="col-8">
+            {% if secondaryliterature.issue %}
+                {{secondaryliterature.issue}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Page number</th>
+        <td class="col-8">
+            {% if secondaryliterature.page_number %}
+                {{secondaryliterature.page_number}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Place</th>
+        <td class="col-8">
+            {% if secondaryliterature.place %}
+                {{secondaryliterature.place}}
+            {% endif %}
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Year</th>
+        <td class="col-8">
+            {% if secondaryliterature.year %}
+                {{secondaryliterature.year }}
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr class="d-flex">
+        <th class="col-2">Status </th>
+        <td class="col-1" align="left">
+            {% if secondaryliterature.status == True %}
+                Completed
+            {% else %}
+                Uncompleted
+            {% endif %}
+
+        </td>
+    </tr>
+</table>
+    <hr>
+
+{% endblock main_content %}
