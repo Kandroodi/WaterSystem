@@ -1,19 +1,25 @@
 {% extends 'installations/base.html' %}
 
+{% block head %}
+
+{% endblock head %}
+
 
 {% block main_content %}
 
-<form method="GET">
-{% csrf_token %}
-    {{ filter.form }}
-    <br> <br>
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
-
-
-
-<h2>Installation list</h2>
-<table class="table table-borderless">
+<div style="display:block; width:100%;">
+    <div style="width:30%; float: left; display: inline-block;">
+        <H2>Advanced search</H2>
+        <form method="GET">
+            {% csrf_token %}
+            {{ filter.form }}
+            <br> <br>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+  <div style="width:65%; float: right; display: inline-block;">
+      <h2>Installation list</h2>
+    <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
             <td>Name
@@ -67,6 +73,19 @@
     </tbody>
 
 </table>
+
+  </div>
+</div>
+
+{#<div class="row">#}
+{#  <div class="column" style="background-color:#aaa;">#}
+{#    #}
+{#  </div>#}
+{#  <div class="column" style="background-color:#bbb;">#}
+{#    #}
+{#  </div>#}
+{#</div>#}
+
 
 
 
