@@ -46,6 +46,7 @@ urlpatterns = [
     path('installation/list/', views.InstallationList, name='installation-list'),
     path('installation/list/adv/', views.InstallationListView.as_view(), name='installation-advancedsearch'),
     path('installation/<int:pk>', views.InstallationDetailView.as_view(), name='installation-detail'),
+    path('installation/duplicate/<int:id>', views.InstallationDuplicate, name='installation-duplicate'),
     # url(r'^evidence/new/$', views.EvidenceCreatView.as_view(), name='evidence-insert'),
     path('evidence/new/', views.edit_evidence, name='evidence-insert'),
     path('evidence/new/<str:view>/', views.edit_evidence, name='evidence-insert'),

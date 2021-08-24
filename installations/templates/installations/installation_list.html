@@ -76,6 +76,7 @@
                         <i class="fa fa-trash fa-lg text-danger float-right"></i>
                         </button>
                     </form>
+                    <a href="{% url 'installations:installation-duplicate' installation.id %}"> <i class="far fa-clone"></i> </a>
                 </td>
             </tr>
         {% endfor%}

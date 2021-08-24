@@ -319,6 +319,26 @@ class InstallationDetailView(DetailView):
     model = Installation
 
 
+def InstallationDuplicate(request, id):
+    instance = get_object_or_404(Installation, pk=id)
+    instance.name += '- copy'
+    instance.pk = None
+    instance.save()
+    # Set ManyToMany relationships after assigning the pk to duplicated one
+    orig = get_object_or_404(Installation, pk=id)
+    instance.purpose.set(orig.purpose.all())
+    instance.neighbourhood.set(orig.neighbourhood.all())
+    instance.secondary_literature.set(orig.secondary_literature.all())
+    # link to relationships (formsets)
+    # by doing following it will delete the connections from the original one. I dont know why is that yet.
+    # instance.institutioninstallationrelation_set.set(orig.institutioninstallationrelation_set.all())
+    # instance.personinstallationrelation_set.set(orig.personinstallationrelation_set.all())
+    # instance.evidenceinstallationrelation_set.set(orig.evidenceinstallationrelation_set.all())
+
+    instance.save()
+    return redirect('installations:installation-list')
+
+
 # Using Class based View
 
 @method_decorator(login_required, name='dispatch')
