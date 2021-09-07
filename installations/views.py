@@ -171,6 +171,14 @@ def InstitutionList(request):
     return render(request, 'installations/institution_list.html', context)
 
 
+def InstitutionAdvancedSearchList(request):
+    query_set = Institution.objects.all()
+    context = {'institution_list': query_set,
+
+    }
+    return render(request, 'installations/institution_advanced_search.html', context)
+
+
 @login_required
 def InstitutionDelete(request, id):
     institution = get_object_or_404(Institution, pk=id)
@@ -260,6 +268,7 @@ class SecondaryLiteratureUpdateView(UpdateView):
 class SecondaryLiteratureDeleteView(DeleteView):
     model = SecondaryLiterature
     success_url = reverse_lazy("installations:secondaryliterature-list")
+
 
 @method_decorator(login_required, name='dispatch')
 class SecondaryLiteratureDetailView(DetailView):
