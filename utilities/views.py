@@ -399,3 +399,51 @@ def unaccent_institutiontype(request, app_name, model_name):
         if query.name is not None:
             query.un_name = unidecode.unidecode(query.name)
             query.save()
+
+
+# Functions for copy_complete: duplicate an entry ----------------------------------------------------------------------
+def instance2names(instance):
+    app_name, model_name = instance._meta.app_label, instance._meta.model_name.capitalize()
+    return app_name, model_name
+
+
+def instance2name(instance):
+    app_name, model_name = instance2names(instance)
+    return model_name
+
+
+def dcopy_complete(instance, commit=True):
+    '''copy a model instance completely with all relations.'''
+    copy = simple_copy(instance, commit)
+    app_name, model_name = instance2names(instance)
+    for f in copy._meta.get_fields():
+        if f.one_to_many:
+            if f.name != "primary" and f.name != "secondary":
+                for r in list(getattr(instance, f.name + '_set').all()):
+                    rcopy = simple_copy(r, False, False)
+                    setattr(rcopy, model_name.lower(), copy)
+                    rcopy.save()
+        if f.many_to_many:
+            getattr(copy, f.name).set(getattr(instance, f.name).all())
+    return copy
+
+
+def simple_copy(instance, commit=True, add_copy_suffix=True):
+    '''Copy a model instance and save it to the database.
+	m2m and relations are not saved.
+	'''
+    app_name, model_name = instance2names(instance)
+    model = apps.get_model(app_name, model_name)
+    copy = model.objects.get(pk=instance.pk)
+    copy.pk = None
+    print('copying...')
+    for name in 'title,name,caption,first_name'.split(','):
+        if hasattr(copy, name):
+            print('setting', name)
+            # copy.view()
+            setattr(copy, name, getattr(copy, name) + ' !copy!')
+            # copy.view()
+            break
+    if commit:
+        copy.save()
+    return copy

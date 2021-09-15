@@ -19,6 +19,8 @@ from utilities.views import edit_model
 from utilities.views import search, institutionsimplesearch
 from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, \
     unaccent_watersystem, unaccent_institutiontype
+from utilities.views import dcopy_complete
+
 from django.db.models.functions import Lower
 from .filters import *
 
@@ -330,21 +332,36 @@ class InstallationDetailView(DetailView):
 
 def InstallationDuplicate(request, id):
     instance = get_object_or_404(Installation, pk=id)
-    instance.name += '- copy'
-    instance.pk = None
-    instance.save()
-    # Set ManyToMany relationships after assigning the pk to duplicated one
-    orig = get_object_or_404(Installation, pk=id)
-    instance.purpose.set(orig.purpose.all())
-    instance.neighbourhood.set(orig.neighbourhood.all())
-    instance.secondary_literature.set(orig.secondary_literature.all())
-    # link to relationships (formsets)
-    # by doing following it will delete the connections from the original one. I dont know why is that yet.
-    # instance.institutioninstallationrelation_set.set(orig.institutioninstallationrelation_set.all())
-    # instance.personinstallationrelation_set.set(orig.personinstallationrelation_set.all())
-    # instance.evidenceinstallationrelation_set.set(orig.evidenceinstallationrelation_set.all())
-
-    instance.save()
+    # instance.name += '- copy'
+    # instance.pk = None
+    # instance.save()
+    # # Set ManyToMany relationships after assigning the pk to duplicated one
+    # orig = get_object_or_404(Installation, pk=id)
+    # # instance.purpose.set(orig.purpose.all())
+    # # instance.neighbourhood.set(orig.neighbourhood.all())
+    # # instance.secondary_literature.set(orig.secondary_literature.all())
+    # for f in orig._meta.get_fields():
+    #     if f.many_to_many:
+    #         # print(f.name)
+    #         getattr(instance, f.name).set(getattr(orig, f.name).all())
+    #
+    # # link to relationships (formsets)
+    # # getattr(instance, instance.institutioninstallationrelation).set(getattr(orig, instance.institutioninstallationrelation).all())
+    #     if f.one_to_many:
+    #         print(f.name)
+    #         for r in list(getattr(orig, f.name + '_set').all()):
+    #             print(r)
+    #             rcopy = PersonInstallationRelation.objects.get(pk=r.pk)
+    #             rcopy.pk = None
+    #             setattr(rcopy, installation, instance)
+    #             rcopy.save()
+    # # by doing following it will delete the connections from the original one. I dont know why is that yet.
+    # # instance.institutioninstallationrelation_set.set(orig.institutioninstallationrelation_set.all())
+    # # instance.personinstallationrelation_set.set(orig.personinstallationrelation_set.all())
+    # # instance.evidenceinstallationrelation_set.set(orig.evidenceinstallationrelation_set.all())
+    # ## new method ------------------------------------------------------------------------------------------------------
+    dcopy = dcopy_complete(instance)
+    dcopy.save()
     return redirect('installations:installation-list')
 
 
