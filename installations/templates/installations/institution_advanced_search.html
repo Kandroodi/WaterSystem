@@ -120,7 +120,7 @@
       <p class="text-secondary small ml-3" ># Entries: {{nentries}}<p>
         <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
-        <tr>
+        <tr >
             <td></td>
             <td class="col-3">Name</td>
             <td>Type</td>
@@ -135,7 +135,7 @@
     </thead>
     <tbody>
         {% for institution in institution_list %}
-            <tr>
+            <tr style="border-bottom:1px solid lightgrey">
                 <td>
                     {% if institution.status %}
                         <span class="Gdot"></span>
