@@ -12,40 +12,121 @@
         <H2>Advanced search</H2>
         <form method="GET">
             {% csrf_token %}
-            {{ filter.form }}
+        <table class="table table-borderless" >
+            <tr class="d-flex">
+                <th class="col-4">Name</th>
+                <td class="col-8"> <input type="text" name="q_name" placeholder=Name
+                    class="col-12 mb-1"
+                    {% if query_name is not None %}
+                       value="{{query_name}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Type</th>
+                <td class="col-8"> <input type="text" name="q_type" placeholder="Institution type"
+                    class="col-12 mb-1"
+                    {% if query_type is not None %}
+                       value="{{query_type}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">City</th>
+                <td class="col-8"> <input type="text" name="q_city" placeholder=City
+                    class="col-12 mb-1"
+                    {% if query_city is not None %}
+                       value="{{query_city}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Start date</th>
+                <td class="col-4">
+                    <input type="text" name="q_startdate_l" placeholder="Min " class="col-12 mb-1"
+                    {% if query_startdate_l is not None %}
+                       value="{{query_startdate_l}}"
+                    {% endif %}>
+                </td>
+                <td class="col-4">
+                    <input type="text" name="q_startdate_u" placeholder="Max " class="col-12 mb-1"
+                    {% if query_startdate_u is not None %}
+                       value="{{query_startdate_u}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">First reference</th>
+                <td class="col-4">
+                    <input type="text" name="q_firstreference_l" placeholder="Min " class="col-12 mb-1"
+                    {% if query_firstreference_l is not None %}
+                       value="{{query_firstreference_l}}"
+                    {% endif %}>
+                </td>
+                <td class="col-4">
+                    <input type="text" name="q_firstreference_u" placeholder="Max " class="col-12 mb-1"
+                    {% if query_firstreference_u is not None %}
+                       value="{{query_firstreference_u}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">End date</th>
+                <td class="col-4">
+                    <input type="text" name="q_enddate_l" placeholder="Min " class="col-12 mb-1"
+                    {% if query_enddate_l is not None %}
+                       value="{{query_enddate_l}}"
+                    {% endif %}>
+                </td>
+                <td class="col-4">
+                    <input type="text" name="q_enddate_u" placeholder="Max " class="col-12 mb-1"
+                    {% if query_enddate_u is not None %}
+                       value="{{query_enddate_u}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Comment</th>
+                <td class="col-8"> <input type="text" name="q_comment" placeholder=Comment
+                    class="col-12 mb-1"
+                    {% if query_comment is not None %}
+                       value="{{query_comment}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4"> <label for="order">Order by</label> </th>
+                <td class="col-8">
+                      <select name="order_by" id="order">
+                          <option value="name">Name</option>
+                          <option value="type_many">Type</option>
+                          <option value="city">City</option>
+                          <option value="start_date_lower">Start date</option>
+                          <option value="first_reference_lower">First reference</option>
+                      </select>
+                </td>
+            </tr>
+        </table>
             <br> <br>
             <button type="submit" class="btn btn-primary">Search</button>
+            <a href="{% url 'installations:institution-advancedsearch' %}" class="btn btn-warning" > Clear form</a>
         </form>
     </div>
+
+
+
   <div style="width:65%; float: right; display: inline-block;">
       <h2>Institution list</h2>
+      <p class="text-secondary small ml-3" ># Entries: {{nentries}}<p>
         <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td class="col-3">Name
-                <a href="?q={{query}}&order_by=name"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-name"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-            <td>Type
-                <a href="?q={{query}}&order_by=type_many"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-type_many"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-            <td>city
-                <a href="?q={{query}}&order_by=city"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-city"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-            <td>Start date
-                <a href="?q={{query}}&order_by=start_date_lower"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-start_date_lower"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-            <td>religion
-                <a href="?q={{query}}&order_by=start_date_lower"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-start_date_lower"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-            <td>Status
-                <a href="?q={{query}}&order_by=status"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=-status"> <i class="fas fa-sort-up"></i> </a>
-            </td>
+            <td></td>
+            <td class="col-3">Name</td>
+            <td>Type</td>
+            <td>city </td>
+            <td>Start date</td>
+            <td>religion</td>
 
             <td>
                  <a href="{% url 'installations:institution-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
@@ -55,6 +136,13 @@
     <tbody>
         {% for institution in institution_list %}
             <tr>
+                <td>
+                    {% if institution.status %}
+                        <span class="Gdot"></span>
+                    {% else %}
+                        <span class="Rdot"></span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{% url 'installations:institution-detail' institution.id %}"> {{institution.name }} </a>
                 </td>
@@ -76,13 +164,7 @@
                     {% endif %}
                 </td>
                 <td>{{institution.religion}}</td>
-                <td>
-                    {% if institution.status %}
-                        <span class="Gdot"></span>
-                    {% else %}
-                        <span class="Rdot"></span>
-                    {% endif %}
-                </td>
+
                 <td>
                     <a href="{% url 'installations:institution-update' institution.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
                     <form action="{% url 'installations:institution-delete' institution.id %}" method="post" class="d-inline">

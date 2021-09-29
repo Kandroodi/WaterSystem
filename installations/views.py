@@ -16,7 +16,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
-from utilities.views import search, institutionsimplesearch
+from utilities.views import search, institutionsimplesearch, institutionadvancedsearch
 from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, \
     unaccent_watersystem, unaccent_institutiontype
 from utilities.views import dcopy_complete
@@ -174,10 +174,34 @@ def InstitutionList(request):
 
 
 def InstitutionAdvancedSearchList(request):
-    query_set = Institution.objects.all()
-    context = {'institution_list': query_set,
+    query_set = institutionadvancedsearch(request)
+    q_name = request.GET.get("q_name", "")
+    q_type = request.GET.get("q_type", "")
+    q_city = request.GET.get("q_city", "")
+    q_startdate_l = request.GET.get("q_startdate_l", "")
+    q_startdate_u = request.GET.get("q_startdate_u", "")
+    q_firstreference_l = request.GET.get("q_firstreference_l", "")
+    q_firstreference_u = request.GET.get("q_firstreference_u", "")
+    q_enddate_l = request.GET.get("q_enddate_l", "")
+    q_enddate_u = request.GET.get("q_enddate_u", "")
+    q_comment = request.GET.get("q_comment", "")
+    order_by = request.GET.get("order_by", "id")
+    context = {'institution_list': query_set.distinct(),
+               'nentries': len(query_set),
+               'query_name': q_name,
+               'query_type': q_type,
+               'query_city': q_city,
+               'query_startdate_l': q_startdate_l,
+               'query_startdate_u': q_startdate_u,
+               'query_firstreference_l': q_firstreference_l,
+               'query_firstreference_u': q_firstreference_u,
+               'query_enddate_l': q_enddate_l,
+               'query_enddate_u': q_enddate_u,
+               'query_comment': q_comment,
+               'order_by': order_by
+               }
 
-    }
+
     return render(request, 'installations/institution_advanced_search.html', context)
 
 
