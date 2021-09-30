@@ -291,6 +291,7 @@ def institutionadvancedsearch(request):
     Advanced search return the AND result between the search result for each field
     '''
     model = apps.get_model('installations', 'institution')  # app_name, model_name
+    print(model._meta.get_fields())
     query_name = request.GET.get("q_name", "")
     query_type = request.GET.get("q_type", "")
     query_city = request.GET.get("q_city", "")
@@ -301,6 +302,8 @@ def institutionadvancedsearch(request):
     query_enddate_l = request.GET.get("q_enddate_l", "")
     query_enddate_u = request.GET.get("q_enddate_u", "")
     query_comment = request.GET.get("q_comment", "")
+    query_installation = request.GET.get("q_installation", "")
+    query_person = request.GET.get("q_person", "")
     order_by = request.GET.get("order_by", "id")
     query_set = model.objects.all()
 
@@ -340,6 +343,20 @@ def institutionadvancedsearch(request):
 
     if query_comment:
         query_set = query_set.filter(Q(un_comment__icontains=query_comment) | Q(comment__icontains=query_comment))
+
+    if query_installation:
+        query_set = query_set.filter(Q(institutioninstallationrelation__installation__name__icontains=query_installation) |
+                                     Q(institutioninstallationrelation__installation__un_name__icontains=query_installation) |
+                                     Q(institutioninstallationrelation__type_of_involvement__icontains=query_installation) |
+                                     Q(institutioninstallationrelation__installation__watersystem__original_term__icontains=query_installation) |
+                                     Q(institutioninstallationrelation__installation__watersystem__type__icontains=query_installation))
+
+    if query_person:
+        query_set = query_set.filter(Q(personinstitutionrelation__person__name__icontains=query_person) |
+                                     Q(personinstitutionrelation__person__un_name__icontains=query_person) |
+                                     Q(personinstitutionrelation__person__role__icontains=query_person) |
+                                     Q(personinstitutionrelation__person__un_role__icontains=query_person) |
+                                     Q(personinstitutionrelation__type_of_involvement__icontains=query_person))
 
     return query_set.order_by(order_by).distinct()
 

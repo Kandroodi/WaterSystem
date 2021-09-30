@@ -95,6 +95,29 @@
                 </td>
             </tr>
             <tr class="d-flex">
+                <th class="col-4"></th>
+                <td class="col-8"> <h5 style="color:limegreen" align="center">Search among the connections</h5>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Person</th>
+                <td class="col-8"> <input type="text" name="q_person" placeholder="Name, Type of env., Role,..."
+                    class="col-12 mb-1"
+                    {% if query_person is not None %}
+                       value="{{query_person}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Installation</th>
+                <td class="col-8"> <input type="text" name="q_installation" placeholder="Name, Type of env., Original term,..."
+                    class="col-12 mb-1"
+                    {% if query_installation is not None %}
+                       value="{{query_installation}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
                 <th class="col-4"> <label for="order">Order by</label> </th>
                 <td class="col-8">
                       <select name="order_by" id="order">
@@ -107,7 +130,6 @@
                 </td>
             </tr>
         </table>
-            <br> <br>
             <button type="submit" class="btn btn-primary">Search</button>
             <a href="{% url 'installations:institution-advancedsearch' %}" class="btn btn-warning" > Clear form</a>
         </form>

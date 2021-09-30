@@ -185,6 +185,8 @@ def InstitutionAdvancedSearchList(request):
     q_enddate_l = request.GET.get("q_enddate_l", "")
     q_enddate_u = request.GET.get("q_enddate_u", "")
     q_comment = request.GET.get("q_comment", "")
+    q_installation = request.GET.get("q_installation", "")
+    q_person = request.GET.get("q_person", "")
     order_by = request.GET.get("order_by", "id")
     context = {'institution_list': query_set.distinct(),
                'nentries': len(query_set),
@@ -198,6 +200,8 @@ def InstitutionAdvancedSearchList(request):
                'query_enddate_l': q_enddate_l,
                'query_enddate_u': q_enddate_u,
                'query_comment': q_comment,
+               'query_installation': q_installation,
+               'query_person': q_person,
                'order_by': order_by
                }
 
