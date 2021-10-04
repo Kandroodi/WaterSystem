@@ -304,6 +304,7 @@ def institutionadvancedsearch(request):
     query_comment = request.GET.get("q_comment", "")
     query_installation = request.GET.get("q_installation", "")
     query_person = request.GET.get("q_person", "")
+    query_evidence = request.GET.get("q_evidence", "")
     order_by = request.GET.get("order_by", "id")
     query_set = model.objects.all()
 
@@ -357,6 +358,12 @@ def institutionadvancedsearch(request):
                                      Q(personinstitutionrelation__person__role__icontains=query_person) |
                                      Q(personinstitutionrelation__person__un_role__icontains=query_person) |
                                      Q(personinstitutionrelation__type_of_involvement__icontains=query_person))
+
+    if query_evidence:
+        query_set = query_set.filter(Q(evidenceinstitutionrelation__evidence__title__icontains=query_evidence) |
+                                     Q(evidenceinstitutionrelation__evidence__un_title__icontains=query_evidence) |
+                                     Q(evidenceinstitutionrelation__evidence__author__icontains=query_evidence) |
+                                     Q(evidenceinstitutionrelation__evidence__un_author__icontains=query_evidence) )
 
     return query_set.order_by(order_by).distinct()
 

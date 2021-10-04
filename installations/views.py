@@ -187,6 +187,7 @@ def InstitutionAdvancedSearchList(request):
     q_comment = request.GET.get("q_comment", "")
     q_installation = request.GET.get("q_installation", "")
     q_person = request.GET.get("q_person", "")
+    q_evidence = request.GET.get("q_evidence", "")
     order_by = request.GET.get("order_by", "id")
     context = {'institution_list': query_set.distinct(),
                'nentries': len(query_set),
@@ -202,6 +203,7 @@ def InstitutionAdvancedSearchList(request):
                'query_comment': q_comment,
                'query_installation': q_installation,
                'query_person': q_person,
+               'query_evidence': q_evidence,
                'order_by': order_by
                }
 

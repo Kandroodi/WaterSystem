@@ -118,6 +118,15 @@
                 </td>
             </tr>
             <tr class="d-flex">
+                <th class="col-4">Evidence</th>
+                <td class="col-8"> <input type="text" name="q_evidence" placeholder="Title, Author,..."
+                    class="col-12 mb-1"
+                    {% if query_evidence is not None %}
+                       value="{{query_evidence}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
                 <th class="col-4"> <label for="order">Order by</label> </th>
                 <td class="col-8">
                       <select name="order_by" id="order">
