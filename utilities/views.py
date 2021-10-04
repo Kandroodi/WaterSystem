@@ -291,7 +291,6 @@ def institutionadvancedsearch(request):
     Advanced search return the AND result between the search result for each field
     '''
     model = apps.get_model('installations', 'institution')  # app_name, model_name
-    print(model._meta.get_fields())
     query_name = request.GET.get("q_name", "")
     query_type = request.GET.get("q_type", "")
     query_city = request.GET.get("q_city", "")
@@ -346,11 +345,12 @@ def institutionadvancedsearch(request):
         query_set = query_set.filter(Q(un_comment__icontains=query_comment) | Q(comment__icontains=query_comment))
 
     if query_installation:
-        query_set = query_set.filter(Q(institutioninstallationrelation__installation__name__icontains=query_installation) |
-                                     Q(institutioninstallationrelation__installation__un_name__icontains=query_installation) |
-                                     Q(institutioninstallationrelation__type_of_involvement__icontains=query_installation) |
-                                     Q(institutioninstallationrelation__installation__watersystem__original_term__icontains=query_installation) |
-                                     Q(institutioninstallationrelation__installation__watersystem__type__icontains=query_installation))
+        query_set = query_set.filter(
+            Q(institutioninstallationrelation__installation__name__icontains=query_installation) |
+            Q(institutioninstallationrelation__installation__un_name__icontains=query_installation) |
+            Q(institutioninstallationrelation__type_of_involvement__icontains=query_installation) |
+            Q(institutioninstallationrelation__installation__watersystem__original_term__icontains=query_installation) |
+            Q(institutioninstallationrelation__installation__watersystem__type__icontains=query_installation))
 
     if query_person:
         query_set = query_set.filter(Q(personinstitutionrelation__person__name__icontains=query_person) |
@@ -363,7 +363,84 @@ def institutionadvancedsearch(request):
         query_set = query_set.filter(Q(evidenceinstitutionrelation__evidence__title__icontains=query_evidence) |
                                      Q(evidenceinstitutionrelation__evidence__un_title__icontains=query_evidence) |
                                      Q(evidenceinstitutionrelation__evidence__author__icontains=query_evidence) |
-                                     Q(evidenceinstitutionrelation__evidence__un_author__icontains=query_evidence) )
+                                     Q(evidenceinstitutionrelation__evidence__un_author__icontains=query_evidence))
+
+    return query_set.order_by(order_by).distinct()
+
+
+def installationadvancedsearch(request):
+    '''
+        Advanced search function between specified fields in the installation model.
+        Advanced search return the AND result between the search result for each field
+        '''
+    model = apps.get_model('installations', 'installation')  # app_name, model_name
+    query_name = request.GET.get("q_name", "")
+    query_watersystem = request.GET.get("q_watersystem", "")
+    query_constructiondate_l = request.GET.get("q_constructiondate_l", "")
+    query_constructiondate_u = request.GET.get("q_constructiondate_u", "")
+    query_firstreference_l = request.GET.get("q_firstreference_l", "")
+    query_firstreference_u = request.GET.get("q_firstreference_u", "")
+    query_enddate_l = request.GET.get("q_enddate_l", "")
+    query_enddate_u = request.GET.get("q_enddate_u", "")
+    query_city = request.GET.get("q_city", "")
+    query_neighbourhoodno = request.GET.get("q_neighbourhoodno", "")
+    query_institutionaslocation = request.GET.get("q_institutionaslocation", "")
+    query_comment = request.GET.get("q_comment", "")
+
+    order_by = request.GET.get("order_by", "id")
+    query_set = model.objects.all()
+
+    if query_name:
+        query_set = query_set.filter(Q(un_name__icontains=query_name) | Q(name__icontains=query_name))
+
+    if query_watersystem:
+        query_set = query_set.filter(Q(watersystem__original_term__icontains=query_watersystem) |
+                                     Q(watersystem__un_original_term__icontains=query_watersystem) |
+                                     Q(watersystem__type__icontains=query_watersystem))
+
+    if query_constructiondate_l:
+        query_set = query_set.filter(
+            Q(construction_date_lower__gte=query_constructiondate_l) | Q(
+                construction_date_upper__gte=query_constructiondate_l))
+
+    if query_constructiondate_u:
+        query_set = query_set.filter(
+            Q(construction_date_lower__lte=query_constructiondate_u) | Q(
+                construction_date_upper__lte=query_constructiondate_u))
+
+    if query_firstreference_l:
+        query_set = query_set.filter(
+            Q(first_reference_lower__gte=query_firstreference_l) | Q(first_reference_upper__gte=query_firstreference_l))
+
+    if query_firstreference_u:
+        query_set = query_set.filter(
+            Q(first_reference_lower__lte=query_firstreference_u) | Q(first_reference_upper__lte=query_firstreference_u))
+
+    if query_enddate_l:
+        query_set = query_set.filter(
+            Q(end_functioning_year_lower__gte=query_enddate_l) | Q(end_functioning_year_upper__gte=query_enddate_l))
+
+    if query_enddate_u:
+        query_set = query_set.filter(
+            Q(end_functioning_year_lower__lte=query_enddate_u) | Q(end_functioning_year_upper__lte=query_enddate_u))
+
+    if query_city:
+        query_set = query_set.filter(city__name__icontains=query_city)
+
+    if query_neighbourhoodno:
+        query_set = query_set.filter(neighbourhood__neighbourhood_number__icontains=query_neighbourhoodno)
+
+    if query_institutionaslocation:
+        query_set = query_set.filter(Q(institution_as_location__name__icontains=query_institutionaslocation) |
+                                     Q(institution_as_location__un_name__icontains=query_institutionaslocation) |
+                                     Q(
+                                         institution_as_location__type_many__name__icontains=query_institutionaslocation) |
+                                     Q(
+                                         institution_as_location__type_many__un_name__icontains=query_institutionaslocation) |
+                                     Q(institution_as_location__purpose__name__icontains=query_institutionaslocation))
+
+    if query_comment:
+        query_set = query_set.filter(Q(un_comment__icontains=query_comment) | Q(comment__icontains=query_comment))
 
     return query_set.order_by(order_by).distinct()
 

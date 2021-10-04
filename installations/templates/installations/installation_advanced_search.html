@@ -12,11 +12,154 @@
         <H2>Advanced search</H2>
         <form method="GET">
             {% csrf_token %}
-            {{ filter.form }}
-            <br> <br>
+        <table class="table table-borderless" >
+            <tr class="d-flex">
+                <th class="col-4">Name</th>
+                <td class="col-8"> <input type="text" name="q_name" placeholder=Name
+                    class="col-12 mb-1"
+                    {% if query_name is not None %}
+                       value="{{query_name}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Water system</th>
+                <td class="col-8"> <input type="text" name="q_watersystem" placeholder="Original term, Type"
+                    class="col-12 mb-1"
+                    {% if query_watersystem is not None %}
+                       value="{{query_watersystem}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Construc. date</th>
+                <td class="col-4">
+                    <input type="text" name="q_constructiondate_l" placeholder="Min " class="col-12 mb-1"
+                    {% if query_constructiondate_l is not None %}
+                       value="{{query_constructiondate_l}}"
+                    {% endif %}>
+                </td>
+                <td class="col-4">
+                    <input type="text" name="q_constructiondate_u" placeholder="Max " class="col-12 mb-1"
+                    {% if query_constructiondate_u is not None %}
+                       value="{{query_constructiondate_u}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">First reference</th>
+                <td class="col-4">
+                    <input type="text" name="q_firstreference_l" placeholder="Min " class="col-12 mb-1"
+                    {% if query_firstreference_l is not None %}
+                       value="{{query_firstreference_l}}"
+                    {% endif %}>
+                </td>
+                <td class="col-4">
+                    <input type="text" name="q_firstreference_u" placeholder="Max " class="col-12 mb-1"
+                    {% if query_firstreference_u is not None %}
+                       value="{{query_firstreference_u}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">End date</th>
+                <td class="col-4">
+                    <input type="text" name="q_enddate_l" placeholder="Min " class="col-12 mb-1"
+                    {% if query_enddate_l is not None %}
+                       value="{{query_enddate_l}}"
+                    {% endif %}>
+                </td>
+                <td class="col-4">
+                    <input type="text" name="q_enddate_u" placeholder="Max " class="col-12 mb-1"
+                    {% if query_enddate_u is not None %}
+                       value="{{query_enddate_u}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Neighbourhood</th>
+                <td class="col-4">
+                    <input type="text" name="q_city" placeholder="City " class="col-12 mb-1"
+                    {% if query_city is not None %}
+                       value="{{query_city}}"
+                    {% endif %}>
+                </td>
+                <td class="col-4">
+                    <input type="text" name="q_neighbourhoodno" placeholder="Neighb. no." class="col-12 mb-1"
+                    {% if query_neighbourhoodno is not None %}
+                       value="{{query_neighbourhoodno}}"
+                    {% endif %}>
+                </td> Institution as location
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Inst. as location</th>
+                <td class="col-8"> <input type="text" name="q_institutionaslocation" placeholder="Institution name, Type"
+                    class="col-12 mb-1"
+                    {% if query_institutionaslocation is not None %}
+                       value="{{query_institutionaslocation}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Comment</th>
+                <td class="col-8"> <input type="text" name="q_comment" placeholder=Comment
+                    class="col-12 mb-1"
+                    {% if query_comment is not None %}
+                       value="{{query_comment}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4"></th>
+                <td class="col-8"> <h5 style="color:limegreen" align="center">Search among the connections</h5>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Person</th>
+                <td class="col-8"> <input type="text" name="q_person" placeholder="Name, Type of env., Role,..."
+                    class="col-12 mb-1"
+                    {% if query_person is not None %}
+                       value="{{query_person}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Installation</th>
+                <td class="col-8"> <input type="text" name="q_installation" placeholder="Name, Type of env., Original term,..."
+                    class="col-12 mb-1"
+                    {% if query_installation is not None %}
+                       value="{{query_installation}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4">Evidence</th>
+                <td class="col-8"> <input type="text" name="q_evidence" placeholder="Title, Author,..."
+                    class="col-12 mb-1"
+                    {% if query_evidence is not None %}
+                       value="{{query_evidence}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
+                <th class="col-4"> <label for="order">Order by</label> </th>
+                <td class="col-8">
+                      <select name="order_by" id="order">
+                          <option value="name">Name</option>
+                          <option value="type_many">Type</option>
+                          <option value="city">City</option>
+                          <option value="start_date_lower">Start date</option>
+                          <option value="first_reference_lower">First reference</option>
+                      </select>
+                </td>
+            </tr>
+        </table>
             <button type="submit" class="btn btn-primary">Search</button>
+            <a href="{% url 'installations:installation-advancedsearch' %}" class="btn btn-warning" > Clear form</a>
         </form>
     </div>
+
+
   <div style="width:65%; float: right; display: inline-block;">
       <h2>Installation list</h2>
     <table class="table table-borderless">
@@ -45,7 +188,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for installation in filter.qs %}
+        {% for installation in installation_list %}
             <tr>
                 <td>{{installation.name }}</td>
                 <td>{{installation.watersystem }}</td>

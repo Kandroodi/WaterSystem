@@ -16,7 +16,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
-from utilities.views import search, institutionsimplesearch, institutionadvancedsearch
+from utilities.views import search, institutionsimplesearch, institutionadvancedsearch, installationadvancedsearch
 from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, \
     unaccent_watersystem, unaccent_institutiontype
 from utilities.views import dcopy_complete
@@ -207,7 +207,6 @@ def InstitutionAdvancedSearchList(request):
                'order_by': order_by
                }
 
-
     return render(request, 'installations/institution_advanced_search.html', context)
 
 
@@ -326,6 +325,7 @@ def InstallationList(request):
     return render(request, 'installations/installation_list.html', context)
 
 
+# this method was working with Django-filter package which had some problems with partial date which I omit it.
 class InstallationListView(ListView):
     model = Installation
     template_name = "installations/installation_advanced_search.html"
@@ -346,6 +346,45 @@ class InstallationListView(ListView):
         context["order_by"] = self.request.GET.get("order_by", "id")
         context["direction"] = self.request.GET.get("direction", "ascending")
         return context
+
+
+def InstallationAdvancedSearchList(request):
+    query_set = installationadvancedsearch(request)
+
+    q_name = request.GET.get("q_name", "")
+    q_watersystem = request.GET.get("q_watersystem", "")
+    q_constructiondate_l = request.GET.get("q_constructiondate_l", "")
+    q_constructiondate_u = request.GET.get("q_constructiondate_u", "")
+    q_firstreference_l = request.GET.get("q_firstreference_l", "")
+    q_firstreference_u = request.GET.get("q_firstreference_u", "")
+    q_enddate_l = request.GET.get("q_enddate_l", "")
+    q_enddate_u = request.GET.get("q_enddate_u", "")
+    q_city = request.GET.get("q_city", "")
+    q_neighbourhoodno = request.GET.get("q_neighbourhoodno", "")
+    q_institutionaslocation = request.GET.get("q_institutionaslocation", "")
+    q_comment = request.GET.get("q_comment", "")
+
+
+    order_by = request.GET.get("order_by", "id")
+
+    context = {'installation_list': query_set.distinct(),
+               'nentries': len(query_set),
+               'query_name': q_name,
+               'query_watersystem': q_watersystem,
+               'query_constructiondate_l': q_constructiondate_l,
+               'query_constructiondate_u': q_constructiondate_u,
+               'query_firstreference_l': q_firstreference_l,
+               'query_firstreference_u': q_firstreference_u,
+               'query_enddate_l': q_enddate_l,
+               'query_enddate_u': q_enddate_u,
+               'query_city': q_city,
+               'query_neighbourhoodno': q_neighbourhoodno,
+               'query_institutionaslocation': q_institutionaslocation,
+               'query_comment': q_comment,
+               'order_by': order_by
+               }
+
+    return render(request, 'installations/installation_advanced_search.html', context)
 
 
 @login_required
