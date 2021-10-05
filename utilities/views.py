@@ -386,7 +386,9 @@ def installationadvancedsearch(request):
     query_neighbourhoodno = request.GET.get("q_neighbourhoodno", "")
     query_institutionaslocation = request.GET.get("q_institutionaslocation", "")
     query_comment = request.GET.get("q_comment", "")
-
+    query_institution = request.GET.get("q_institution", "")
+    query_person = request.GET.get("q_person", "")
+    query_evidence = request.GET.get("q_evidence", "")
     order_by = request.GET.get("order_by", "id")
     query_set = model.objects.all()
 
@@ -433,14 +435,33 @@ def installationadvancedsearch(request):
     if query_institutionaslocation:
         query_set = query_set.filter(Q(institution_as_location__name__icontains=query_institutionaslocation) |
                                      Q(institution_as_location__un_name__icontains=query_institutionaslocation) |
-                                     Q(
-                                         institution_as_location__type_many__name__icontains=query_institutionaslocation) |
-                                     Q(
-                                         institution_as_location__type_many__un_name__icontains=query_institutionaslocation) |
+                                     Q(institution_as_location__type_many__name__icontains=query_institutionaslocation) |
+                                     Q(institution_as_location__type_many__un_name__icontains=query_institutionaslocation) |
                                      Q(institution_as_location__purpose__name__icontains=query_institutionaslocation))
 
     if query_comment:
         query_set = query_set.filter(Q(un_comment__icontains=query_comment) | Q(comment__icontains=query_comment))
+
+    if query_institution:
+        query_set = query_set.filter(
+            Q(institutioninstallationrelation__institution__name__icontains=query_institution) |
+            Q(institutioninstallationrelation__institution__un_name__icontains=query_institution) |
+            Q(institutioninstallationrelation__type_of_involvement__icontains=query_institution) |
+            Q(institutioninstallationrelation__institution__type_many__name__icontains=query_institution) |
+            Q(institutioninstallationrelation__institution__type_many__un_name__icontains=query_institution))
+
+    if query_person:
+        query_set = query_set.filter(Q(personinstallationrelation__person__name__icontains=query_person) |
+                                     Q(personinstallationrelation__person__un_name__icontains=query_person) |
+                                     Q(personinstallationrelation__person__role__icontains=query_person) |
+                                     Q(personinstallationrelation__person__un_role__icontains=query_person) |
+                                     Q(personinstallationrelation__type_of_involvement__icontains=query_person))
+
+    if query_evidence:
+        query_set = query_set.filter(Q(evidenceinstallationrelation__evidence__title__icontains=query_evidence) |
+                                     Q(evidenceinstallationrelation__evidence__un_title__icontains=query_evidence) |
+                                     Q(evidenceinstallationrelation__evidence__author__icontains=query_evidence) |
+                                     Q(evidenceinstallationrelation__evidence__un_author__icontains=query_evidence))
 
     return query_set.order_by(order_by).distinct()
 

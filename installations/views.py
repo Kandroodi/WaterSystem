@@ -363,8 +363,9 @@ def InstallationAdvancedSearchList(request):
     q_neighbourhoodno = request.GET.get("q_neighbourhoodno", "")
     q_institutionaslocation = request.GET.get("q_institutionaslocation", "")
     q_comment = request.GET.get("q_comment", "")
-
-
+    q_institution = request.GET.get("q_institution", "")
+    q_person = request.GET.get("q_person", "")
+    q_evidence = request.GET.get("q_evidence", "")
     order_by = request.GET.get("order_by", "id")
 
     context = {'installation_list': query_set.distinct(),
@@ -381,6 +382,9 @@ def InstallationAdvancedSearchList(request):
                'query_neighbourhoodno': q_neighbourhoodno,
                'query_institutionaslocation': q_institutionaslocation,
                'query_comment': q_comment,
+               'query_institution': q_institution,
+               'query_person': q_person,
+               'query_evidence': q_evidence,
                'order_by': order_by
                }
 

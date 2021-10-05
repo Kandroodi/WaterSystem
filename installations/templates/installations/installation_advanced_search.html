@@ -115,6 +115,15 @@
                 </td>
             </tr>
             <tr class="d-flex">
+                <th class="col-4">Institution</th>
+                <td class="col-8"> <input type="text" name="q_institution" placeholder="Name, Type of env., Type"
+                    class="col-12 mb-1"
+                    {% if query_institution is not None %}
+                       value="{{query_institution}}"
+                    {% endif %}>
+                </td>
+            </tr>
+            <tr class="d-flex">
                 <th class="col-4">Person</th>
                 <td class="col-8"> <input type="text" name="q_person" placeholder="Name, Type of env., Role,..."
                     class="col-12 mb-1"
@@ -123,15 +132,7 @@
                     {% endif %}>
                 </td>
             </tr>
-            <tr class="d-flex">
-                <th class="col-4">Installation</th>
-                <td class="col-8"> <input type="text" name="q_installation" placeholder="Name, Type of env., Original term,..."
-                    class="col-12 mb-1"
-                    {% if query_installation is not None %}
-                       value="{{query_installation}}"
-                    {% endif %}>
-                </td>
-            </tr>
+
             <tr class="d-flex">
                 <th class="col-4">Evidence</th>
                 <td class="col-8"> <input type="text" name="q_evidence" placeholder="Title, Author,..."
