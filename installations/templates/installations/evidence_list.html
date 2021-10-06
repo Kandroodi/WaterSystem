@@ -34,7 +34,7 @@
         </thead>
         <tbody>
             {% for evidence in evidences %}
-            <tr>
+            <tr style="border-bottom:1px solid lightgrey">
                 <td>
                     <a href="{% url 'installations:evidence-detail' evidence.id %}"> {{evidence.title}} </a>
                 </td>

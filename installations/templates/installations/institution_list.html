@@ -51,7 +51,7 @@
     </thead>
     <tbody>
         {% for institution in institution_list %}
-            <tr>
+            <tr style="border-bottom:1px solid lightgrey">
                 <td>
                     <a href="{% url 'installations:institution-detail' institution.id %}"> {{institution.name }} </a>
                 </td>

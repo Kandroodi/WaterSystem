@@ -36,7 +36,7 @@
         </thead>
         <tbody>
             {% for secondaryliterature in secondaryliteratures %}
-            <tr>
+            <tr style="border-bottom:1px solid lightgrey">
                 <td>
                     <a href="{% url 'installations:secondaryliterature-detail' secondaryliterature.id %}"> {{secondaryliterature.title}} </a>
                 </td>

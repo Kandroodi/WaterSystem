@@ -46,7 +46,7 @@
     </thead>
     <tbody>
         {% for installation in installation_list %}
-            <tr>
+            <tr style="border-bottom:1px solid lightgrey">
                 <td>
                     <a href="{% url 'installations:installation-detail' installation.id %}"> {{installation.name }} </a>
                 </td>
