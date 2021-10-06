@@ -5,7 +5,7 @@
 
     <table class="table table-borderless" >
     <tr class="d-flex">
-        <h1>{{ secondaryliterature.title }}</h1>
+        <h1>{{ secondaryliterature.title }}  <a href="{% url 'installations:secondaryliterature-update' secondaryliterature.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a></h1>
 
     </tr>
     <tr class="d-flex">

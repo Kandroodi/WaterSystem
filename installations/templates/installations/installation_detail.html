@@ -5,8 +5,7 @@
 
     <table class="table table-borderless" >
     <tr class="d-flex">
-        <h1>{{ installation.name }}</h1>
-
+        <h1>{{ installation.name }} <a href="{% url 'installations:installation-update' installation.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a></h1>
     </tr>
     <tr class="d-flex">
         <th class="col-2">Water system</th>

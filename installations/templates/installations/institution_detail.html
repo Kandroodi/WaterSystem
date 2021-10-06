@@ -5,7 +5,7 @@
 
     <table class="table table-borderless" >
     <tr class="d-flex">
-        <h1>{{ institution.name }}</h1>
+        <h1>{{ institution.name }}<a href="{% url 'installations:institution-update' institution.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a></h1>
 
     </tr>
     <tr class="d-flex">
