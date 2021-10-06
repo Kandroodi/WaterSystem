@@ -147,10 +147,9 @@
                 <td class="col-8">
                       <select name="order_by" id="order">
                           <option value="name">Name</option>
-                          <option value="type_many">Type</option>
+                          <option value="watersystem">Water system</option>
+                          <option value="construction_date_lower">Construction date</option>
                           <option value="city">City</option>
-                          <option value="start_date_lower">Start date</option>
-                          <option value="first_reference_lower">First reference</option>
                       </select>
                 </td>
             </tr>
@@ -163,27 +162,15 @@
 
   <div style="width:65%; float: right; display: inline-block;">
       <h2>Installation list</h2>
+    <p class="text-secondary small ml-3" ># Entries: {{nentries}}<p>
     <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td>Name
-                <a href="?q={{query}}&order_by=name&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=name&direction=descending"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-            <td>Water System
-                <a href="?q={{query}}&order_by=watersystem&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=watersystem&direction=descending"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-            <td>Construction Date
-                <a href="?q={{query}}&order_by=construction_date_lower&direction=ascending"><i class="fas fa-sort-down"></i></a>
-                <a href="?q={{query}}&order_by=construction_date_lower&direction=descending"><i class="fas fa-sort-up"></i></a>
-            </td>
-            <td>City
-                <a href="?q={{query}}&order_by=city&direction=ascending"> <i class="fas fa-sort-down"></i> </a>
-                <a href="?q={{query}}&order_by=city&direction=descending"> <i class="fas fa-sort-up"></i> </a>
-            </td>
-
-            <td>
+            <td class="col-4">Name </td>
+            <td class="col-2">Water System </td>
+            <td class="col-2">Construction Date </td>
+            <td class="col-2">City </td>
+            <td class="col-2">
                  <a href="{% url 'installations:installation-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>
         </tr>
