@@ -166,6 +166,7 @@
     <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
+            <td></td>
             <td class="col-4">Name </td>
             <td class="col-2">Water System </td>
             <td class="col-2">Construction Date </td>
@@ -177,7 +178,14 @@
     </thead>
     <tbody>
         {% for installation in installation_list %}
-            <tr>
+            <tr style="border-bottom:1px solid lightgrey">
+                <td>
+                    {% if installation.status %}
+                        <span class="Gdot"></span>
+                    {% else %}
+                        <span class="Rdot"></span>
+                    {% endif %}
+                </td>
                 <td>{{installation.name }}</td>
                 <td>{{installation.watersystem }}</td>
 
