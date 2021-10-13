@@ -285,6 +285,39 @@ def institutionsimplesearch(request):
     return query_set
 
 
+def personsimplesearch(request):
+    '''
+    Simple search function between specified fields in the person model.
+    Simple search return the OR result between the search result for each field
+    '''
+    model = apps.get_model('installations', 'person')  # app_name, model_name
+    query = request.GET.get("q", "")
+    order_by = request.GET.get("order_by", "id")
+    query_set = model.objects.all().order_by(order_by)
+
+    queries = query.split()
+    if query is not None:
+        query_setall = model.objects.none()
+        for qs in queries:
+            query_seti = query_set.filter(
+                Q(name__icontains=qs) |
+                Q(un_name__icontains=qs) |
+                Q(role__icontains=qs) |
+                Q(un_role__icontains=qs) |
+                Q(religion__name__icontains=qs) |
+                Q(secondary_literature__title__icontains=qs) |
+                Q(secondary_literature__author__icontains=qs) |
+                Q(comment__icontains=qs) |
+                Q(un_comment__icontains=qs)
+            )
+            query_setall = query_setall | query_seti
+        query_set = query_setall.order_by(order_by)
+    if query == "":
+        query_set = model.objects.all().order_by(order_by)
+
+    return query_set
+
+# Advanced search methods
 def institutionadvancedsearch(request):
     '''
     Advanced search function between specified fields in the institution model.
@@ -435,8 +468,10 @@ def installationadvancedsearch(request):
     if query_institutionaslocation:
         query_set = query_set.filter(Q(institution_as_location__name__icontains=query_institutionaslocation) |
                                      Q(institution_as_location__un_name__icontains=query_institutionaslocation) |
-                                     Q(institution_as_location__type_many__name__icontains=query_institutionaslocation) |
-                                     Q(institution_as_location__type_many__un_name__icontains=query_institutionaslocation) |
+                                     Q(
+                                         institution_as_location__type_many__name__icontains=query_institutionaslocation) |
+                                     Q(
+                                         institution_as_location__type_many__un_name__icontains=query_institutionaslocation) |
                                      Q(institution_as_location__purpose__name__icontains=query_institutionaslocation))
 
     if query_comment:

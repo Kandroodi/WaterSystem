@@ -16,7 +16,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
-from utilities.views import search, institutionsimplesearch, institutionadvancedsearch, installationadvancedsearch
+from utilities.views import search, institutionsimplesearch, personsimplesearch, institutionadvancedsearch, installationadvancedsearch
 from utilities.views import unaccent_installations, unaccent_institution, unaccent_person, unaccent_evidence, \
     unaccent_watersystem, unaccent_institutiontype
 from utilities.views import dcopy_complete
@@ -231,10 +231,11 @@ def edit_person(request, pk=None, focus='', view='complete'):
 
 
 def PersonList(request):
+    query_set = personsimplesearch(request)
     query = request.GET.get("q", "")
-    order_by = request.GET.get("order_by", "id")
-    query_set = Person.objects.all().order_by(order_by)
-    context = {'person_list': query_set}
+    context = {'person_list': query_set,
+               'nentries': len(query_set),
+               'query': query}
     return render(request, 'installations/person_list.html', context)
 
 
