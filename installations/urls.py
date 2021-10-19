@@ -102,6 +102,10 @@ urlpatterns = [
     url(r'^cityinstallationrelation/delete/(?P<pk>\d+)/$', views.CityInstallationRelationDeleteView.as_view(), name='cityinstallationrelation-delete'),
     path('cityinstallationrelation/list', views.CityInstallationRelationListView.as_view(), name='cityinstallationrelation-list'),
 
+
+    #Map
+    # ------------------------------------------------------------------------------------------------------------------
+    path('map/', views.MapVisualization, name='map-visualization'),
     # Accessory
     # ------------------------------------------------------------------------------------------------------------------
     path('accessory/', views.Accessory, name='accessory'),
