@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_select2',
     'easyaudit',
     'django_filters',
+    'colorfield',
 ]
 
 # CRISPY_TEMPLATE_PACK = 'uni_form'

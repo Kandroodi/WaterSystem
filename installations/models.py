@@ -4,6 +4,7 @@ from django.urls import reverse
 # from django.contrib.gis.db import models as gismodels
 from django.contrib.auth.models import User
 import unidecode
+from colorfield.fields import ColorField
 
 
 # Notes
@@ -404,3 +405,32 @@ class PersonPersonRelation(models.Model):
     primary = models.ForeignKey(Person, related_name='primary', on_delete=models.CASCADE)
     secondary = models.ForeignKey(Person, related_name='secondary', on_delete=models.CASCADE)
     description = models.CharField(max_length=1000, blank=True)
+
+
+# Landmarks
+class Style(models.Model):
+    name = models.CharField(max_length=200)
+    color = ColorField(default='#FF0000')
+    stroke_opacity = models.FloatField(default=0.8, )
+    stroke_weight = models.IntegerField(default=2)
+    fill_opacity = models.FloatField(default=0.3)
+    dashed = models.BooleanField(default=False)
+    z_index = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name + ' ' + self.color
+
+
+class Figure(models.Model):
+    '''figure to be plotted on a map.'''
+    dargs = {'on_delete': models.SET_NULL, 'blank': True, 'null': True}
+    name = models.CharField(max_length=200)
+    description = models.TextField(default='', blank=True)
+    style = models.ForeignKey(Style, **dargs)
+    start_date = PartialDateField(null=True, blank=True)
+    end_date = PartialDateField(null=True, blank=True)
+    geojson = models.FileField(upload_to='shapefiles/', null=True, blank=True)
+    district_number = models.IntegerField(blank=True, null=True)
+    city = models.CharField(max_length=200)
+
+# --------------------------------------------------

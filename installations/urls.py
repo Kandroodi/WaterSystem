@@ -106,6 +106,11 @@ urlpatterns = [
     #Map
     # ------------------------------------------------------------------------------------------------------------------
     path('map/', views.MapVisualization, name='map-visualization'),
+    path('figure/new/', views.edit_figure, name='figure-insert'),
+    path('figure/new/<str:view>/', views.edit_figure, name='figure-insert'),
+    path('figure/new/<int:pk>', views.edit_figure, name='figure-update'),
+    path('figure/new/<int:pk>/<str:focus>', views.edit_figure, name='figure-update'),
+
     # Accessory
     # ------------------------------------------------------------------------------------------------------------------
     path('accessory/', views.Accessory, name='accessory'),

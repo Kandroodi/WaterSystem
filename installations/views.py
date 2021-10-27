@@ -888,3 +888,9 @@ def MapVisualization(request):
     context = {'page_name': 'Map'}
 
     return render(request, 'installations/map_visualization.html', context)
+
+
+@login_required
+def edit_figure(request, pk=None, focus='', view='complete'):
+    return edit_model(request, __name__, 'Figure', 'installations', pk,
+                      focus=focus, view=view)
