@@ -115,10 +115,11 @@ urlpatterns = [
     path('figure/new/<int:pk>', views.FigureUpdateView.as_view(), name='figure-update'),
     url(r'^figure/delete/(?P<pk>\d+)/$', views.FigureDeleteView.as_view(), name='figure-delete'),
     path('figure/list', views.FigureListView.as_view(), name='figure-list'),
-    path('style/new/', views.edit_style, name='style-insert'),
-    path('style/new/<str:view>/', views.edit_style, name='style-insert'),
-    path('style/new/<int:pk>', views.edit_style, name='style-update'),
-    path('style/new/<int:pk>/<str:focus>', views.edit_style, name='style-update'),
+    path('style/new/', views.StyleCreatView.as_view(), name='style-insert'),
+    path('style/list', views.StyleListView.as_view(), name='style-list'),
+    # path('style/new/<str:view>/', views.edit_style, name='style-insert'),
+    path('style/new/<int:pk>', views.StyleUpdateView.as_view(), name='style-update'),
+    url(r'^style/delete/(?P<pk>\d+)/$', views.StyleDeleteView.as_view(), name='style-delete'),
 
     # Accessory
     # ------------------------------------------------------------------------------------------------------------------

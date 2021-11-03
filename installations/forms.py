@@ -769,7 +769,6 @@ class FigureForm(ModelForm):
         self.fields['description'].required = False
 
 
-
 class StyleForm(ModelForm):
     name = forms.CharField(widget=forms.TextInput(
         attrs={'style': 'width:100%', 'rows': 1}),
@@ -790,4 +789,9 @@ class StyleForm(ModelForm):
 
     class Meta:
         model = Style
-        fields = ('name', 'stroke_opacity', 'stroke_weight','fill_opacity','dashed','z_index',)
+        # fields = '__all__'
+        fields = ('name', 'stroke_opacity', 'stroke_weight', 'fill_opacity', 'dashed', 'z_index',)
+
+    def __init__(self, *args, **kwargs):
+        super(StyleForm, self).__init__(*args, **kwargs)
+        self.fields['dashed'].required = False

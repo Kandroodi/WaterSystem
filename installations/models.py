@@ -423,13 +423,12 @@ class Style(models.Model):
 
 class Figure(models.Model):
     '''figure to be plotted on a map.'''
-    dargs = {'on_delete': models.SET_NULL, 'blank': True, 'null': True}
     name = models.CharField(max_length=200)
-    style = models.ForeignKey(Style, **dargs)
+    style = models.ForeignKey(Style,  on_delete=models.SET_NULL, blank=True, null=True, default='')
     start_date = PartialDateField(null=True, blank=True)
     end_date = PartialDateField(null=True, blank=True)
     geojson = models.FileField(upload_to='shapefiles/', null=True, blank=True)
     district_number = models.IntegerField(blank=True, null=True)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, blank=False, null=False, default='')
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True, default='')
     description = models.CharField(max_length=1000, blank=True, default='', null=True)
 # --------------------------------------------------

@@ -891,10 +891,10 @@ def MapVisualization(request):
 
 
 
-@login_required
-def edit_style(request, pk=None, focus='', view='complete'):
-    return edit_model(request, __name__, 'Style', 'installations', pk,
-                      focus=focus, view=view)
+# @login_required
+# def edit_style(request, pk=None, focus='', view='complete'):
+#     return edit_model(request, __name__, 'Style', 'installations', pk,
+#                       focus=focus, view=view)
 
 
 
@@ -932,3 +932,38 @@ class FigureUpdateView(UpdateView):
 class FigureDeleteView(DeleteView):
     model = Figure
     success_url = reverse_lazy("installations:figure-list")
+
+
+@method_decorator(login_required, name='dispatch')
+class StyleListView(ListView):
+    model = Style
+    template_name = 'installations/style_list.html'
+    context_object_name = 'styles'
+
+
+@method_decorator(login_required, name='dispatch')
+class StyleCreatView(CreateView):
+    model = Style
+    fields = ('name', 'stroke_opacity', 'stroke_weight', 'fill_opacity', 'dashed', 'z_index',)
+    template_name = 'installations/add_style.html'
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:style-list')
+
+@method_decorator(login_required, name='dispatch')
+class StyleUpdateView(UpdateView):
+    model = Style
+    fields = ('name', 'stroke_opacity', 'stroke_weight', 'fill_opacity', 'dashed', 'z_index',)
+    template_name = 'installations/add_style.html'
+    success_url = reverse_lazy('installations:style-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class StyleDeleteView(DeleteView):
+    model = Style
+    success_url = reverse_lazy("installations:style-list")

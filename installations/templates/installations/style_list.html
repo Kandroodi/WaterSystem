@@ -2,19 +2,19 @@
 
 {% block main_content %}
 
-<h2>Figure list</h2>
+<h2>Style list</h2>
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
             <td class="col-3">Name
             </td>
-            <td class="col-2">Description
+            <td class="col-2">Color
             </td>
-            <td class="col-2">Start date
+            <td class="col-2">Z index
             </td>
-            <td class="col-1">End date
+            <td class="col-1">Fill opacity
             </td>
-            <td class="col-1">city
+            <td class="col-1">Stroke opacity
             </td>
 
             <td class="col-2">
@@ -23,22 +23,22 @@
         </tr>
     </thead>
     <tbody>
-        {% for figure in figures %}
+        {% for style in styles %}
             <tr style="border-bottom:1px solid lightgrey">
-                <td>{{figure.name }}</td>
+                <td>{{style.name }}</td>
                 <td>
-                    {{figure.description }}
+                    {{style.color }}
                 </td>
-                <td>{{figure.start_date }}</td>
+                <td>{{style.z_index }}</td>
                 <td>
-                    {{figure.end_date }}
-                </td>
-                <td>
-                    {{figure.city }}
+                    {{style.fill_opacity }}
                 </td>
                 <td>
-                    <a href="{% url 'installations:figure-update' figure.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
-                    <form action="{% url 'installations:figure-delete' figure.id %}" method="post" class="d-inline">
+                    {{style.stroke_opacity }}
+                </td>
+                <td>
+                    <a href="{% url 'installations:style-update' style.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:style-delete' style.id %}" method="post" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
 <!--                        <button type="submit" class="btn">-->
