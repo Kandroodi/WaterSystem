@@ -1,0 +1,55 @@
+{% extends 'installations/base.html' %}
+
+{% block main_content %}
+
+<h2>Figure list</h2>
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td class="col-3">Name
+            </td>
+            <td class="col-2">Description
+            </td>
+            <td class="col-2">Start date
+            </td>
+            <td class="col-1">End date
+            </td>
+            <td class="col-1">city
+            </td>
+
+            <td class="col-2">
+                 <a href="{% url 'installations:figure-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for figure in figures %}
+            <tr style="border-bottom:1px solid lightgrey">
+                <td>{{figure.name }}</td>
+                <td>
+                    {{figure.description }}
+                </td>
+                <td>{{figure.start_date }}</td>
+                <td>
+                    {{figure.end_date }}
+                </td>
+                <td>
+
+                </td>
+                <td>
+                    <a href="{% url 'installations:figure-update' figure.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:figure-delete' figure.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete all entities connected to this from the database?')">
+<!--                        <button type="submit" class="btn">-->
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor%}
+    </tbody>
+
+</table>
+
+{% endblock main_content %}

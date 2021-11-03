@@ -106,10 +106,19 @@ urlpatterns = [
     #Map
     # ------------------------------------------------------------------------------------------------------------------
     path('map/', views.MapVisualization, name='map-visualization'),
-    path('figure/new/', views.edit_figure, name='figure-insert'),
-    path('figure/new/<str:view>/', views.edit_figure, name='figure-insert'),
-    path('figure/new/<int:pk>', views.edit_figure, name='figure-update'),
-    path('figure/new/<int:pk>/<str:focus>', views.edit_figure, name='figure-update'),
+    # path('figure/new/', views.edit_figure, name='figure-insert'),
+    # path('figure/new/<str:view>/', views.edit_figure, name='figure-insert'),
+    # path('figure/new/<int:pk>', views.edit_figure, name='figure-update'),
+    # path('figure/new/<int:pk>/<str:focus>/', views.edit_figure, name='figure-update'),
+    path('figure/new/', views.FigureCreatView.as_view(), name='figure-insert'),
+    path('figure/new/<str:view>/', views.FigureCreatView.as_view(), name='figure-insert'),
+    path('figure/new/<int:pk>', views.FigureUpdateView.as_view(), name='figure-update'),
+    url(r'^figure/delete/(?P<pk>\d+)/$', views.FigureDeleteView.as_view(), name='figure-delete'),
+    path('figure/list', views.FigureListView.as_view(), name='figure-list'),
+    path('style/new/', views.edit_style, name='style-insert'),
+    path('style/new/<str:view>/', views.edit_style, name='style-insert'),
+    path('style/new/<int:pk>', views.edit_style, name='style-update'),
+    path('style/new/<int:pk>/<str:focus>', views.edit_style, name='style-update'),
 
     # Accessory
     # ------------------------------------------------------------------------------------------------------------------

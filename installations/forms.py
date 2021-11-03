@@ -732,51 +732,62 @@ personperson_formset = inlineformset_factory(
 class FigureForm(ModelForm):
     '''form to add or edit a figure.'''
 
-    description = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 3}),
-        required=False)
     style = forms.ModelChoiceField(
-        queryset=Style.objects.all().order_by('name'),
+        queryset=Style.objects.all(),
         widget=StyleWidget(
             attrs={'data-placeholder': 'Select style',
                    'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'},
-            required=False))
+                   'data-minimum-input-length': '1'}))
+
     start_date = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'start date'}))
 
-    end_date = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'end date'}), required=False)
+    end_date = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'end date'}))
     district_number = forms.IntegerField(widget=forms.NumberInput(
         attrs={'style': 'width:100%', 'rows': 1}),
         required=False)
-    city = forms.CharField(widget=forms.TextInput(
-        attrs={'style': 'width:100%', 'rows': 1}),
-        required=False)
+    city = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=CityWidget(
+            attrs={'data-placeholder': 'Select city',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 4}))
 
     class Meta:
         model = Figure
-        fields = 'name,description,style,start_date,end_date,district_number,city,geojson'
-        fields = fields.split(',')
+        fields = '__all__'
 
-#
-# class StyleForm(ModelForm):
-#     name = forms.CharField(widget=forms.Textarea(
-#         attrs={'style': 'width:100%', 'rows': 3}),
-#         required=False)
-#     stroke_opacity = forms.FloatField(widget=forms.NumberInput(
-#         attrs={'style': 'width:100%', 'rows': 1}),
-#         required=False)
-#     stroke_weight = forms.IntegerField(widget=forms.NumberInput(
-#         attrs={'style': 'width:100%', 'rows': 1}),
-#         required=False)
-#     fill_opacity = forms.FloatField(widget=forms.NumberInput(
-#         attrs={'style': 'width:100%', 'rows': 1}),
-#         required=False)
-#     z_index = forms.FloatField(widget=forms.NumberInput(
-#         attrs={'style': 'width:100%', 'rows': 1}),
-#         required=False)
-#
-#     class Meta:
-#         model = Style
-#         f = 'stroke_weight,stroke_opacity,color,fill_opacity'
-#         f += ',dashed,name,z_index'
-#         fields = f.split(',')
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
+        super(FigureForm, self).__init__(*args, **kwargs)
+        self.fields['style'].required = False
+        self.fields['start_date'].required = False
+        self.fields['end_date'].required = False
+        self.fields['city'].required = False
+        self.fields['description'].required = False
+
+
+
+class StyleForm(ModelForm):
+    name = forms.CharField(widget=forms.TextInput(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+    stroke_opacity = forms.FloatField(widget=forms.NumberInput(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+    stroke_weight = forms.IntegerField(widget=forms.NumberInput(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+    fill_opacity = forms.FloatField(widget=forms.NumberInput(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+    z_index = forms.FloatField(widget=forms.NumberInput(
+        attrs={'style': 'width:100%', 'rows': 1}),
+        required=False)
+    dashed = forms.BooleanField()
+
+    class Meta:
+        model = Style
+        fields = ('name', 'stroke_opacity', 'stroke_weight','fill_opacity','dashed','z_index',)

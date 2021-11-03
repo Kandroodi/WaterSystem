@@ -890,7 +890,45 @@ def MapVisualization(request):
     return render(request, 'installations/map_visualization.html', context)
 
 
+
 @login_required
-def edit_figure(request, pk=None, focus='', view='complete'):
-    return edit_model(request, __name__, 'Figure', 'installations', pk,
+def edit_style(request, pk=None, focus='', view='complete'):
+    return edit_model(request, __name__, 'Style', 'installations', pk,
                       focus=focus, view=view)
+
+
+
+@method_decorator(login_required, name='dispatch')
+class FigureListView(ListView):
+    model = Figure
+    template_name = 'installations/figure_list.html'
+    context_object_name = 'figures'
+
+
+@method_decorator(login_required, name='dispatch')
+class FigureCreatView(CreateView):
+    model = Figure
+    fields = '__all__'
+    template_name = 'installations/add_figure.html'
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:figure-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class FigureUpdateView(UpdateView):
+    model = Figure
+    fields = '__all__'
+    template_name = 'installations/add_figure.html'
+    success_url = reverse_lazy('installations:figure-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class FigureDeleteView(DeleteView):
+    model = Figure
+    success_url = reverse_lazy("installations:figure-list")
