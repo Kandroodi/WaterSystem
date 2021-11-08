@@ -944,7 +944,7 @@ class StyleListView(ListView):
 @method_decorator(login_required, name='dispatch')
 class StyleCreatView(CreateView):
     model = Style
-    fields = ('name', 'stroke_opacity', 'stroke_weight', 'fill_opacity', 'dashed', 'z_index',)
+    fields = '__all__'
     template_name = 'installations/add_style.html'
 
     def get_success_url(self):
@@ -958,7 +958,7 @@ class StyleCreatView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class StyleUpdateView(UpdateView):
     model = Style
-    fields = ('name', 'stroke_opacity', 'stroke_weight', 'fill_opacity', 'dashed', 'z_index',)
+    fields = '__all__'
     template_name = 'installations/add_style.html'
     success_url = reverse_lazy('installations:style-list')
 

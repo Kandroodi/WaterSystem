@@ -769,29 +769,20 @@ class FigureForm(ModelForm):
         self.fields['description'].required = False
 
 
+dattr = {'attrs':{'style':'width:100%'}}
+dnumber = {'widget': forms.NumberInput(attrs={'style': 'width:100%', 'rows': 3}), 'required': False}
+dchar_required = {'widget': forms.TextInput(**dattr), 'required': True}
+
+
 class StyleForm(ModelForm):
-    name = forms.CharField(widget=forms.TextInput(
-        attrs={'style': 'width:100%', 'rows': 1}),
-        required=False)
-    stroke_opacity = forms.FloatField(widget=forms.NumberInput(
-        attrs={'style': 'width:100%', 'rows': 1}),
-        required=False)
-    stroke_weight = forms.IntegerField(widget=forms.NumberInput(
-        attrs={'style': 'width:100%', 'rows': 1}),
-        required=False)
-    fill_opacity = forms.FloatField(widget=forms.NumberInput(
-        attrs={'style': 'width:100%', 'rows': 1}),
-        required=False)
-    z_index = forms.FloatField(widget=forms.NumberInput(
-        attrs={'style': 'width:100%', 'rows': 1}),
-        required=False)
-    dashed = forms.BooleanField()
+    name = forms.CharField(**dchar_required)
+    stroke_opacity = forms.FloatField(**dnumber)
+    stroke_weight = forms.IntegerField(**dnumber)
+    fill_opacity = forms.FloatField(**dnumber)
+    z_index = forms.FloatField(**dnumber)
 
     class Meta:
         model = Style
-        # fields = '__all__'
-        fields = ('name', 'stroke_opacity', 'stroke_weight', 'fill_opacity', 'dashed', 'z_index',)
-
-    def __init__(self, *args, **kwargs):
-        super(StyleForm, self).__init__(*args, **kwargs)
-        self.fields['dashed'].required = False
+        f = 'stroke_weight,stroke_opacity,color,fill_opacity'
+        f += ',dashed,name,z_index'
+        fields = f.split(',')

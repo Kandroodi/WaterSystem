@@ -27,11 +27,20 @@
             <tr style="border-bottom:1px solid lightgrey">
                 <td>{{figure.name }}</td>
                 <td>
-                    {{figure.description }}
+                    {% if figure.description %}
+                        {{figure.description }}
+                    {% endif %}
                 </td>
-                <td>{{figure.start_date }}</td>
                 <td>
-                    {{figure.end_date }}
+                    {% if figure.start_date %}
+                        {{figure.start_date }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if figure.end_date %}
+                        {{figure.end_date }}
+                    {% endif %}
+
                 </td>
                 <td>
                     {{figure.city }}

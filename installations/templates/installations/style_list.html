@@ -6,11 +6,11 @@
 <table class="table table-borderless">
     <thead class="border-bottom font-weight-bold">
         <tr>
-            <td class="col-3">Name
+            <td class="col-2">Name
             </td>
-            <td class="col-2">Color
+            <td class="col-1">Color
             </td>
-            <td class="col-2">Z index
+            <td class="col-1">Z index
             </td>
             <td class="col-1">Fill opacity
             </td>
@@ -18,7 +18,7 @@
             </td>
 
             <td class="col-2">
-                 <a href="{% url 'installations:figure-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
+                 <a href="{% url 'installations:style-insert' %}" class="btn btn-outline-success"> <i class="fa fa-plus"></i> Add New</a>
             </td>
         </tr>
     </thead>
@@ -26,7 +26,7 @@
         {% for style in styles %}
             <tr style="border-bottom:1px solid lightgrey">
                 <td>{{style.name }}</td>
-                <td>
+                <td style="background-color:{{style.color}};">
                     {{style.color }}
                 </td>
                 <td>{{style.z_index }}</td>

@@ -2,7 +2,7 @@
 
 {% block head %}
 	<title>{{page_name}}</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.3.3/jscolor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.3.3/jscolor.min.js"></script>
 
 {% endblock %}
 
@@ -33,6 +33,7 @@ jscolor.presets.default = {
     {% include 'utilities/change_log.html' %}
     {% else %} <p class="mb-4"></p>
 {% endif %}
+<form method="post">
 <table class="table table-borderless table-sm">
 	<tr class="d-flex">
 		<th class="col-2">Name</th>
@@ -40,7 +41,8 @@ jscolor.presets.default = {
 	</tr>
 	<tr class="d-flex">
 		<th class="col-2">Color</th>
-		<td class="col-8">{{form.color}}</td>
+		<td class="col-8">{{form.color}} {{form.color.error}} </td>
+
 	</tr>
 	<tr class="d-flex">
 		<th class="col-2">Stroke weight</th>
@@ -78,20 +80,5 @@ jscolor.presets.default = {
 </form>
 
 
-<script>
-
-if(document.getElementById("id_fill_opacity").value == "") {
-	document.getElementById("id_fill_opacity").value =0.3;
-}
-if(document.getElementById("id_stroke_opacity").value == "") {
-	document.getElementById("id_stroke_opacity").value =0.8;
-}
-if(document.getElementById("id_stroke_weight").value == "") {
-	document.getElementById("id_stroke_weight").value =3;
-}
-if(document.getElementById("id_z_index").value == "") {
-	document.getElementById("id_z_index").value =0;
-}
-</script>
 
 {% endblock %}
