@@ -260,6 +260,15 @@ class Watersystem(models.Model):
         super(Watersystem, self).save()
 
 
+class WatersystemCategories(models.Model):
+    name = models.CharField(max_length=250, blank=False)
+    watersystem = models.ManyToManyField(Watersystem, blank=True)
+    description = models.TextField(max_length=1000, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Installation(models.Model):
     name = models.CharField(max_length=250, blank=True, default='')
     watersystem = models.ForeignKey(Watersystem, on_delete=models.CASCADE, blank=True, null=True)

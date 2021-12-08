@@ -88,6 +88,12 @@ class WatersystemWidget(s2forms.ModelSelect2Widget):
         'un_original_term__icontains',
     ]
 
+class WatersystemWidgetMulti(s2forms.ModelSelect2MultipleWidget):
+    search_fields = [
+        'original_term__icontains',
+        'un_original_term__icontains',
+    ]
+
 
 class PurposeWidget(s2forms.ModelSelect2MultipleWidget):
     model = Purpose
@@ -431,6 +437,28 @@ class WatersystemForm(ModelForm):
         super(WatersystemForm, self).__init__(*args, **kwargs)
         self.fields['type'].required = False
         self.fields['secondary_literature'].required = False
+        self.fields['description'].required = False
+
+
+class WatersystemCategoriesForm(ModelForm):
+    watersystem = forms.ModelMultipleChoiceField(
+        queryset=Watersystem.objects.all(),
+        widget=WatersystemWidgetMulti(
+            attrs={'data-placeholder': 'Select water systems',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 3}),
+        required=False)
+
+    class Meta:
+        model = WatersystemCategories
+        fields = ('name', 'watersystem', 'description')
+
+    def __init__(self, *args, **kwargs):
+        super(WatersystemCategoriesForm, self).__init__(*args, **kwargs)
+        self.fields['name'].required = True
+        self.fields['watersystem'].required = False
         self.fields['description'].required = False
 
 

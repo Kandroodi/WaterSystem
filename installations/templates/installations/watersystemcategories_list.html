@@ -1,0 +1,51 @@
+{% extends "installations/base.html" %}
+
+{% block main_content %}
+    <h2>Water system categories list</h2>
+    <table class="table table-borderless">
+        <thead class="border-bottom font-weight-bold">
+            <tr>
+                <th scope="col">Name
+                </th>
+                <th scope="col">Water system
+                </th>
+                <th scope="col">Description
+                </th>
+                <td>
+                    <a href= "{% url 'installations:watersystemcategories-insert' %}"
+                       class="btn btn-outline-success"
+                       target="popup"
+                       onclick="window.open('{% url 'installations:watersystemcategories-insert' %}','popup','width=600,height=600'); return false;">
+                        <i class="fa fa-plus"></i> Add New</a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for watersystemcategory in watersystemcategories %}
+            <tr>
+                <td>{{watersystemcategory.name}}</td>
+                <td>{% for t in watersystemcategory.watersystem.all %}
+                        {% if t %}
+                            {{ t.original_term }} ({{ t.type }}),
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    {% endfor %}
+
+                    </td>
+                <td>{{watersystemcategory.description}}</td>
+                <td>
+                    <a href="{% url 'installations:watersystemcategories-update' watersystemcategory.id %}" class="btn text-secondary px-0"><i class="fa fa-edit fa-lg"></i></a>
+                    <form action="{% url 'installations:watersystemcategories-delete' watersystemcategory.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to delete {{watersystemcategory.name}} and all entities connected to this from the database?')">
+                        <i class="fa fa-trash fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

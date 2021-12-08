@@ -553,6 +553,41 @@ class WaterSystemDeleteView(DeleteView):
 
 
 @method_decorator(login_required, name='dispatch')
+class WaterSystemCategoriesListView(ListView):
+    model = WatersystemCategories
+    template_name = 'installations/watersystemcategories_list.html'
+    context_object_name = 'watersystemcategories'
+
+
+@method_decorator(login_required, name='dispatch')
+class WaterSystemCategoriesCreatView(CreateView):
+    model = WatersystemCategories
+    form_class = WatersystemCategoriesForm
+    template_name = 'installations/watersystemcategories_form.html'
+
+    def get_success_url(self):
+        if 'view' in self.kwargs:
+            viewmode = self.kwargs['view']
+            if viewmode == 'inline':
+                return reverse_lazy('utilities:close')
+        else:
+            return reverse_lazy('installations:watersystemcategories-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class WaterSystemCategoriesUpdateView(UpdateView):
+    model = WatersystemCategories
+    form_class = WatersystemCategoriesForm
+    success_url = reverse_lazy('installations:watersystemcategories-list')
+
+
+@method_decorator(login_required, name='dispatch')
+class WaterSystemCategoriesDeleteView(DeleteView):
+    model = WatersystemCategories
+    success_url = reverse_lazy("installations:watersystemcategories-list")
+
+
+@method_decorator(login_required, name='dispatch')
 class PurposeListView(ListView):
     model = Purpose
     template_name = 'installations/purpose_list.html'
@@ -882,8 +917,6 @@ def Accessory(request):
         unaccent_institutiontype(request, 'installations', 'institutiontype')
 
     return render(request, 'installations/accessory.html')
-
-
 
 
 
