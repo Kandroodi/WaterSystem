@@ -12,7 +12,7 @@ from django.db.models import Q
 
 # Extra Imports for the Login and Logout Capabilities
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from utilities.views import edit_model
@@ -24,7 +24,9 @@ from utilities.views import dcopy_complete
 
 from django.db.models.functions import Lower
 from .filters import *
-
+from django.core import serializers
+import json
+import os
 
 # Create your views here.
 def register(request):
@@ -882,12 +884,35 @@ def Accessory(request):
     return render(request, 'installations/accessory.html')
 
 
+
+
+
+
 #
 # MAp Visualization
 def MapVisualization(request):
-    context = {'page_name': 'Map'}
+    f = Figure.objects.all()
+    f = serializers.serialize('json', f)
+    f = json.loads(f)
+    s = Style.objects.all()
+    s = serializers.serialize('json', s)
+    s = json.loads(s)
+    context = {'page_name': 'Map', 'figures': f, 'styles': s}
 
+    # return render(request, 'installations/MAP_back.html', context)
+    # return render(request, 'installations/test_map.html', context)
     return render(request, 'installations/map_visualization.html', context)
+
+
+def geojson_file(request, filename):
+    print(filename)
+    if not os.path.isfile('media/shapefiles/'+filename): data = {'file': False}
+    a = open('media/shapefiles/'+filename).read()
+    try:
+        data = json.loads(a)
+    except:
+        data = {'json': False}
+    return JsonResponse(data)
 
 
 
@@ -895,7 +920,6 @@ def MapVisualization(request):
 # def edit_style(request, pk=None, focus='', view='complete'):
 #     return edit_model(request, __name__, 'Style', 'installations', pk,
 #                       focus=focus, view=view)
-
 
 
 @method_decorator(login_required, name='dispatch')
@@ -954,6 +978,7 @@ class StyleCreatView(CreateView):
                 return reverse_lazy('utilities:close')
         else:
             return reverse_lazy('installations:style-list')
+
 
 @method_decorator(login_required, name='dispatch')
 class StyleUpdateView(UpdateView):

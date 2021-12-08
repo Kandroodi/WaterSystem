@@ -1,0 +1,166 @@
+{% extends 'installations/base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin=""/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css"
+	integrity=""
+	crossorigin=""/>
+
+
+	<!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+
+    <style>
+        #map { height: 600px;}
+    </style>
+
+{% endblock %}
+
+{% block main_content %}
+<table class="table table-borderless table-sm ">
+	<tr class="d-flex">
+		<th class="col-2">Map opacity</th>
+        <th class="col-1"></th>
+		<th class="col-9">Date range</th>
+	</tr>
+    <tr class="d-flex">
+		<td class="col-2">
+            <div id="map_opacity" ></div>
+        </td>
+        <td class="col-1">
+        </td>
+		<td class="col-9"><div id="years" ></div></td>
+	</tr>
+</table>
+{#<small>map opacity</small>#}
+{#<div id="map_opacity" class="col-2 mt-1"></div>#}
+{#<small>map opacity</small>#}
+{#<div id="years" class="col-10 mt-1"></div>#}
+
+
+<div id="map"></div>
+    {{figures|json_script:"figuresjs"}}
+    {{styles|json_script:"stylesjs"}}
+
+<script>
+    var mymap = L.map('map').setView([30.041394878798638,31.237350234985355], 13);
+
+    {#L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {#}
+    {#attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',#}
+    {#maxZoom: 18,#}
+    {#id: 'mapbox/streets-v11',#}
+    {#tileSize: 512,#}
+    {#zoomOffset: -1,#}
+    {#accessToken: 'pk.eyJ1IjoibW9qaXJvc2kiLCJhIjoiY2t2czl3Y2VzMGE3eTJ2bzJhMXdiMGM4ciJ9.RArnejioh0AnjXVmZWP9-A'#}
+    {#}).addTo(mymap);#}
+
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+    maxZoom: 20,
+    opacity: 0.9,
+    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+
+    var marker = L.marker([30.03153, 31.24184]).addTo(mymap);
+
+    marker.bindPopup("El-Sayeda Zeinab Mosque");
+
+    var marker = L.marker([30.032402, 31.256131]).addTo(mymap);
+
+    marker.bindPopup("Sultan Hassan Mosque");
+
+
+    var circle = L.circle([30.05342, 31.198985], {
+    color: 'red',
+    fillColor: '#30f',
+    fillOpacity: 0.3,
+    radius: 300
+    }).addTo(mymap);
+
+    circle.bindPopup("Circle area").openPopup();
+
+
+    var polygon = L.polygon([
+    [30.045489, 31.24669],
+    [30.047179, 31.246716],
+    [30.049241, 31.250149],
+    [30.047179, 31.250943],
+    [30.044857, 31.249055]
+
+    ]).addTo(mymap);
+
+    polygon.bindPopup("Polygon area");
+
+    {#var popup = L.popup()#}
+    {#.setLatLng([51.5, -0.093])#}
+    {#.setContent("I am a standalone popup.")#}
+    {#.openOn(mymap);#}
+
+    var popup = L.popup();
+    function onMapClick(e) {
+        popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(mymap);
+    }
+
+    mymap.on('click', onMapClick);
+
+
+    {#var geojsonFeature = {#}
+    {#"type": "Feature",#}
+    {#"properties": {#}
+    {#    "name": "Coors Field",#}
+    {#    "amenity": "Baseball Stadium",#}
+    {#    "popupContent": "This is where the Rockies play!"#}
+    {#},#}
+    {#"geometry": {#}
+    {#    "type": "Point",#}
+    {#    "coordinates": [51.509, -0.08]#}
+    {#}#}
+    {#};#}
+    {##}
+    {#L.geoJSON(geojsonFeature).addTo(map);#}
+
+    var start = 1000;
+    var end = 1400;
+    var multi_slider = document.getElementById('years');
+    noUiSlider.create(multi_slider, {
+        start: [start, end],
+        connect: true,
+        range: {'min':500,'max':1500},
+        steps: 50,
+        tooltips: true,
+        format: {to: function (value) {return Math.floor(value)},from: function (value) {return Math.floor(value)}},
+    });
+
+    multi_slider.noUiSlider.on('change',handleYearSlider);
+
+    function handleYearSlider(values) {
+        //set start and end values based on the year slider, this is used to determine which
+        //figures are shown
+        start= values[0];
+        end= values[1];
+
+    }
+
+    //create slider to control opacity of the map tiles
+    var slider = document.getElementById('map_opacity');
+    noUiSlider.create(slider, {
+        start: [30],
+        range: {'min':0,'max':100},
+        steps: 1,
+    });
+
+    slider.noUiSlider.on('slide',function(value){tiles.setOpacity(value/100);});
+    var myJson = {"type":"FeatureCollection","crs":{"type":"name","properties":{"name":"EPSG:4326"}},"features":[{"type":"Feature","id":3,"geometry":{"type":"Polygon","coordinates":[[[31.263905901900721,30.055042032021081],[31.263055044524478,30.054289277460988],[31.263825126841958,30.053625566932851],[31.264711025431051,30.054396358887555],[31.263905901900721,30.055042032021081]]]},"properties":{"FID":3,"Id":0,"Name":" "}}]}
+    L.geoJSON(myJson).addTo(mymap)
+</script>
+
+
+{% endblock %}
