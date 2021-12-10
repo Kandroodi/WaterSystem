@@ -501,6 +501,14 @@ class EvidenceDetailView(DetailView):
     model = Evidence
 
 
+@login_required
+def edit_figure(request, pk=None, focus='', view='complete'):
+    names = ''
+    return edit_model(request, __name__, 'Figure', 'installations', pk, formset_names=names,
+                      focus=focus, view=view)
+
+
+
 @method_decorator(login_required, name='dispatch')
 class WaterSystemListView(ListView):
     model = Watersystem
@@ -966,7 +974,7 @@ class FigureListView(ListView):
 class FigureCreatView(CreateView):
     model = Figure
     fields = '__all__'
-    template_name = 'installations/add_figure.html'
+    template_name = 'installations/add_figure_old.html'
 
     def get_success_url(self):
         if 'view' in self.kwargs:
@@ -981,7 +989,7 @@ class FigureCreatView(CreateView):
 class FigureUpdateView(UpdateView):
     model = Figure
     fields = '__all__'
-    template_name = 'installations/add_figure.html'
+    template_name = 'installations/add_figure_old.html'
     success_url = reverse_lazy('installations:figure-list')
 
 

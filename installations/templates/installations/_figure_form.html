@@ -1,0 +1,47 @@
+<table class="table table-borderless" >
+    <tr class="d-flex">
+        <th class="col-2">Name</th>
+        <td class="col-8">{{form.name}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Style</th>
+        <td class="col-8">{{form.style}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:style-insert'%}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Start date</th>
+        <td class="col-8">{{form.start_date}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">End date</th>
+        <td class="col-8">{{form.end_date}}</td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Neighbourhood</th>
+        <td class="col-8">{{form.neighbourhood}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:neighbourhood-insert' 'inline' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">City</th>
+        <td class="col-8">{{form.city}}</td>
+        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+           href ="{% url 'installations:city-insert' 'inline' %}"
+           role="button"><i class="fa fa-plus"></i></a>
+        </td>
+    </tr>
+    <tr class="d-flex">
+        <th class="col-2">Description</th>
+        <td class="col-8">{{form.description}}</td>
+    </tr>
+    <tr class="d-flex">
+		<th class="col-2">File (geojson)</th>
+		<td class="col-8">{{form.geojson}}</td>
+	</tr>
+
+</table>

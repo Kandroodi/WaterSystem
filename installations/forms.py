@@ -88,6 +88,7 @@ class WatersystemWidget(s2forms.ModelSelect2Widget):
         'un_original_term__icontains',
     ]
 
+
 class WatersystemWidgetMulti(s2forms.ModelSelect2MultipleWidget):
     search_fields = [
         'original_term__icontains',
@@ -417,6 +418,50 @@ class EvidenceForm(ModelForm):
         self.fields['date_lower'].required = False
         self.fields['date_upper'].required = False
         self.fields['status'].required = False
+
+
+# Landmarks
+class FigureForm(ModelForm):
+    style = forms.ModelChoiceField(
+        queryset=Style.objects.all(),
+        widget=StyleWidget(
+            attrs={'data-placeholder': 'Select style',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
+    start_date = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'start date'}))
+
+    end_date = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'end date'}))
+    neighbourhood = forms.ModelMultipleChoiceField(
+        queryset=Neighbourhood.objects.all(),
+        widget=NeighbourhoodWidget(
+            attrs={'data-placeholder': 'Select neighbourhood',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+    city = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=CityWidget(
+            attrs={'data-placeholder': 'Select city',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
+    description = forms.CharField(widget=forms.Textarea(
+        attrs={'style': 'width:100%', 'rows': 4}))
+
+    class Meta:
+        model = Figure
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
+        super(FigureForm, self).__init__(*args, **kwargs)
+        self.fields['style'].required = True
+        self.fields['start_date'].required = False
+        self.fields['end_date'].required = False
+        self.fields['city'].required = False
+        self.fields['description'].required = False
+        self.fields['neighbourhood'].required = False
+        self.fields['geojson'].required = True
 
 
 class WatersystemForm(ModelForm):
@@ -755,50 +800,7 @@ institutioninstitution_formset = inlineformset_factory(
 personperson_formset = inlineformset_factory(
     Person, PersonPersonRelation, fk_name='primary', fields='__all__', extra=1, form=PersonPersonRelationForm)
 
-
-# Landmarks
-class FigureForm(ModelForm):
-    '''form to add or edit a figure.'''
-
-    style = forms.ModelChoiceField(
-        queryset=Style.objects.all(),
-        widget=StyleWidget(
-            attrs={'data-placeholder': 'Select style',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
-
-    start_date = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'start date'}))
-
-    end_date = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'end date'}))
-    district_number = forms.IntegerField(widget=forms.NumberInput(
-        attrs={'style': 'width:100%', 'rows': 1}),
-        required=False)
-    city = forms.ModelChoiceField(
-        queryset=City.objects.all(),
-        widget=CityWidget(
-            attrs={'data-placeholder': 'Select city',
-                   'style': 'width:100%;', 'class': 'searching',
-                   'data-minimum-input-length': '1'}))
-
-    description = forms.CharField(widget=forms.Textarea(
-        attrs={'style': 'width:100%', 'rows': 4}))
-
-    class Meta:
-        model = Figure
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        instance = kwargs.get('instance', None)
-        super(FigureForm, self).__init__(*args, **kwargs)
-        self.fields['style'].required = True
-        self.fields['start_date'].required = False
-        self.fields['end_date'].required = False
-        self.fields['city'].required = False
-        self.fields['description'].required = False
-        self.fields['geojson'].required = True
-
-
-dattr = {'attrs':{'style':'width:100%'}}
+dattr = {'attrs': {'style': 'width:100%'}}
 dnumber = {'widget': forms.NumberInput(attrs={'style': 'width:100%', 'rows': 3}), 'required': False}
 dchar_required = {'widget': forms.TextInput(**dattr), 'required': True}
 

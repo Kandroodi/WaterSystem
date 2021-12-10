@@ -437,7 +437,7 @@ class Figure(models.Model):
     start_date = PartialDateField(null=True, blank=True)
     end_date = PartialDateField(null=True, blank=True)
     geojson = models.FileField(upload_to='shapefiles/', null=False, blank=False, default='')
-    district_number = models.IntegerField(blank=True, null=True)
+    neighbourhood = models.ManyToManyField(Neighbourhood, blank=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, blank=False, null=False, default='')
     description = models.CharField(max_length=1000, blank=True, default='', null=True)
 # --------------------------------------------------

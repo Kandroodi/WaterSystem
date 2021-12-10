@@ -6,70 +6,48 @@
         {% if not form.instance.pk %}
             Add Figure
         {% else %}
-            Update Figure "{{form.instance.name}}"
+            Update figure "{{form.instance.name}}"
         {% endif %}
     </h2>
 
 <form method="post" enctype="multipart/form-data" onsubmit="dosubmit();">
 {% csrf_token %}
 
-        {%if page_name == "Edit figure" and 'unknown' not in crud.last_update %}
-	        {% include 'utilities/change_log.html' %}
-        {% else %}
-            <p class="mb-4"></p>
-        {% endif %}
-	    <table class="table table-borderless table-sm ">
-	<tr class="d-flex">
-		<th class="col-2">Name</th>
-		<td class="col-8">{{form.name}}</td>
-	</tr>
-    <tr class="d-flex">
-		<th class="col-2">Style</th>
-		<td class="col-8">{{form.style}} </td>
-        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:style-insert' %}"
-           role="button"><i class="fa fa-plus"></i></a>
-        </td>
-	</tr>
-	<tr class="d-flex">
-		<th class="col-2">Start date</th>
-		<td class="col-8">{{form.start_date}}</td>
-	</tr>
-	<tr class="d-flex">
-		<th class="col-2">End date</th>
-		<td class="col-8">{{form.end_date}}</td>
-	</tr>
-	<tr class="d-flex">
-		<th class="col-2">District number</th>
-		<td class="col-8">{{form.district_number}}</td>
-	</tr>
-	<tr class="d-flex">
-        <th class="col-2">City</th>
-        <td class="col-8">{{form.city}}</td>
-        <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
-           href ="{% url 'installations:city-insert' 'inline' %}"
-           role="button"><i class="fa fa-plus"></i></a>
-        </td>
-    </tr>
-    <tr class="d-flex">
-		<th class="col-2">File (geojson)</th>
-		<td class="col-8">{{form.geojson}}</td>
-	</tr>
-    <tr class="d-flex">
-        <th class="col-2">Description</th>
-        <td class="col-8">{{form.description}}</td>
-    </tr>
-	</table>
-        <div class="form-group">
-            {% if not form.instance.pk %}
-                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Save</button>
-            {% else %}
-                <button type="submit" class="btn btn-success"><i class="fa fa-database"></i>Update</button>
-            {% endif %}
-            <a href="{% url 'installations:figure-list' %}" class="btn btn-default">Cancel</a>
-        </div>
+<!-- edit_model needs focus and there was an erroe here! -->
+{% include 'utilities/edit_minimize_tab.html' %}
+<div class="tab-content">
+    <div class="tab-pane fade" id="Edit">
+	<!-- text form is defined in a seperate template -->
+    </div>
+    <div class="tab-pane fade" id="Minimize">
+		<!-- you can minimize the text form -->
+    </div>
+</div>
 
-    </form>
-    {{ form.media.js }}
+
+{%if page_name == "Edit figure" and 'unknown' not in crud.last_update %}
+    {% include 'utilities/change_log.html' %}
+    {% else %} <p class="mb-4"></p>
+{% endif %}
+{% include 'installations/_figure_form.html' %}
+
+{% if view == "inline" %}
+{% else %}
+{#    Formsets#}
+{% endif %}
+
+
+
+<input type="hidden" name="navbar" id="navbar" value="" />
+<input type="hidden" name="navcontent" id="navcontent" value="" />
+<input type="hidden" name="focus" id="focus" value="" />
+<button type="submit" value="Submit" class ="btn btn-success"><i class="fa fa-database"></i>Save</button>
+
+<a type="reset" value="Cancel" class ="btn btn-light" href="{% url 'installations:figure-list' %}">Cancel</a>
+
+
+
+{% include 'utilities/tab_selector.html' %}
+</form>
 
 {% endblock %}
