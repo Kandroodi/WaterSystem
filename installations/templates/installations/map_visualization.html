@@ -260,7 +260,6 @@
         //fetches the correct style and creates a popup and tooltip
         const response = await fetch('/media/'+figure.fields.geojson)
         const data = await response.json()
-        console.log(data, "json data on html")
         style = make_style(figure);
         var pop_up = make_pop_up(figure);
         add_popup_and_tooltip(data,pop_up,figure.fields.name)

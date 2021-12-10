@@ -790,11 +790,12 @@ class FigureForm(ModelForm):
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance', None)
         super(FigureForm, self).__init__(*args, **kwargs)
-        self.fields['style'].required = False
+        self.fields['style'].required = True
         self.fields['start_date'].required = False
         self.fields['end_date'].required = False
         self.fields['city'].required = False
         self.fields['description'].required = False
+        self.fields['geojson'].required = True
 
 
 dattr = {'attrs':{'style':'width:100%'}}
