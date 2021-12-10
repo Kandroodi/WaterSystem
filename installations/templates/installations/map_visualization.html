@@ -217,7 +217,7 @@
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     });
 
-    stadia.addTo(mymap)
+    mapbox.addTo(mymap)
 
     //------------------------------------------------------------------------------------------------------------------
     // functions to work with Json files on map
@@ -386,7 +386,7 @@
 
         // Layer controller
         var baseMaps = {
-           "Gray": stadia,
+           {#"Gray": stadia,#}
            "MapBox": mapbox,
            "Google streets": googleStreets,
            "Google satellite": googleSat,
