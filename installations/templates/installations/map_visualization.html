@@ -237,11 +237,11 @@
         var m = '<p class="mt-0 mb-0">'+figure.fields.name+'</p>'
         }
         else {
-        var m = '<h5 class="mt-2 mb-0">'+figure.fields.name+'</h5>'
+        var m = '<p class="mt-2 mb-0">'+figure.fields.name+'</p>'
         {#m += '<p class="mt-2 mb-0">'+figure.fields.description+'</p>'#}
-        {#m += '<a class = "btn btn-link btn-sm mt-1 pl-0 text-dark" href='#}
-        {#m += '/'+app_name+'/edit_' + model_name+'/' + figure.pk #}
-        {#m += ' role="button"><i class="far fa-edit"></i></a>'#}
+        m += '<a class = "btn btn-link btn-sm mt-1 pl-0 text-dark" href='
+        m += '/installations/figure/new/' + figure.pk
+        m += ' role="button"><i class="far fa-edit"></i></a>'
         }
         return m
     }
@@ -303,6 +303,7 @@
     
     function show_layers(){
         //show the figures in the order of the z index
+        Landlayers.sort((a,b) => a.style.z_index - b.style.z_index)
         for (i = 0; i<Landlayers.length; i++) {
             layer = Landlayers[i];
             //check whether a figure overlaps with the current time range and only plot those that do
