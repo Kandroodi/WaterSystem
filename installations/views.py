@@ -938,7 +938,10 @@ def MapVisualization(request):
     s = Style.objects.all()
     s = serializers.serialize('json', s)
     s = json.loads(s)
-    context = {'page_name': 'Map', 'figures': f, 'styles': s}
+    cities = City.objects.all()
+    cjs = serializers.serialize('json', cities)
+    cjs = json.loads(cjs)
+    context = {'page_name': 'Map', 'figures': f, 'styles': s, 'cities': cities, 'cjs':cjs}
 
     # return render(request, 'installations/MAP_back.html', context)
     # return render(request, 'installations/test_map.html', context)

@@ -90,15 +90,20 @@
                 <tr>
                     <div id="map_opacity"></div>
                 </tr>
-                <br> <br> <br>
                 <tr>
-                     Filter based on Main Categories <br>
-                        -Conduits <br>
-                        -Storage <br>
-                        -Water Lifting <br>
-                        -Usage <br>
-                        -Disposal <br>
+                    <br>
+                    <td class="col-2">
+                        <label for="city">City:</label>
+                    </td>
+                    <td class="col-10">
+                        <select name="city" id="city-select" onChange="setMapCenter(this.options[this.selectedIndex].value)">
+                            {% for city in cities %}
+                                <option value="{{city.name}}">{{city.name }}</option>
+                            {% endfor%}
+                        </select>
+                    </td>
                 </tr>
+
             </table>
         </div>
         {#        <div class="col-1">#}
@@ -113,6 +118,7 @@
         <div id="map"></div>
         {{figures|json_script:"figuresjs"}}
         {{styles|json_script:"stylesjs"}}
+        {{cjs|json_script:"cjsjs"}}
 
         <div>
 {#            <p> Here are the figure list</p>#}
@@ -148,7 +154,10 @@
 
 
     // Set view and zoom level for map
-    var mymap = L.map('map').setView([30.041394878798638,31.237350234985355], 13);
+    {#var selectedcity = document.getElementById("city-select");#}
+    {#console.log(selectedcity.value, "selected city")#}
+    var mapCenter = [30.041394878798638,31.237350234985355]
+    var mymap = L.map('map').setView(mapCenter, 12);
 
     // Define different tileLayer for map ------------------------------------------------------------------------------
 
@@ -396,6 +405,20 @@
         };
 
         L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+
+    //------------------------------------------------------------------------------------------------------------------
+    // City filter
+    function setMapCenter(chosen) {
+        cityjs = JSON.parse(document.getElementById('cjsjs').textContent)
+        for (i = 0; i<cityjs.length; i++) {
+        //Check which city is selected
+            if (cityjs[i].fields.name === chosen){
+                mapCenter = [cityjs[i].fields.latitude, cityjs[i].fields.longitude]
+                mymap.setView(mapCenter, 12);
+            }
+        }
+    }
+
 
 </script>
 
