@@ -938,10 +938,13 @@ def MapVisualization(request):
     s = Style.objects.all()
     s = serializers.serialize('json', s)
     s = json.loads(s)
-    cities = City.objects.all()
+    cities = City.objects.all() # used for the selection dropdown
     cjs = serializers.serialize('json', cities)
-    cjs = json.loads(cjs)
-    context = {'page_name': 'Map', 'figures': f, 'styles': s, 'cities': cities, 'cjs':cjs}
+    cjs = json.loads(cjs) # used for having access to the fields of city model in the js scripts
+    n = Neighbourhood.objects.all()
+    n = serializers.serialize('json', n)
+    n = json.loads(n)
+    context = {'page_name': 'Map', 'figures': f, 'styles': s, 'cities': cities, 'cjs':cjs, 'neighbourhoods':n}
 
     # return render(request, 'installations/MAP_back.html', context)
     # return render(request, 'installations/test_map.html', context)

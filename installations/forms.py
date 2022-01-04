@@ -510,9 +510,16 @@ class WatersystemCategoriesForm(ModelForm):
 class NeighbourhoodForms(ModelForm):
     extent_shapefile = forms.FileField(widget=forms.ClearableFileInput)
 
+    style = forms.ModelChoiceField(
+        queryset=Style.objects.all(),
+        widget=StyleWidget(
+            attrs={'data-placeholder': 'Select style',
+                   'style': 'width:100%;', 'class': 'searching',
+                   'data-minimum-input-length': '1'}))
+
     class Meta:
         model = Neighbourhood
-        fields = ('city', 'neighbourhood_number', 'extent_shapefile')
+        fields = ('city', 'neighbourhood_number', 'style', 'extent_shapefile')
 
 
 class InstitutionTypeForms(ModelForm):

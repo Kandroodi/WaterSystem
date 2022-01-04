@@ -119,6 +119,7 @@
         {{figures|json_script:"figuresjs"}}
         {{styles|json_script:"stylesjs"}}
         {{cjs|json_script:"cjsjs"}}
+        {{neighbourhoods|json_script:"neighbourhoodsjs"}}
 
         <div>
 {#            <p> Here are the figure list</p>#}
@@ -336,7 +337,6 @@
         show_layers();
     }
 
-
     var Landlayers = [];
     styles = JSON.parse(document.getElementById('stylesjs').textContent)
     figures = JSON.parse(document.getElementById('figuresjs').textContent)
@@ -347,7 +347,6 @@
     }
 
     check_done_loading(Landlayers,figures.length);
-
     //------------------------------------------------------------------------------------------------------------------
     // Multi slider for Date range
     var start = 1000;
@@ -387,24 +386,20 @@
         mapbox.setOpacity(value/100);
         googleStreets.setOpacity(value/100);
         googleSat.setOpacity(value/100);
-
-
     });
+    //------------------------------------------------------------------------------------------------------------------
+    // Layer controller
+    var baseMaps = {
+       {#"Gray": stadia,#}
+       "MapBox": mapbox,
+       "Google streets": googleStreets,
+       "Google satellite": googleSat,
+    };
 
-        //------------------------------------------------------------------------------------------------------------------
+    var overlayMaps = {
+    };
 
-        // Layer controller
-        var baseMaps = {
-           {#"Gray": stadia,#}
-           "MapBox": mapbox,
-           "Google streets": googleStreets,
-           "Google satellite": googleSat,
-        };
-
-        var overlayMaps = {
-        };
-
-        L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+    L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
     //------------------------------------------------------------------------------------------------------------------
     // City filter
@@ -418,6 +413,8 @@
             }
         }
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //
 
 
 </script>

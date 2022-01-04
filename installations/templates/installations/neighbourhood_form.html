@@ -25,6 +25,14 @@
             <td class="col-8">{{form.neighbourhood_number}}</td>
         </tr>
         <tr class="d-flex">
+            <th class="col-2">Style</th>
+            <td class="col-8">{{form.style}}</td>
+            <td><a class = "btn btn-link btn-sm ml-auto" target = "_blank"
+               href ="{% url 'installations:style-insert'%}"
+               role="button"><i class="fa fa-plus"></i></a>
+            </td>
+        </tr>
+        <tr class="d-flex">
             <th class="col-2">Extent shapefile</th>
             <td class="col-8">{{form.extent_shapefile}} </td>
         </tr>
