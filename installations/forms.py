@@ -521,6 +521,10 @@ class NeighbourhoodForms(ModelForm):
         model = Neighbourhood
         fields = ('city', 'neighbourhood_number', 'style', 'extent_shapefile')
 
+    def __init__(self, *args, **kwargs):
+        super(NeighbourhoodForms, self).__init__(*args, **kwargs)
+        self.fields['style'].required = False
+
 
 class InstitutionTypeForms(ModelForm):
     name = forms.CharField()
