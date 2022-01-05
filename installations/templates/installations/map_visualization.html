@@ -275,9 +275,7 @@
         add_popup_and_tooltip(data,pop_up,figure.fields.name)
         {#L.geoJSON(data).addTo(mymap)#}
         var geosjson_layer = L.geoJSON(data,{style:style,onEachFeature:onEachFeature})
-        console.log(geosjson_layer, "geosjson_layer")
 	    Landlayers.push({'figure':figure,'layer':geosjson_layer,'style':style})
-        console.log(Landlayers, "Landlayers")
     }
 
     function get_style(pk) {
@@ -318,13 +316,8 @@
             layer = Landlayers[i];
             //check whether a figure overlaps with the current time range and only plot those that do
             overlap = check_overlap(layer.figure.fields.start_date, layer.figure.fields.end_date)
-            console.log(overlap, "overlap")
-            if (overlap) {mymap.addLayer(layer.layer);
-            console.log('add',layer,overlap)}
-            else {mymap.removeLayer(layer.layer);console.log('remove',layer,overlap)}
-
-            //check whether a figure overlaps with the current time range and only plot those that do
-            {#mymap.addLayer(layer.layer); console.log('add',layer)#}
+            if (overlap) {mymap.addLayer(layer.layer);}
+            else {mymap.removeLayer(layer.layer);}
         }
     }
 
@@ -344,7 +337,6 @@
         //skips tooltips for districts because they '  ' the tooltip from other objects
         layer.bindPopup(feature.pop_up,{maxWidth:200,closeButton:false});
         layer.bindTooltip(feature.tool_tip);
-        console.log("onEachFeature_neighbour is ran")
     }
 
     function make_pop_up_neighbour(neighbourhood) {
@@ -375,29 +367,17 @@
         else{
             style = make_style(neighbourhood);
         }
-        console.log(style, "style in neihgh")
-
         var pop_up = make_pop_up_neighbour(neighbourhood);
         add_popup_and_tooltip(data,pop_up,neighbourhood.fields.neighbourhood_number)
-        console.log(data.features, " data.features added neighbourhood is here")
         {#L.geoJSON(data).addTo(mymap)#}
         var geosjson_layer = L.geoJSON(data,{style:style,onEachFeature:onEachFeature_neighbour})
-        console.log(geosjson_layer, " *****v neighbourhood geosjson_layer")
 	    Neighbourlayers.push({'neighbourhood':neighbourhood,'layer':geosjson_layer,'style':style})
-        console.log(Neighbourlayers, "Neighbourlayers")
     }
 
-
     function show_layers_neighbour(){
-        //show the figures in the order of the z index
-        {#Landlayers.sort((a,b) => a.style.z_index - b.style.z_index)#}
         for (i = 0; i<Neighbourlayers.length; i++) {
             layer = Neighbourlayers[i];
-            //check whether a figure overlaps with the current time range and only plot those that do
-            {#overlap = check_overlap(layer.figure.fields.start_date, layer.figure.fields.end_date)#}
-            {#console.log(overlap, "overlap")#}
             mymap.addLayer(layer.layer);
-            console.log(layer, "neighbourhood layer is added");
         }
     }
 
@@ -415,7 +395,6 @@
 
     for (i = 0; i<neighbourhoods.length; i++) {
         //create figures to plot on the leaflet map
-        console.log(neighbourhoods[i], "neighbourhoods[i]")
         add_neighbourhood(neighbourhoods[i]);
     }
 
