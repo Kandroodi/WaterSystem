@@ -372,7 +372,8 @@
             style = make_style(neighbourhood);
         }
         var pop_up = make_pop_up_neighbour(neighbourhood);
-        add_popup_and_tooltip(data,pop_up,neighbourhood.fields.neighbourhood_number)
+        var tooltip_str = 'Neighbourhood '+ neighbourhood.fields.neighbourhood_number.toString();
+        add_popup_and_tooltip(data,pop_up,tooltip_str)
         {#L.geoJSON(data).addTo(mymap)#}
         var geosjson_layer = L.geoJSON(data,{style:style,onEachFeature:onEachFeature_neighbour})
 	    Neighbourlayers.push({'neighbourhood':neighbourhood,'layer':geosjson_layer,'style':style})
