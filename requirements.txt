@@ -3,7 +3,7 @@ beautifulsoup4==4.8.2
 certifi==2019.11.28
 cffi==1.14.3
 chardet==3.0.4
-Django==2.2.24
+Django==2.2.27
 django-appconf==1.0.3
 django-bootstrap4==1.0.1
 django-colorfield==0.3.2
