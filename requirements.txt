@@ -20,7 +20,7 @@ django-smart-selects==1.5.4
 django-widget-tweaks==1.4.8
 idna==2.8
 partial-date==0.1
-Pillow==8.3.2
+Pillow==9.0.1
 pycparser==2.20
 python-decouple==3.1
 pytz==2019.3
