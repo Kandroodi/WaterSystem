@@ -1,6 +1,6 @@
 argon2-cffi==20.1.0
 beautifulsoup4==4.8.2
-certifi==2019.11.28
+certifi==2022.12.7
 cffi==1.14.3
 chardet==3.0.4
 Django==2.2.24
